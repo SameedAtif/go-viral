@@ -1,0 +1,11 @@
+class Influencer < ApplicationRecord
+  belongs_to :user
+
+  has_many :gigs
+  # One Influencer can be on multiple platforms
+  has_many :influencer_platforms
+  has_many :platforms, through: :influencer_platforms
+  # One Influencer can be in multiple projects
+  has_many :project_influencers
+  has_many :project, through: :project_influencers
+end
