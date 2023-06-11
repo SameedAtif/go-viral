@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_145004) do
 
   create_table "gigs", force: :cascade do |t|
     t.bigint "influencer_id"
-    t.string "title"
+    t.string "title", default: "", null: false
     t.index ["influencer_id"], name: "index_gigs_on_influencer_id"
   end
 
@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_145004) do
 
   create_table "projects", force: :cascade do |t|
     t.bigint "client_id"
+    t.string "title", default: "", null: false
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
@@ -100,6 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_145004) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.string "phone_number", default: "", null: false
+    t.string "user_roles", default: [], array: true
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

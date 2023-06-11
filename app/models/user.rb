@@ -5,6 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :trackable
 
-  has_one :influencer
-  has_one :client
+  has_one :influencer, dependent: :destroy
+  has_one :client, dependent: :destroy
 end
