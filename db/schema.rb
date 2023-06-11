@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_082011) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_11_145004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,10 +19,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_082011) do
     t.index ["user_id"], name: "index_clients_on_user_id", unique: true
   end
 
+  create_table "gig_categories", force: :cascade do |t|
+    t.bigint "gig_id"
+    t.string "title", default: "", null: false
+    t.string "description", default: "", null: false
+    t.float "price"
+    t.index ["gig_id"], name: "index_gig_categories_on_gig_id"
+  end
+
   create_table "gig_clients", force: :cascade do |t|
     t.bigint "gig_id"
     t.bigint "client_id"
+    t.bigint "gig_category_id"
     t.index ["client_id"], name: "index_gig_clients_on_client_id"
+    t.index ["gig_category_id"], name: "index_gig_clients_on_gig_category_id"
     t.index ["gig_id"], name: "index_gig_clients_on_gig_id"
   end
 
@@ -54,6 +64,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_082011) do
   create_table "platforms", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "url", default: "", null: false
+  end
+
+  create_table "project_applications", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "influencer_id"
+    t.string "title", default: "", null: false
+    t.string "description", default: "", null: false
+    t.string "status", default: "", null: false
+    t.float "budget"
+    t.index ["influencer_id"], name: "index_project_applications_on_influencer_id"
+    t.index ["project_id"], name: "index_project_applications_on_project_id"
   end
 
   create_table "project_influencers", force: :cascade do |t|
@@ -105,7 +126,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_082011) do
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "gig_categories", "gigs"
   add_foreign_key "gig_clients", "clients"
+  add_foreign_key "gig_clients", "gig_categories"
   add_foreign_key "gig_clients", "gigs"
   add_foreign_key "gig_platforms", "gigs"
   add_foreign_key "gig_platforms", "platforms"
@@ -113,6 +136,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_082011) do
   add_foreign_key "influencer_platforms", "influencers"
   add_foreign_key "influencer_platforms", "platforms"
   add_foreign_key "influencers", "users"
+  add_foreign_key "project_applications", "influencers"
+  add_foreign_key "project_applications", "projects"
   add_foreign_key "project_influencers", "influencers"
   add_foreign_key "project_influencers", "projects"
   add_foreign_key "project_platforms", "platforms"
