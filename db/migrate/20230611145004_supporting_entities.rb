@@ -5,6 +5,7 @@ class SupportingEntities < ActiveRecord::Migration[7.0]
       t.string :title, null: false, default: ""
       t.string :description, null: false, default: ""
       t.float :price
+      t.timestamps
     end
 
     create_table :project_applications do |t|
@@ -14,6 +15,7 @@ class SupportingEntities < ActiveRecord::Migration[7.0]
       t.string :description, null: false, default: ""
       t.string :status, null: false, default: ""
       t.float :budget
+      t.timestamps
     end
 
     add_reference :gig_clients, :gig_category, foreign_key: true

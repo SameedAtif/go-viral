@@ -43,51 +43,61 @@ class CreateCoreEntities < ActiveRecord::Migration[7.0]
     create_table :influencers do |t|
       # Enforce a 1 to 1 relation
       t.belongs_to :user, index: { unique: true }, foreign_key: true
+      t.timestamps
     end
 
     create_table :clients do |t|
       # Enforce a 1 to 1 relation
       t.belongs_to :user, index: { unique: true }, foreign_key: true
+      t.timestamps
     end
 
     create_table :gigs do |t|
       t.belongs_to :influencer, foreign_key: true
       t.string :title, null: false, default: ""
+      t.timestamps
     end
 
     create_table :gig_clients do |t|
       t.belongs_to :gig, foreign_key: true
       t.belongs_to :client, foreign_key: true
+      t.timestamps
     end
 
     create_table :projects do |t|
       t.belongs_to :client, foreign_key: true
       t.string :title, null: false, default: ""
+      t.timestamps
     end
 
     create_table :project_influencers do |t|
       t.belongs_to :project, foreign_key: true
       t.belongs_to :influencer, foreign_key: true
+      t.timestamps
     end
 
     create_table :platforms do |t|
       t.string :name, null: false, default: ""
       t.string :url, null: false, default: ""
+      t.timestamps
     end
 
     create_table :influencer_platforms do |t|
       t.belongs_to :influencer, foreign_key: true
       t.belongs_to :platform, foreign_key: true
+      t.timestamps
     end
 
     create_table :gig_platforms do |t|
       t.belongs_to :gig, foreign_key: true
       t.belongs_to :platform, foreign_key: true
+      t.timestamps
     end
 
     create_table :project_platforms do |t|
       t.belongs_to :project, foreign_key: true
       t.belongs_to :platform, foreign_key: true
+      t.timestamps
     end
 
     add_index :users, :email,                unique: true

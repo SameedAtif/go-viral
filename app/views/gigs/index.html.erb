@@ -1,8 +1,12 @@
 <% if current_user %>
   <h1>Hello <%= current_user.first_name %></h1>
-  <% link "Setup Influencer profile", "#" %>
-  <% link "Setup Business profile", "#" %>
-
+  <% if session[:user_role] == "Client" %>
+    <h1>Client Dashboard</h1>
+  <% elsif session[:user_role] == "Influencer" %>
+    <h1>Influencer Dashboard</h1>
+  <% else %>
+    <%= link_to "Setup Business profile", new_organization_path %>
+  <% end %>
   <%= button_to(
         "Log Out",
         destroy_user_session_path,
