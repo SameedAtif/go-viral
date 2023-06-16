@@ -8,4 +8,8 @@ class Influencer < ApplicationRecord
   # One Influencer can be in multiple projects
   has_many :project_influencers, dependent: :destroy
   has_many :project, through: :project_influencers, dependent: :destroy
+
+  accepts_nested_attributes_for :influencer_platforms,
+                                allow_destroy: true
+                                # reject_if: proc { |att| att['platform_id'].blank?}
 end

@@ -1,0 +1,15 @@
+<div class="nested-fields">
+  <div>
+    <%= f.label :platform_id %><br>
+    <%= f.select :platform_id, options_for_select(Platform.pluck(:name,:id)), :class => 'genForm_dropBox' %>
+  </div>
+  <div>
+    <%= f.label :followers %><br>
+    <%= f.number_field :followers, step: :any%>
+  </div>
+  <div>
+    <%= f.label :reach %><br>
+    <%= f.number_field :reach, step: 0.5%>
+  </div>
+  <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
+</div>

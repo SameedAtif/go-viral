@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_11_145004) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_070621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,12 +52,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_145004) do
   create_table "influencer_platforms", force: :cascade do |t|
     t.bigint "influencer_id"
     t.bigint "platform_id"
+    t.integer "followers"
+    t.float "reach"
+    t.string "url"
     t.index ["influencer_id"], name: "index_influencer_platforms_on_influencer_id"
     t.index ["platform_id"], name: "index_influencer_platforms_on_platform_id"
   end
 
   create_table "influencers", force: :cascade do |t|
     t.bigint "user_id"
+    t.string "bio"
     t.index ["user_id"], name: "index_influencers_on_user_id", unique: true
   end
 
