@@ -1,5 +1,4 @@
 class InfluencersController < ApplicationController
-
   before_action :find_influencer, only: %i[show edit update]
   def index
     @influencers = Influencer.all
@@ -12,9 +11,11 @@ class InfluencersController < ApplicationController
 
   def create
     @influencer = Influencer.new(permitted_params)
-    @influencer.user_id = User.last.id
+    @influencer.user_id = current_user.id
     if @influencer.save
       flash[:success] = 'influencer successfully created'
+      session[:user_role] = 'Influencer'
+      redirect_to root_path
     else
       flash[:error] = 'Something went wrong'
       render 'new'
