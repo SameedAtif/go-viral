@@ -2,6 +2,8 @@
   <h1>Hello <%= current_user.first_name %></h1>
   <% if session[:user_role] == "Client" %>
     <h1>Client Dashboard</h1>
+    <%= link_to "Create Campaign", root_path %>
+    <%= link_to "Manage Organization", organization_path %>
   <% elsif session[:user_role] == "Influencer" %>
     <h1>Influencer Dashboard</h1>
   <% else %>

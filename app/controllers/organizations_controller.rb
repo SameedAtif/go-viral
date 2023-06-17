@@ -3,7 +3,7 @@ class OrganizationsController < ApplicationController
 
   def create
     Organization.transaction do
-      organization = Organization.create!(create_params)
+      organization = Organization.create!(permitted_params)
       client = Client.find_or_create_by!(user: current_user)
       session[:user_role] = 'Client'
       OrganizationDetail.find_or_create_by!(organization: organization, client: client, client_role: 'Owner')
@@ -15,17 +15,28 @@ class OrganizationsController < ApplicationController
     redirect_to root_path
   end
 
-  def show; end
+  def show
+    @organization = current_user.client.organization
+  end
 
-  def edit; end
+  def edit
+    @organization = current_user.client.organization
+  end
 
-  def update; end
+  def update
+    Organization.update!(permitted_params)
+    flash[:success] = "Organization updated created"
+    redirect_to organization_path
+  rescue StandardError => e
+    flash[:error] = e
+    redirect_to root_path
+  end
 
   def destroy; end
 
   private
 
-  def create_params
+  def permitted_params
     params.require(:organization).permit(:name, :address_1, :address_2, :city, :country, :phone_number)
   end
 end
