@@ -1,0 +1,12 @@
+<h1>
+  <%= @influencer.user.first_name %>
+</h1>
+<h3>
+  <%= @influencer&.bio %>
+  <br>
+  <br>
+  <% @influencer&.influencer_platforms&.each do |influencer_platform| %>
+    <%=  influencer_platform.platform.name %>
+    FOllowers: <%=   influencer_platform.followers %>
+  <% end %>
+</h3>

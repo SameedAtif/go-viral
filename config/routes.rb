@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   root "gigs#index"
 
   resource :organization
+  resources :influencers
 end
