@@ -1,0 +1,5 @@
+<% @influencers.each_with_index do |influencer, index| %>
+  <h2>
+    <%= link_to influencer.user.first_name, influencer_path(id: influencer.id) %>
+  </h2>
+<% end %>

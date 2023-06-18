@@ -1,0 +1,13 @@
+<%= form_for @influencer do |f| %>
+  <div>
+    <%= f.label :bio %><br>
+    <%= f.text_area :bio %>
+  </div>
+  <div class="influencer_platforms">
+    <%= f.fields_for :influencer_platforms do |platform| %>
+      <%= render 'influencer_platform_fields', f: platform %>
+    <% end %>
+    <%= link_to_add_association "Add Platform", f, :influencer_platforms, data: {association_insertion_node: '.influencer_platforms', association_insertion_method: :append} %>
+  </div>
+  <%= f.submit "submit" %>
+<% end %>
