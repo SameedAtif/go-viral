@@ -38,6 +38,6 @@ class ProjectsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:project).permit(:id, :title, :description, :budget, project_platforms_attributes: %i[:id platform_id _destroy])
+    params.require(:project).permit(:id, :title, :description, :budget, project_platforms_attributes: %i[id platform_id _destroy])
   end
 end
