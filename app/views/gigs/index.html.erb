@@ -7,42 +7,36 @@
     <% if current_user.client.projects.present? %>
       <% current_user.client.projects.each do |project| %>
         <div>
-          <p><%= project.name %> | <%= project.budget %> | <%= project.duration %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
+          <p><%= project.title %> | <%= project.budget %> | <%= project.duration %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
         <div>
       <% end %>
     <% end %>
   <% elsif session[:user_role] == "Influencer" %>
     <h1>Influencer Dashboard</h1>
-  <% elsif current_user.client.present? || current_user.influencer.present? %>
-    <% if current_user.client.present? %>
-      <h1>Client Dashboard</h1>
-      <%= link_to "Create Campaign", new_project_path %>
-      <%= link_to "Manage Organization", organization_path %>
-      <% if current_user.client.projects.present? %>
-        <% current_user.client.projects.each do |project| %>
-          <div>
-            <p><%= project.title %> | <%= project.budget %> | <%= project.duration %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
-          <div>
-        <% end %>
-      <% end %>
-    <% else %>
-      <%= link_to "Setup Business profile", new_organization_path %>
-    <% end %>
-    <% if current_user.influencer.present?%>
-      <h1>Influencer Dashboard</h1>
-      <%= link_to "Setup Business profile", new_organization_path %>
-    <% else %>
-      <%= link_to "Setup Influencer profile", new_influencer_path %>
-    <% end %>
+  <% end %>
+  <% if current_user.client.present? %>
+    <%= button_to(
+      "Switch to Client",
+      switch_session_path(type: '2'),
+      method: :put
+    ) %>
   <% else %>
-    <%= link_to "Setup Influencer profile", new_influencer_path %>
     <%= link_to "Setup Business profile", new_organization_path %>
   <% end %>
+  <% if current_user.influencer.present?%>
+     <%= button_to(
+      "Switch to Influencer",
+      switch_session_path(type: '1'),
+      method: :put
+    ) %>
+  <% else %>
+    <%= link_to "Setup Influencer profile", new_influencer_path %>
+  <% end %>
   <%= button_to(
-        "Log Out",
-        destroy_user_session_path,
-        method: :delete
-      ) %>
+      "Log Out",
+      destroy_user_session_path,
+      method: :delete
+  ) %>
 <% else %>
   <%= link_to "Sign up", new_user_registration_path %>
   <%= link_to "Sign In", new_user_session_path %>
