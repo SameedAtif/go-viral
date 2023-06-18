@@ -1,5 +1,5 @@
 <h1>Create Organization</h1>
-<%= form_with model: Organization.new, url: organizations_path, method: :post, local: true do |f|%>
+<%= form_with model: Organization.new, url: organization_path, method: :post, local: true do |f|%>
   <div>
     <%= f.label :name %><br>
     <%= f.text_field :name %>
