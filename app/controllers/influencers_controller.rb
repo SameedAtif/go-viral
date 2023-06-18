@@ -11,8 +11,7 @@ class InfluencersController < ApplicationController
   end
 
   def create
-    @influencer = Influencer.new(permitted_params)
-    @influencer.user_id = User.last.id
+    @influencer = current_user.influencer.new(permitted_params)
     if @influencer.save
       flash[:success] = 'influencer successfully created'
     else
