@@ -1,13 +1,13 @@
 class Influencer < ApplicationRecord
   belongs_to :user
 
-  has_many :gigs, dependent: :destroy
+  has_many :gigs
   # One Influencer can be on multiple platforms
   has_many :influencer_platforms, dependent: :destroy
   has_many :platforms, through: :influencer_platforms
   # One Influencer can be in multiple projects
-  has_many :project_influencers, dependent: :destroy
-  has_many :project, through: :project_influencers, dependent: :destroy
+  has_many :project_influencers
+  has_many :project, through: :project_influencers
 
   accepts_nested_attributes_for :influencer_platforms,
                                 allow_destroy: true

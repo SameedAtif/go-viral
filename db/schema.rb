@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_070621) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_17_143029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_070621) do
     t.index ["user_id"], name: "index_influencers_on_user_id", unique: true
   end
 
+  create_table "organization_details", force: :cascade do |t|
+    t.bigint "client_id"
+    t.bigint "organization_id"
+    t.string "client_role", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_organization_details_on_client_id", unique: true
+    t.index ["organization_id"], name: "index_organization_details_on_organization_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "address_1", default: "", null: false
+    t.string "address_2", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "country", default: "", null: false
+    t.string "phone_number", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "platforms", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "url", default: "", null: false
@@ -98,6 +119,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_070621) do
   create_table "projects", force: :cascade do |t|
     t.bigint "client_id"
     t.string "title", default: "", null: false
+    t.string "description", default: "", null: false
+    t.float "budget", default: 0.0, null: false
+    t.interval "duration"
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
@@ -142,6 +166,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_070621) do
   add_foreign_key "influencer_platforms", "influencers"
   add_foreign_key "influencer_platforms", "platforms"
   add_foreign_key "influencers", "users"
+  add_foreign_key "organization_details", "clients"
+  add_foreign_key "organization_details", "organizations"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
   add_foreign_key "project_influencers", "influencers"

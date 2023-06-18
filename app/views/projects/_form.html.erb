@@ -1,0 +1,21 @@
+<%= form_with model: @project, local: true do |f| %>
+  <div>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div>
+    <%= f.label :budget %><br>
+    <%= f.number_field :budget, step: :any %>
+  </div>
+  <div class="project_platforms">
+    <%= f.fields_for :project_platforms do |platform| %>
+      <%= render 'project_platform_fields', f: platform %>
+    <% end %>
+    <%= link_to_add_association "Add Platform", f, :project_platforms, data: { association_insertion_node: '.project_platforms', association_insertion_method: :append } %>
+  </div>
+  <%= f.submit "submit" %>
+<% end %>
