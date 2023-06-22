@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_17_143029) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_21_134346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,8 +98,35 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_143029) do
     t.string "description", default: "", null: false
     t.string "status", default: "", null: false
     t.float "budget"
+    t.datetime "delivery_date"
     t.index ["influencer_id"], name: "index_project_applications_on_influencer_id"
     t.index ["project_id"], name: "index_project_applications_on_project_id"
+  end
+
+  create_table "project_deliverable_reviews", force: :cascade do |t|
+    t.bigint "client_id"
+    t.bigint "project_id"
+    t.bigint "project_deliverable_id"
+    t.integer "achieved_reach", default: 0, null: false
+    t.integer "achieved_conversion", default: 0, null: false
+    t.string "remarks", default: "", null: false
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_project_deliverable_reviews_on_client_id"
+    t.index ["project_deliverable_id"], name: "index_project_deliverable_reviews_on_project_deliverable_id"
+    t.index ["project_id"], name: "index_project_deliverable_reviews_on_project_id"
+  end
+
+  create_table "project_deliverables", force: :cascade do |t|
+    t.bigint "project_milestone_id"
+    t.bigint "influencer_id"
+    t.string "title", default: "", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["influencer_id"], name: "index_project_deliverables_on_influencer_id"
+    t.index ["project_milestone_id"], name: "index_project_deliverables_on_project_milestone_id"
   end
 
   create_table "project_influencers", force: :cascade do |t|
@@ -107,6 +134,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_143029) do
     t.bigint "influencer_id"
     t.index ["influencer_id"], name: "index_project_influencers_on_influencer_id"
     t.index ["project_id"], name: "index_project_influencers_on_project_id"
+  end
+
+  create_table "project_milestones", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "title", default: "", null: false
+    t.string "description", default: "", null: false
+    t.integer "reach", null: false
+    t.integer "conversion", null: false
+    t.float "budget", default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_milestones_on_project_id"
   end
 
   create_table "project_platforms", force: :cascade do |t|
@@ -121,7 +160,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_143029) do
     t.string "title", default: "", null: false
     t.string "description", default: "", null: false
     t.float "budget", default: 0.0, null: false
-    t.interval "duration"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "required_number_of_influencers", default: 1, null: false
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
@@ -170,8 +211,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_143029) do
   add_foreign_key "organization_details", "organizations"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
+  add_foreign_key "project_deliverable_reviews", "clients"
+  add_foreign_key "project_deliverable_reviews", "project_deliverables"
+  add_foreign_key "project_deliverable_reviews", "projects"
+  add_foreign_key "project_deliverables", "influencers"
+  add_foreign_key "project_deliverables", "project_milestones"
   add_foreign_key "project_influencers", "influencers"
   add_foreign_key "project_influencers", "projects"
+  add_foreign_key "project_milestones", "projects"
   add_foreign_key "project_platforms", "platforms"
   add_foreign_key "project_platforms", "projects"
   add_foreign_key "projects", "clients"
