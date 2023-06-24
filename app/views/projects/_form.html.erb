@@ -11,11 +11,25 @@
     <%= f.label :budget %><br>
     <%= f.number_field :budget, step: :any %>
   </div>
+  <div>
+    <%= f.label :start_time %><br>
+    <%= f.datetime_local_field :start_time %>
+  </div>
+  <div>
+    <%= f.label :end_time %><br>
+    <%= f.datetime_local_field :end_time %>
+  </div>
   <div class="project_platforms">
     <%= f.fields_for :project_platforms do |platform| %>
       <%= render 'project_platform_fields', f: platform %>
     <% end %>
     <%= link_to_add_association "Add Platform", f, :project_platforms, data: { association_insertion_node: '.project_platforms', association_insertion_method: :append } %>
+  </div>
+  <div class="project_milestones">
+    <%= f.fields_for :project_milestones do |milestone| %>
+      <%= render 'project_milestone_fields', f: milestone %>
+    <% end %>
+    <%= link_to_add_association "Add Milestone", f, :project_milestones, data: { association_insertion_node: '.project_milestones', association_insertion_method: :append } %>
   </div>
   <%= f.submit "submit" %>
 <% end %>

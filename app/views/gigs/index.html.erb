@@ -7,7 +7,7 @@
     <% if current_user.client.projects.present? %>
       <% current_user.client.projects.each do |project| %>
         <div>
-          <p><%= project.title %> | <%= project.budget %> | <%= project.duration %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
+          <p><%= project.title %> | <%= project.budget %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
         <div>
       <% end %>
     <% end %>
