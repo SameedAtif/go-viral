@@ -100,6 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_134346) do
     t.float "budget"
     t.datetime "delivery_date"
     t.index ["influencer_id"], name: "index_project_applications_on_influencer_id"
+    t.index ["project_id", "influencer_id"], name: "index_project_applications_on_project_id_and_influencer_id", unique: true
     t.index ["project_id"], name: "index_project_applications_on_project_id"
   end
 

@@ -5,6 +5,7 @@ class HandleProjectApplication < ActiveRecord::Migration[7.0]
     add_column :projects, :required_number_of_influencers, :integer, null: false, default: 1
 
     add_column :project_applications, :delivery_date, :datetime
+    add_index :project_applications, [:project_id, :influencer_id], unique: true
 
     create_table :project_milestones do |t|
       t.belongs_to :project, foreign_key: true

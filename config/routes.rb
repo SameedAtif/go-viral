@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   resource :organization
   resources :influencers
   # Already made all the associations so changing the name would be very time taking (sorry)
-  resources :projects, path: :campaigns
+  resources :projects, path: :campaigns do
+    resources :project_applications
+  end
 end

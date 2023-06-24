@@ -13,6 +13,9 @@
     <% end %>
   <% elsif session[:user_role] == "Influencer" %>
     <h1>Influencer Dashboard</h1>
+    <% Project.all.each do |project|%>
+      <p><%= project.title %> | <%= project.budget %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
+    <% end %>
   <% end %>
   <% if current_user.client.present? %>
     <%= button_to(

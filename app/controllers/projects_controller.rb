@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = current_user.client.projects.find(params[:id])
+    @project = Project.find(params[:id])
   end
 
   def edit
