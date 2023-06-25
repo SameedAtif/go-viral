@@ -46,6 +46,6 @@ class ProjectApplicationsController < ApplicationController
   end
 
   def validate_client_statuses
-    ['accepted', 'rejected'].find{ |type| type == params[:status] }
+    ['approved', 'rejected'].find{ |type| type == params[:status] }
   end
 end

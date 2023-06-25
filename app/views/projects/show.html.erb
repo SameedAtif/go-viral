@@ -8,7 +8,7 @@
   <% end %>
 </div>
 <div>
-  <% if session[:user_role] == "Influencer" %>
+  <% if session[:user_role] == "Influencer" && current_user.influencer.projects.find_by(id: @project.id).nil? %>
     <%= button_to(
       "Apply for campaign",
       new_project_project_application_path(@project.id),
