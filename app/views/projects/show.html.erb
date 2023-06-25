@@ -4,7 +4,7 @@
   <h4><%= @project.budget %></h4>
   <% if session[:user_role] == "Client" && @project.client == current_user.client %>
     <%= link_to "Edit Project", edit_project_path(@project.id) %>
-    <%= link_to "View Applications", edit_project_path(@project.id) %>
+    <%= link_to "View Applications", project_project_applications_path(@project.id) %>
   <% end %>
 </div>
 <div>
