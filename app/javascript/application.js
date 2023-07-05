@@ -2,3 +2,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "@nathanvda/cocoon"
+import 'flowbite';
+import 'flowbite-datepicker';
