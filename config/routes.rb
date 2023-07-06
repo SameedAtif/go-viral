@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
-  root "gigs#index"
+  root "dotcom#index"
 
+  get '/dashboard', :to => 'dotcom#dashboard'
   resource :organization
   resources :influencers
   # Already made all the associations so changing the name would be very time taking (sorry)
