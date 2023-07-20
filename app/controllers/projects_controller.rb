@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = current_user.client.projects.find(params[:id])
+    @project = Project.find(params[:id])
   end
 
   def edit
@@ -38,6 +38,10 @@ class ProjectsController < ApplicationController
   private
 
   def permitted_params
-    params.require(:project).permit(:id, :title, :description, :budget, project_platforms_attributes: %i[id platform_id _destroy])
+    params.require(:project).permit(
+      :id, :title, :description, :budget,
+      project_platforms_attributes: %i[id platform_id _destroy],
+      project_milestones_attributes: %i[id title description reach conversion budget _destroy]
+    )
   end
 end

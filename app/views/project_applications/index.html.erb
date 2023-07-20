@@ -1,0 +1,36 @@
+<table>
+  <th>
+    <td>Influencer name</td>
+    <td>Application title</td>
+    <td>Application description</td>
+    <td>Influencer budget</td>
+    <td>Influencer delivery date</td>
+    <td>Approve</td>
+    <td>Reject</td>
+  </th>
+  <% @project_applications.each do |project_application| %>
+    <tr>
+      <td><%= project_application.influencer.user.first_name %></td>
+      <td><%= project_application.title %></td>
+      <td><%= project_application.description %></td>
+      <td><%= project_application.budget %></td>
+      <td><%= project_application.delivery_date %></td>
+      <td>
+        <%= button_to(
+          "Approve",
+          project_project_application_path(@project.id, project_application.id),
+          params: {status: 'approved'},
+          method: :put
+        ) %>
+      </td>
+      <td>
+        <%= button_to(
+          "Reject",
+          project_project_application_path(@project.id, project_application.id),
+          params: {status: 'rejected'},
+          method: :put
+        ) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

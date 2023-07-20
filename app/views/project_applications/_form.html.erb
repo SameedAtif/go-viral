@@ -1,0 +1,19 @@
+<%= form_with model: @project_application, url: [@project, @project_application], local: true do |f| %>
+  <div>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div>
+    <%= f.label :budget %><br>
+    <%= f.number_field :budget, step: :any %>
+  </div>
+  <div>
+    <%= f.label :delivery_date %><br>
+    <%= f.datetime_local_field :delivery_date %>
+  </div>
+  <%= f.submit "submit" %>
+<% end %>

@@ -2,6 +2,17 @@
   <h1><%= @project.title %></h1>
   <h4><%= @project.description %></h4>
   <h4><%= @project.budget %></h4>
-  <h4><%= @project.duration %></h4>
-  <%= link_to "Edit Project", edit_project_path(@project.id) %>
+  <% if session[:user_role] == "Client" && @project.client == current_user.client %>
+    <%= link_to "Edit Project", edit_project_path(@project.id) %>
+    <%= link_to "View Applications", project_project_applications_path(@project.id) %>
+  <% end %>
+</div>
+<div>
+  <% if session[:user_role] == "Influencer" && current_user.influencer.projects.find_by(id: @project.id).nil? %>
+    <%= button_to(
+      "Apply for campaign",
+      new_project_project_application_path(@project.id),
+      method: :get
+    ) %>
+  <% end %>
 </div>
