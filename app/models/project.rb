@@ -65,7 +65,7 @@ class Project < ApplicationRecord
   # Influencer will be notified
   # Influencer will communicate with the client through the platform
   # Campaign will start
-  # Influence will delive the milestone (project-deliverable form).
+  # Influence will deliver the milestone (project-deliverable form).
   # Client will be notified
   # After completing milestone. Client will be asked to fill a survey and if they want to close the campaign or continue
   # If client choose "close" the project will be closed.
