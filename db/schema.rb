@@ -10,13 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_07_112149) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_15_131422) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "clients", force: :cascade do |t|
     t.bigint "user_id"
     t.index ["user_id"], name: "index_clients_on_user_id", unique: true
+  end
+
+  create_table "example_works", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_example_works_on_project_id"
   end
 
   create_table "gig_categories", force: :cascade do |t|
@@ -75,6 +91,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_112149) do
     t.index ["organization_id"], name: "index_organization_details_on_organization_id"
   end
 
+  create_table "organization_feedbacks", force: :cascade do |t|
+    t.decimal "score", precision: 64, scale: 12
+    t.string "title"
+    t.string "description"
+    t.bigint "organization_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_organization_feedbacks_on_organization_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "address_1", default: "", null: false
@@ -84,6 +110,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_112149) do
     t.string "phone_number", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "website_url"
+    t.string "facebook_url"
+    t.string "instagram_url"
+    t.string "linkedin_url"
+    t.string "youtube_url"
+    t.string "tiktok_url"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -102,6 +134,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_112149) do
     t.index ["influencer_id"], name: "index_project_applications_on_influencer_id"
     t.index ["project_id", "influencer_id"], name: "index_project_applications_on_project_id_and_influencer_id", unique: true
     t.index ["project_id"], name: "index_project_applications_on_project_id"
+  end
+
+  create_table "project_categories", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_project_categories_on_category_id"
+    t.index ["project_id"], name: "index_project_categories_on_project_id"
   end
 
   create_table "project_deliverable_reviews", force: :cascade do |t|
@@ -165,6 +206,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_112149) do
     t.datetime "end_time"
     t.integer "required_number_of_influencers", default: 1, null: false
     t.string "status"
+    t.string "payment_type"
+    t.string "target_audience"
+    t.boolean "payment_verified"
+    t.boolean "reviewed"
+    t.boolean "is_draft"
+    t.integer "views"
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
@@ -199,6 +246,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_112149) do
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "example_works", "projects"
   add_foreign_key "gig_categories", "gigs"
   add_foreign_key "gig_clients", "clients"
   add_foreign_key "gig_clients", "gig_categories"
@@ -211,8 +259,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_112149) do
   add_foreign_key "influencers", "users"
   add_foreign_key "organization_details", "clients"
   add_foreign_key "organization_details", "organizations"
+  add_foreign_key "organization_feedbacks", "organizations"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
+  add_foreign_key "project_categories", "categories"
+  add_foreign_key "project_categories", "projects"
   add_foreign_key "project_deliverable_reviews", "clients"
   add_foreign_key "project_deliverable_reviews", "project_deliverables"
   add_foreign_key "project_deliverable_reviews", "projects"

@@ -6,5 +6,9 @@ class Platform < ApplicationRecord
   has_many :influencer_platforms, dependent: :destroy
   has_many :influencers, through: :influencer_platforms
 
+  # One Platfom can have multiple projects
+  has_many :project_platforms, dependent: :destroy
+  has_many :projects, through: :project_platforms
+
   validates_presence_of :name, :url
 end
