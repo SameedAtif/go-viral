@@ -8,19 +8,27 @@ FactoryBot.define do
     password_confirmation { 'password' }
 
     trait :client do
-      user_roles { ['Client'] }
+      after(:build) do |instance|
+        instance.user_roles << 'client'
+      end
     end
 
     trait :creator do
-      user_roles { ['Creator'] }
+      after(:build) do |instance|
+        instance.user_roles << 'creator'
+      end
     end
 
     trait :admin do
-      user_roles { ['Admin'] }
+      after(:build) do |instance|
+        instance.user_roles << 'admin'
+      end
     end
 
-    trait :admin do
-      user_roles { ['Reviewer'] }
+    trait :reviewer do
+      after(:build) do |instance|
+        instance.user_roles << 'reviewer'
+      end
     end
   end
 end
