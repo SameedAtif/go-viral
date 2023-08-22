@@ -5,6 +5,12 @@ class Project < ApplicationRecord
   has_many :project_milestones, dependent: :destroy
   accepts_nested_attributes_for :project_milestones,
                                 allow_destroy: true
+  has_many :project_categories, dependent: :destroy
+  accepts_nested_attributes_for :project_categories,
+                                allow_destroy: true
+  has_many :example_works, dependent: :destroy
+  accepts_nested_attributes_for :example_works,
+                                allow_destroy: true
 
   has_many :project_deliverable_reviews
   # One Project can have multiple influencers

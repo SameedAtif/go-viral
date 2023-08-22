@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   end
   # When you submit a deliverable for a milestone, you can view the milestone
   resources :project_milestones, only: :show do
-    resources :project_deliveables
+    resources :project_deliverables
   end
 end
