@@ -6,6 +6,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { 'password' }
     password_confirmation { 'password' }
+    confirmed_at { DateTime.current }
 
     trait :client do
       after(:build) do |instance|

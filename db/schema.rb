@@ -132,6 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.string "linkedin_url"
     t.string "youtube_url"
     t.string "tiktok_url"
+    t.boolean "verified"
   end
 
   create_table "platforms", force: :cascade do |t|

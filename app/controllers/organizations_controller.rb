@@ -3,7 +3,7 @@ class OrganizationsController < ApplicationController
 
   def create
     Organization.transaction do
-      organization = Organization.create!(permitted_params)
+      organization = Organization.create!(creation_params)
       client = Client.find_or_create_by!(user: current_user)
       session[:user_role] = 'Client'
       OrganizationDetail.find_or_create_by!(organization: organization, client: client, client_role: 'Owner')
@@ -36,7 +36,11 @@ class OrganizationsController < ApplicationController
 
   private
 
-  def permitted_params
+  def creation_params
     params.require(:organization).permit(:name, :address_1, :address_2, :city, :country, :phone_number)
+  end
+
+  def permitted_params
+    params.require(:organization).permit(:id, :name, :address_1, :address_2, :city, :country, :phone_number)
   end
 end
