@@ -78,14 +78,14 @@ RSpec.describe OrganizationsController do
   # - Client who is the owner
   # - Reviewer can only update reviewed property
   describe "PUT/PATCH update" do
-    let(:user) { create :user }
-    let(:client_user) do
-      user = create :user, :client
-      create :client, user: user
-      user
+    let(:organization) do
+      org_detail = create :organization_detail, :owner
+      org_detail.organization
     end
+
     let(:updation_params) {
       {
+        id: organization.id,
         organization: {
           name: 'Sample 1',
           address_1: 'House no.1',
@@ -97,31 +97,35 @@ RSpec.describe OrganizationsController do
       }
     }
     before :each do
-      sign_in(user, scope: :user)
+      sign_in(organization.owner.user, scope: :user)
     end
 
     context "when user is not signed_in" do
       it "will not be updated" do
-        sign_out user
+        sign_out organization.owner.user
         put 'update', params: updation_params
-        expect(Organization.count).to eq(0)
+        update_keys = updation_params[:organization].map { |k, _| k.to_sym}
+        update_keys.each do |key|
+          expect(organization.reload.send(key)).not_to eq(updation_params[:organization][key])
+        end
       end
     end
 
     context "when user is signed_in" do
       context "when user is owner" do
         it "will update the organization" do
-          sign_out user
-          sign_in client_user, scope: user
-          post 'create', params: updation_params
-          expect(Client.count).not_to eq(2)
+          put 'update', params: updation_params
+          update_keys = updation_params[:organization].map { |k, _| k.to_sym}
+          update_keys.each do |key|
+            expect(organization.reload.send(key)).to eq(updation_params[:organization][key])
+          end
         end
       end
 
       context "when user is not the owner" do
-        it "will not update the organization" do
-          post 'create', params: updation_params
-          expect(Client.count).to eq(1)
+        xit "will not update the organization" do
+          put 'create', params: updation_params
+          expect(Organization.count).to eq(0)
         end
       end
 

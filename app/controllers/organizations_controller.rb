@@ -24,7 +24,8 @@ class OrganizationsController < ApplicationController
   end
 
   def update
-    Organization.update!(permitted_params)
+    organization = Organization.find(params[:id])
+    organization.update!(permitted_params)
     flash[:success] = "Organization updated"
     redirect_to organization_path
   rescue StandardError => e
