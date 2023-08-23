@@ -78,6 +78,7 @@ group :development do
 end
 
 group :test do
+  gem 'simplecov'
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "database_cleaner"
   gem "capybara"

@@ -25,7 +25,7 @@ class OrganizationsController < ApplicationController
 
   def update
     Organization.update!(permitted_params)
-    flash[:success] = "Organization updated created"
+    flash[:success] = "Organization updated"
     redirect_to organization_path
   rescue StandardError => e
     flash[:error] = e
