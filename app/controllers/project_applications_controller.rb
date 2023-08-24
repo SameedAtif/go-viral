@@ -25,7 +25,7 @@ class ProjectApplicationsController < ApplicationController
   def update
     project_application = ProjectApplication.find(params[:id])
     # When a client approves or rejects the application.
-    if session[:user_role] == "Client"
+    if session[:user_role] == User::USER_ROLES[:client]
       project_client = current_user.client.projects.find(params[:project_id])
       project_application.update!(status: validate_client_statuses) if project_client.present?
     end

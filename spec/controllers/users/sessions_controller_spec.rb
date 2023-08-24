@@ -7,7 +7,7 @@ RSpec.describe Users::SessionsController do
   end
   describe "PUT switch_sessions" do
     let(:user) do
-      user = create :user, :client, :creator
+      user = create :user, :client, :influencer
       create(:influencer, user: user)
       create(:client, user: user)
       user
@@ -19,21 +19,21 @@ RSpec.describe Users::SessionsController do
     context "when session_type is set to 1" do
       it "updates session variable to client" do
         put 'switch_session', params: { type: 1 }
-        expect(session[:user_role]).to include('Influencer')
+        expect(session[:user_role]).to include(User::USER_ROLES[:influencer])
       end
     end
 
     context "when session_type is set to 2" do
       it "updates session variable to influencer" do
         put 'switch_session', params: { type: 2 }
-        expect(session[:user_role]).to include('Client')
+        expect(session[:user_role]).to include(User::USER_ROLES[:client])
       end
     end
 
     context "when session_type is set to invalid number" do
       it "updates session variable to client" do
         put 'switch_session', params: { type: 3 }
-        expect(session[:user_role]).to include('Client')
+        expect(session[:user_role]).to include(User::USER_ROLES[:client])
       end
     end
   end

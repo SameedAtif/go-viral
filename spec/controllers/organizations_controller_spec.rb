@@ -51,7 +51,7 @@ RSpec.describe OrganizationsController do
         end
       end
 
-      it "will be created with given params" do
+      it "will be created with required params" do
         post 'create', params: creation_params
         expect(Organization.count).to eq(1)
         expect(Organization.find_by(creation_params[:organization])).to be_present
@@ -70,6 +70,12 @@ RSpec.describe OrganizationsController do
         expect(Organization.find_by(
           creation_params[:organization].merge(verified: true))
         ).not_to be_present
+      end
+
+      it "will not be created without required params" do
+        creation_params[:organization].delete(:name)
+        post 'create', params: {organization: {name: ""}}
+        expect(Organization.find_by(name: "")).not_to be_present
       end
     end
   end
@@ -96,13 +102,9 @@ RSpec.describe OrganizationsController do
         }
       }
     }
-    before :each do
-      sign_in(organization.owner.user, scope: :user)
-    end
 
     context "when user is not signed_in" do
       it "will not be updated" do
-        sign_out organization.owner.user
         put 'update', params: updation_params
         update_keys = updation_params[:organization].map { |k, _| k.to_sym}
         update_keys.each do |key|
@@ -113,19 +115,39 @@ RSpec.describe OrganizationsController do
 
     context "when user is signed_in" do
       context "when user is owner" do
-        it "will update the organization" do
-          put 'update', params: updation_params
-          update_keys = updation_params[:organization].map { |k, _| k.to_sym}
-          update_keys.each do |key|
-            expect(organization.reload.send(key)).to eq(updation_params[:organization][key])
+        before :each do
+          sign_in(organization.owner.user, scope: :user)
+        end
+        context "when user is signed in as client" do
+          it "will update the organization" do
+            session_params = {user_role: User::USER_ROLES[:client]}
+            put 'update', params: updation_params, session: session_params
+            update_keys = updation_params[:organization].map { |k, _| k.to_sym}
+            update_keys.each do |key|
+              expect(organization.reload.send(key)).to eq(updation_params[:organization][key])
+            end
+          end
+        end
+        context "when user is signed in as creator" do
+          it "will not update the organization" do
+            session_params = {user_role: User::USER_ROLES[:influencer]}
+            expect do
+              put 'update', params: updation_params, session: session_params
+            end.to raise_error(Pundit::NotAuthorizedError)
           end
         end
       end
 
       context "when user is not the owner" do
-        xit "will not update the organization" do
-          put 'create', params: updation_params
-          expect(Organization.count).to eq(0)
+        let(:user) { create(:user, :client)}
+        before :each do
+          sign_in(user, scope: :user)
+        end
+        it "will not update the organization" do
+          session_params = {user_role: User::USER_ROLES[:client]}
+          expect do
+            put 'update', params: updation_params, session: session_params
+          end.to raise_error(Pundit::NotAuthorizedError)
         end
       end
 

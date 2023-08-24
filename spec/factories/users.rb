@@ -10,13 +10,13 @@ FactoryBot.define do
 
     trait :client do
       after(:build) do |instance|
-        instance.user_roles << 'client'
+        instance.user_roles << User::USER_ROLES[:client]
       end
     end
 
-    trait :creator do
+    trait :influencer do
       after(:build) do |instance|
-        instance.user_roles << 'creator'
+        instance.user_roles << User::USER_ROLES[:influencer]
       end
     end
 

@@ -7,7 +7,6 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def validate_session_type
-    user_type = params[:type] == "1" ? 'Influencer' : 'Client'
-    ['Influencer', 'Client'].find{ |type| type == user_type }
+    params[:type] == "1" ? User::USER_ROLES[:influencer] : User::USER_ROLES[:client]
   end
 end
