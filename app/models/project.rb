@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
   belongs_to :client
+  has_many :project_reviews
   # One Project can have many project-milestones
   has_many :project_applications
   has_many :project_milestones, dependent: :destroy

@@ -67,12 +67,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.index ["platform_id"], name: "index_gig_platforms_on_platform_id"
   end
 
+  create_table "gig_reviews", force: :cascade do |t|
+    t.bigint "gig_id"
+    t.bigint "reviewer_id"
+    t.string "status"
+    t.string "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gig_id"], name: "index_gig_reviews_on_gig_id"
+    t.index ["reviewer_id"], name: "index_gig_reviews_on_reviewer_id"
+  end
+
   create_table "gigs", force: :cascade do |t|
     t.bigint "influencer_id"
     t.string "title", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "reviewer_id"
+    t.boolean "reviewed"
     t.index ["influencer_id"], name: "index_gigs_on_influencer_id"
+    t.index ["reviewer_id"], name: "index_gigs_on_reviewer_id"
   end
 
   create_table "influencer_platforms", force: :cascade do |t|
@@ -92,6 +106,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "bio"
+    t.bigint "reviewer_id"
+    t.boolean "reviewed"
+    t.index ["reviewer_id"], name: "index_influencers_on_reviewer_id"
     t.index ["user_id"], name: "index_influencers_on_user_id", unique: true
   end
 
@@ -115,6 +132,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.bigint "influencer_id"
     t.index ["influencer_id"], name: "index_organization_feedbacks_on_influencer_id"
     t.index ["organization_id"], name: "index_organization_feedbacks_on_organization_id"
+  end
+
+  create_table "organization_reviews", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.bigint "reviewer_id"
+    t.string "status"
+    t.string "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_organization_reviews_on_organization_id"
+    t.index ["reviewer_id"], name: "index_organization_reviews_on_reviewer_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -222,6 +250,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.index ["project_id"], name: "index_project_platforms_on_project_id"
   end
 
+  create_table "project_reviews", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "reviewer_id"
+    t.string "status"
+    t.string "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_reviews_on_project_id"
+    t.index ["reviewer_id"], name: "index_project_reviews_on_reviewer_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.bigint "client_id"
     t.string "title", default: "", null: false
@@ -239,7 +278,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.boolean "reviewed"
     t.boolean "is_draft"
     t.integer "views"
+    t.bigint "reviewer_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
+    t.index ["reviewer_id"], name: "index_projects_on_reviewer_id"
+  end
+
+  create_table "reviewers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reviewers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -280,14 +328,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
   add_foreign_key "gig_clients", "gigs"
   add_foreign_key "gig_platforms", "gigs"
   add_foreign_key "gig_platforms", "platforms"
+  add_foreign_key "gig_reviews", "gigs"
+  add_foreign_key "gig_reviews", "reviewers"
   add_foreign_key "gigs", "influencers"
+  add_foreign_key "gigs", "reviewers"
   add_foreign_key "influencer_platforms", "influencers"
   add_foreign_key "influencer_platforms", "platforms"
+  add_foreign_key "influencers", "reviewers"
   add_foreign_key "influencers", "users"
   add_foreign_key "organization_details", "clients"
   add_foreign_key "organization_details", "organizations"
   add_foreign_key "organization_feedbacks", "influencers"
   add_foreign_key "organization_feedbacks", "organizations"
+  add_foreign_key "organization_reviews", "organizations"
+  add_foreign_key "organization_reviews", "reviewers"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
   add_foreign_key "project_categories", "categories"
@@ -302,5 +356,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
   add_foreign_key "project_milestones", "projects"
   add_foreign_key "project_platforms", "platforms"
   add_foreign_key "project_platforms", "projects"
+  add_foreign_key "project_reviews", "projects"
+  add_foreign_key "project_reviews", "reviewers"
   add_foreign_key "projects", "clients"
+  add_foreign_key "projects", "reviewers"
+  add_foreign_key "reviewers", "users"
 end

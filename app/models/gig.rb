@@ -8,6 +8,8 @@ class Gig < ApplicationRecord
   has_many :gig_platforms, dependent: :destroy
   has_many :platforms, through: :gig_platforms
 
+  has_many :gig_reviews
+
   validates_presence_of :title
   validates_length_of :title, minimum: 3
 end

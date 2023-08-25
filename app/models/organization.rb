@@ -1,4 +1,5 @@
 class Organization < ApplicationRecord
+  has_many :organization_reviews
   has_many :organization_details, dependent: :destroy
   has_many :clients, through: :organization_details
 
