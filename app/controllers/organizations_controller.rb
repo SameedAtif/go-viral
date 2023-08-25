@@ -37,11 +37,16 @@ class OrganizationsController < ApplicationController
   private
 
   def creation_params
-    params.require(:organization).permit(:name, :address_1, :address_2, :city, :country, :phone_number)
+    params.require(:organization).permit(
+      :name, :address_1, :address_2, :city, :country, :phone_number,
+      :website_url, :facebook_url, :instagram_url, :tiktok_url, :youtube_url
+    )
   end
 
   def permitted_params
-    params.require(:organization).permit(:id, :name, :address_1, :address_2, :city, :country, :phone_number)
+    params.require(:organization).permit(
+      policy(@organization).permitted_attributes
+    )
   end
 
   def load_organization
