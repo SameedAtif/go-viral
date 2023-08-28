@@ -1,9 +1,16 @@
 class Project < ApplicationRecord
   belongs_to :client
+  has_many :project_reviews
   # One Project can have many project-milestones
   has_many :project_applications
   has_many :project_milestones, dependent: :destroy
   accepts_nested_attributes_for :project_milestones,
+                                allow_destroy: true
+  has_many :project_categories, dependent: :destroy
+  accepts_nested_attributes_for :project_categories,
+                                allow_destroy: true
+  has_many :example_works, dependent: :destroy
+  accepts_nested_attributes_for :example_works,
                                 allow_destroy: true
 
   has_many :project_deliverable_reviews

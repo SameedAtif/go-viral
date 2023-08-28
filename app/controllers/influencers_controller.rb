@@ -14,7 +14,7 @@ class InfluencersController < ApplicationController
     @influencer.user_id = current_user.id
     if @influencer.save
       flash[:success] = 'influencer successfully created'
-      session[:user_role] = 'Influencer'
+      session[:user_role] = User::USER_ROLES[:influencer]
       redirect_to root_path
     else
       flash[:error] = 'Something went wrong'

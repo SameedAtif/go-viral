@@ -24,7 +24,7 @@ class ProjectDeliverablesController < ApplicationController
   def update
     project_deliverable = ProjectDeliverable.find(params[:id])
     project_deliverable.update!(permitted_params)
-    if session[:user_role] == "Client"
+    if session[:user_role] == User::USER_ROLES[:client]
       project_client = current_user.client.projects.find(params[:project_id])
       project_application.update!(status: validate_client_statuses) if project_client.present?
     end
