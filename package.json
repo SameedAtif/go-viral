@@ -15,5 +15,8 @@
     "url": "personal:SameedAtif/go-viral.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
 }
