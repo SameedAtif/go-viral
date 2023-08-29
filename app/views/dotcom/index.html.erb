@@ -1,39 +1,26 @@
 <div class="bg-gradient-to-b from-[#e0f0fe] to-white ">
   <div class="mx-auto max-w-screen-2xl">
     <div class="relative isolate overflow-hidden px-6 py-24 sm:px-24 xl:py-32">
-        <div class="absolute left-52 top-30 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Instagram.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute right-48 top-30 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Facebook.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute left-64 top-2/3 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/WeChat.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute left-0 top-3/4 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Snapchat.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute right-1/4 top-1/2 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Telegram.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute left-32 top-2/3 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Tiktok.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute right-0 top-1/4 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Twitter.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute left-20 top-36 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Whatsapp.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute right-36 top-2/3 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Youtube.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute right-0 bottom-12 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Reddit.png"), alt: 'My Image') %>
-        </div>
-        <div class="absolute left-3/4 top-3/4 transform -translate-y-1/2">
-            <%= image_tag(asset_url("home_page_banner_assets/Line.png"), alt: 'My Image') %>
-        </div>
+        <% social_media_icons = [
+            { image: "Instagram.png", alt: "Instagram", position: "left-52 top-30" },
+            { image: "Facebook.png", alt: "Facebook", position: "right-48 top-30" },
+            { image: "WeChat.png", alt: "WeChat", position: "left-64 top-2/3" },
+            { image: "Snapchat.png", alt: "Snapchat", position: "left-0 top-3/4" },
+            { image: "Telegram.png", alt: "Telegram", position: "right-1/4 top-1/2" },
+            { image: "Tiktok.png", alt: "Tiktok", position: "left-32 top-2/3" },
+            { image: "Twitter.png", alt: "Twitter", position: "right-0 top-1/4" },
+            { image: "Whatsapp.png", alt: "Whatsapp", position: "left-4 md:left-20 top-36" },
+            { image: "Youtube.png", alt: "YouTube", position: "right-36 top-2/3" },
+            { image: "Reddit.png", alt: "Reddit", position: "right-0 bottom-12" },
+            { image: "Line.png", alt: "Line", position: "left-3/4 top-3/4" }
+        ] %>
+
+        <% social_media_icons.each do |icon| %>
+            <div class="absolute <%= icon[:position] %> transform -translate-y-1/2">
+                <%= image_tag(asset_url("home_page_banner_assets/#{icon[:image]}"), alt: icon[:alt]) %>
+            </div>
+        <% end %>
+
         <h2 class="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-neutral-600 sm:text-4xl">Find The Perfect Creator</h2>
         <p class="mx-auto mt-2 max-w-xl text-center text-lg leading-8  text-neutral-600">for your business</p>
         <form class="mx-auto mt-10 flex max-w-lg gap-x-4">
@@ -50,4 +37,92 @@
 
     </div>
   </div>
+</div>
+
+<div class="bg-white">
+  <div class="py-16 sm:py-24 xl:mx-auto xl:max-w-7xl xl:px-8 !max-w-screen-2xl">
+    <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Shop by Category</h2>
+      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+        View all
+        <span aria-hidden="true"> &rarr;</span>
+      </a>
+    </div>
+
+    <div class="mt-4 flow-root">
+      <div class="-my-2">
+        <div class="relative box-content h-[10rem] overflow-x-auto py-2 xl:overflow-visible">
+            <% social_media_icons = [
+                { title: "Instagram", alt: "Instagram", image: "category-instagram.png" },
+                { title: "Youtube", alt: "Youtube", image: "category-youtube.png" },
+                { title: "Facebook", alt: "Facebook", image: "category-facebook.png" },
+                { title: "Tiktok", alt: "Tiktok", image: "category-tiktok.png" }
+            ] %>
+            <div class="absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0">
+                <% social_media_icons.each do |icon| %>
+                    <a href="#" class="relative flex h-[8.75rem] w-[18.875rem] flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
+                        <span aria-hidden="true" class="absolute inset-0">
+                            <%= image_tag(asset_url("category_slidebar/#{icon[:image]}"), alt: icon[:alt]) %>
+                        </span>
+                        <span aria-hidden="true" class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"></span>
+                        <span class="relative mt-auto text-center text-xl font-bold text-white"><%# icon[:title] %></span>
+                    </a>
+                <% end %>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 px-4 sm:hidden">
+      <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+        View all
+        <span aria-hidden="true"> &rarr;</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white">
+  <div class="py-16 sm:py-24 xl:mx-auto xl:max-w-7xl xl:px-8 !max-w-screen-2xl">
+    <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Listing you might be interested in</h2>
+      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+        View all
+        <span aria-hidden="true"> &rarr;</span>
+      </a>
+    </div>
+
+    <div class="mt-6 px-4 sm:hidden">
+      <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+        View all
+        <span aria-hidden="true"> &rarr;</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white">
+  <ul role="list" class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+    <li class="relative">
+      <div class="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+        <img src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="" class="pointer-events-none object-cover group-hover:opacity-75">
+        <button type="button" class="absolute inset-0 focus:outline-none">
+          <span class="sr-only">View details for IMG_4985.HEIC</span>
+        </button>
+      </div>
+      <p class="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">IMG_4985.HEIC</p>
+      <p class="pointer-events-none block text-sm font-medium text-gray-500">3.9 MB</p>
+    </li>
+
+    <li class="relative">
+      <div class="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+        <img src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt="" class="pointer-events-none object-cover group-hover:opacity-75">
+        <button type="button" class="absolute inset-0 focus:outline-none">
+          <span class="sr-only">View details for IMG_4985.HEIC</span>
+        </button>
+      </div>
+      <p class="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">IMG_4985.HEIC</p>
+      <p class="pointer-events-none block text-sm font-medium text-gray-500">3.9 MB</p>
+    </li>
+  </ul>
 </div>
