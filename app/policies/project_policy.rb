@@ -1,8 +1,19 @@
 class ProjectPolicy < ApplicationPolicy
+  def edit?
+    # Also add if the user is a reviewer
+    (user == record.organization.owner.user && current_role == User::USER_ROLES[:client]) ||
+    user.reviewer?
+  end
+
   def update?
     # Also add if the user is a reviewer
     (user == record.organization.owner.user && current_role == User::USER_ROLES[:client]) ||
     user.reviewer?
+  end
+
+  def new?
+    # Also add if the user is a reviewer
+    user.client.organization.verified && current_role == User::USER_ROLES[:client]
   end
 
   def create?

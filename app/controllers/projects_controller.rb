@@ -1,9 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :load_project, except: :create
-  before_action :authorize_resource!, except: %i[create show]
+  before_action :load_project, except: %i[create new]
+  before_action :authorize_resource!, except: %i[create new show]
+  skip_before_action :authenticate_user!, only: :show
 
   def new
     @project = Project.new
+    authorize @project
     @project.project_platforms.build
     @project.project_categories.build
     @project.project_milestones.build

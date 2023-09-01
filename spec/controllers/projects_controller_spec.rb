@@ -3,6 +3,66 @@ require 'spec_helper'
 
 RSpec.describe ProjectsController do
   # Who can create? Client
+  describe "GET new" do
+    let(:client_user) do
+      user = create :user, :client
+      client = create :client, user: user
+      organization = create :organization, :verified
+      create :organization_detail, :owner, client: client, organization: organization
+      user
+    end
+    let(:creation_params) {
+      {
+        project: {
+          title: Faker::Book.title,
+          description: Faker::Quote.famous_last_words,
+          budget: rand(0.00..1000.00),
+          start_time: DateTime.current,
+          end_time: 1.month.from_now,
+          required_number_of_influencers: rand(1..5),
+          status: 'draft',
+          payment_type: 'Cash',
+          target_audience: 'Gen-Z',
+          views: rand(100..500)
+        }
+      }
+    }
+
+    context "when user is signed_in" do
+      before :each do
+        sign_in(client_user, scope: :user)
+      end
+      context "when user is signed in as creator" do
+        it "will not create the project" do
+          session_params = {user_role: User::USER_ROLES[:influencer]}
+          expect do
+            get 'new', params: creation_params, session: session_params
+          end.to raise_error(Pundit::NotAuthorizedError)
+        end
+      end
+
+      context "when user is client" do
+        let(:session_params) {{user_role: User::USER_ROLES[:client]}}
+
+        it "will create project" do
+          get 'new', params: creation_params, session: session_params
+          expect do
+            get 'new', params: creation_params
+          end.not_to raise_error
+        end
+      end
+
+
+      context "when client is absent" do
+        it "will not create project" do
+          expect do
+            get 'new', params: creation_params
+          end.to raise_error(Pundit::NotAuthorizedError)
+        end
+      end
+    end
+  end
+
   describe "POST create" do
     let(:client_user) do
       user = create :user, :client
@@ -536,6 +596,86 @@ RSpec.describe ProjectsController do
           update_keys.each do |key|
             expect(project.reload.send(key)).to eq(reviewer_updation_params[:project][key])
           end
+        end
+      end
+    end
+  end
+
+  describe "GET edit" do
+    let(:client_user) do
+      user = create :user, :client
+      client = create :client, user: user
+      create :organization_detail, :owner, client: client
+      user
+    end
+    let(:project) { create(:project, organization: client_user.client.organization) }
+    let(:updation_params) {
+      {
+        id: project.id,
+        project: {
+          title: Faker::Book.title,
+          description: Faker::Quote.famous_last_words,
+          budget: rand(0.00..1000.00),
+          start_time: DateTime.current,
+          end_time: 1.month.from_now,
+          required_number_of_influencers: 6,
+          status: 'ready_for_review',
+          payment_type: 'exposure',
+          target_audience: 'Boomer',
+          views: rand(100..500)
+        }
+      }
+    }
+
+    context "when user is signed_in" do
+      context "when user is owner" do
+        before :each do
+          sign_in(project.organization.owner.user, scope: :user)
+        end
+        context "when user is signed in as client" do
+          it "will update the project" do
+            session_params = {user_role: User::USER_ROLES[:client]}
+            expect do
+              get 'edit', params: updation_params, session: session_params
+            end.not_to raise_error
+          end
+        end
+        context "when user is signed in as creator" do
+          it "will not update the project" do
+            session_params = {user_role: User::USER_ROLES[:influencer]}
+            expect do
+              get 'edit', params: updation_params, session: session_params
+            end.to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
+      end
+
+      context "when user is not the owner" do
+        let(:user) { create(:user, :client)}
+        before :each do
+          sign_in(user, scope: :user)
+        end
+        it "will not update the project" do
+          session_params = {user_role: User::USER_ROLES[:client]}
+          expect do
+            get 'edit', params: updation_params, session: session_params
+          end.to raise_error(Pundit::NotAuthorizedError)
+        end
+      end
+
+      context "when user is of type reviewer" do
+        let(:user) do
+          reviewer = create(:reviewer)
+          reviewer.user
+        end
+        before :each do
+          sign_in(user, scope: :user)
+        end
+        it "will not update client permitted fields" do
+          session_params = {user_role: User::USER_ROLES[:reviewer]}
+          expect do
+            get 'edit', params: updation_params, session: session_params
+          end.not_to raise_error
         end
       end
     end

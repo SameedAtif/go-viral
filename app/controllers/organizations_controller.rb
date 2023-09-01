@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
-  before_action :load_organization, except: :create
+  before_action :load_organization, except: %i[create new]
   before_action :authorize_resource!, except: %i[create show]
+  skip_before_action :authenticate_user!, only: :show
 
   def new; end
 

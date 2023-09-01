@@ -190,4 +190,70 @@ RSpec.describe OrganizationsController do
       end
     end
   end
+
+  describe "GET edit" do
+    let(:organization) do
+      org_detail = create :organization_detail, :owner
+      org_detail.organization
+    end
+
+    let(:updation_params) {
+      {
+        id: organization.id
+      }
+    }
+
+    context "when user is signed_in" do
+      context "when user is owner" do
+        before :each do
+          sign_in(organization.owner.user, scope: :user)
+        end
+        context "when user is signed in as client" do
+          it "will not raise pundit-authorization error" do
+            session_params = {user_role: User::USER_ROLES[:client]}
+            expect do
+              get 'edit', params: updation_params, session: session_params
+            end.not_to raise_error
+          end
+        end
+        context "when user is signed in as creator" do
+          it "will raise pundit-authorization error" do
+            session_params = {user_role: User::USER_ROLES[:influencer]}
+            expect do
+              get 'edit', params: updation_params, session: session_params
+            end.to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
+      end
+
+      context "when user is not the owner" do
+        let(:user) { create(:user, :client)}
+        before :each do
+          sign_in(user, scope: :user)
+        end
+        it "will raise pundit-authorization error" do
+          session_params = {user_role: User::USER_ROLES[:client]}
+          expect do
+            get 'edit', params: updation_params, session: session_params
+          end.to raise_error(Pundit::NotAuthorizedError)
+        end
+      end
+
+      context "when user is of type reviewer" do
+        let(:user) do
+          reviewer = create(:reviewer)
+          reviewer.user
+        end
+        before :each do
+          sign_in(user, scope: :user)
+        end
+        it "will not raise pundit-authorization error" do
+          session_params = {user_role: User::USER_ROLES[:reviewer]}
+          expect do
+            get 'edit', params: updation_params, session: session_params
+          end.not_to raise_error
+        end
+      end
+    end
+  end
 end

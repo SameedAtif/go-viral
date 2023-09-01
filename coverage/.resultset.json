@@ -25,7 +25,7 @@
           null,
           1,
           4,
-          34,
+          40,
           null,
           null,
           null
@@ -49,6 +49,7 @@
           1,
           1,
           1,
+          1,
           null,
           1,
           null,
@@ -91,11 +92,11 @@
           null,
           null,
           1,
-          5,
+          9,
           null,
           null,
           1,
-          5,
+          9,
           null,
           null
         ]
@@ -108,10 +109,10 @@
           1,
           null,
           1,
-          37,
-          37,
+          49,
+          49,
           null,
-          37,
+          49,
           null,
           null
         ]
@@ -121,13 +122,15 @@
           1,
           1,
           1,
+          1,
           null,
           1,
-          0,
-          0,
-          0,
-          0,
-          0,
+          4,
+          4,
+          2,
+          2,
+          2,
+          2,
           null,
           null,
           1,
@@ -171,11 +174,11 @@
           null,
           null,
           1,
-          21,
+          25,
           null,
           null,
           1,
-          21,
+          25,
           null,
           null
         ]
@@ -220,7 +223,7 @@
           1,
           null,
           1,
-          68,
+          80,
           null,
           null
         ]
@@ -256,8 +259,8 @@
           1,
           null,
           1,
-          37,
-          37,
+          49,
+          49,
           null,
           null
         ]
@@ -265,6 +268,10 @@
       "/Users/satif/Desktop/projects/go_viral/app/policies/organization_policy.rb": {
         "lines": [
           1,
+          1,
+          4,
+          null,
+          null,
           1,
           null,
           5,
@@ -296,9 +303,9 @@
           1,
           null,
           1,
-          37,
-          37,
-          37,
+          49,
+          49,
+          49,
           null,
           null,
           1,
@@ -456,8 +463,19 @@
           1,
           1,
           null,
+          4,
+          null,
+          null,
+          null,
+          1,
+          null,
           21,
           null,
+          null,
+          null,
+          1,
+          null,
+          4,
           null,
           null,
           1,
@@ -485,42 +503,10 @@
           null
         ]
       },
-      "/Users/satif/Desktop/projects/go_viral/app/models/platform.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
       "/Users/satif/Desktop/projects/go_viral/app/models/project_platform.rb": {
         "lines": [
           1,
           1,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/category.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
           1,
           null
         ]
@@ -551,6 +537,38 @@
       "/Users/satif/Desktop/projects/go_viral/app/models/example_work.rb": {
         "lines": [
           1,
+          1,
+          null
+        ]
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/platform.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/category.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
           1,
           null
         ]
@@ -1036,6 +1054,6 @@
         }
       }
     },
-    "timestamp": 1693575610
+    "timestamp": 1693581409
   }
 }
