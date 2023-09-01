@@ -1,7 +1,8 @@
 class ProjectPolicy < ApplicationPolicy
   def update?
     # Also add if the user is a reviewer
-    (user == record.organization.owner.user && current_role == User::USER_ROLES[:client]) || user.reviewer?
+    (user == record.organization.owner.user && current_role == User::USER_ROLES[:client]) ||
+    user.reviewer?
   end
 
   def create?
@@ -19,13 +20,11 @@ class ProjectPolicy < ApplicationPolicy
       project_milestones_attributes: %i[id title description reach conversion budget _destroy],
       example_works_attributes: %i[id title description _destroy]
     ]
-    if (user.admin? && current_role == User::USER_ROLES[:admin]) || record.organization.owner.user
+    if (user.admin? && current_role == User::USER_ROLES[:admin]) ||
+      record.organization.owner.user == user
       record_attributes
     elsif (user.reviewer? && current_role == User::USER_ROLES[:reviewer])
-      record_attributes << :status
-      record_attributes << :reviewed
-      record_attributes << :payment_verified
-      record_attributes << :reviewer_id
+      [:id, :status, :reviewed, :payment_verified, :reviewer_id]
     end
   end
 end

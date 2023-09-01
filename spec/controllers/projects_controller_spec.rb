@@ -499,10 +499,44 @@ RSpec.describe ProjectsController do
         end
       end
 
-      xit "when user is of type reviewer" do
-        post 'create', params: updation_params
-        expect(Project.count).to eq(1)
-        expect(Project.find_by(updation_params[:project])).to be_present
+      context "when user is of type reviewer" do
+        let(:user) do
+          reviewer = create(:reviewer)
+          reviewer.user
+        end
+        before :each do
+          sign_in(user, scope: :user)
+        end
+        it "will not update client permitted fields" do
+          session_params = {user_role: User::USER_ROLES[:reviewer]}
+          put 'update', params: updation_params, session: session_params
+          update_keys = [
+            :title, :description, :budget, :required_number_of_influencers, :target_audience
+          ].map { |k, _| k.to_sym}
+          update_keys.each do |key|
+            expect(project.reload.send(key)).not_to eq(updation_params[:project][key])
+          end
+        end
+
+        it "will only update reviewer permitted fields" do
+          session_params = {user_role: User::USER_ROLES[:reviewer]}
+          reviewer_updation_params = {
+            id: project.id,
+            project: {
+              status: 'under_review',
+              reviewed: true,
+              payment_verified: true,
+              reviewer_id: user.reviewer.id
+            }
+          }
+          put 'update', params: reviewer_updation_params, session: session_params
+          update_keys = [
+            :status, :reviewed, :payment_verified, :reviewer_id
+          ].map { |k, _| k.to_sym}
+          update_keys.each do |key|
+            expect(project.reload.send(key)).to eq(reviewer_updation_params[:project][key])
+          end
+        end
       end
     end
   end

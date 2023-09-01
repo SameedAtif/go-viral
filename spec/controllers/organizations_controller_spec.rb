@@ -66,15 +66,17 @@ RSpec.describe OrganizationsController do
       end
 
       it "will be created without reserved params" do
-        post 'create', params: creation_params[:organization].merge(verified: true)
+        creation_params[:organization].merge!(verified: true)
+        post 'create', params: creation_params
         expect(Organization.find_by(
           creation_params[:organization].merge(verified: true))
         ).not_to be_present
       end
 
       it "will not be created without required params" do
-        creation_params[:organization].delete(:name)
-        post 'create', params: {organization: {name: ""}}
+        expect do
+          post 'create', params: {organization: {name: ""}}
+        end.to raise_error(ActiveRecord::RecordInvalid)
         expect(Organization.find_by(name: "")).not_to be_present
       end
     end
@@ -151,10 +153,40 @@ RSpec.describe OrganizationsController do
         end
       end
 
-      xit "when user is of type reviewer" do
-        post 'create', params: updation_params
-        expect(Organization.count).to eq(1)
-        expect(Organization.find_by(updation_params[:organization])).to be_present
+      context "when user is of type reviewer" do
+        let(:user) do
+          reviewer = create(:reviewer)
+          reviewer.user
+        end
+        before :each do
+          sign_in(user, scope: :user)
+        end
+        it "will not update client permitted fields" do
+          session_params = {user_role: User::USER_ROLES[:reviewer]}
+          put 'update', params: updation_params, session: session_params
+          update_keys = updation_params[:organization].map { |k, _| k.to_sym}
+          update_keys.each do |key|
+            expect(organization.reload.send(key)).not_to eq(updation_params[:organization][key])
+          end
+        end
+
+        it "will only update reviewer permitted fields" do
+          session_params = {user_role: User::USER_ROLES[:reviewer]}
+          reviewer_updation_params = {
+            id: organization.id,
+            organization: {
+              verified: true,
+              reviewer_id: user.reviewer.id
+            }
+          }
+          put 'update', params: reviewer_updation_params, session: session_params
+          update_keys = [
+            :verified, :reviewer_id
+          ].map { |k, _| k.to_sym}
+          update_keys.each do |key|
+            expect(organization.reload.send(key)).to eq(reviewer_updation_params[:organization][key])
+          end
+        end
       end
     end
   end

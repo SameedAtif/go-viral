@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_one :influencer, dependent: :destroy
   has_one :client, dependent: :destroy
+  has_one :reviewer, dependent: :destroy
 
   USER_ROLES = {
     client: 'client',

@@ -161,6 +161,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
     t.string "youtube_url"
     t.string "tiktok_url"
     t.boolean "verified"
+    t.bigint "reviewer_id"
+    t.index ["reviewer_id"], name: "index_organizations_on_reviewer_id"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -342,6 +344,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
   add_foreign_key "organization_feedbacks", "organizations"
   add_foreign_key "organization_reviews", "organizations"
   add_foreign_key "organization_reviews", "reviewers"
+  add_foreign_key "organizations", "reviewers"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
   add_foreign_key "project_categories", "categories"

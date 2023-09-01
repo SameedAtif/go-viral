@@ -19,16 +19,11 @@ class ProjectsController < ApplicationController
     redirect_to root_path
   end
 
-  def show
-    @project = Project.find(params[:id])
-  end
+  def show; end
 
-  def edit
-    @project = current_user.client.projects.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @project = Project.find(params[:id])
     @project.update!(permitted_params)
     redirect_to @project
   end

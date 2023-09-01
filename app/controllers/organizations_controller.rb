@@ -13,9 +13,6 @@ class OrganizationsController < ApplicationController
     end
     flash[:success] = "Organization successfully created"
     redirect_to root_path
-  rescue StandardError => e
-    flash[:error] = e
-    redirect_to root_path
   end
 
   def show; end
@@ -23,13 +20,9 @@ class OrganizationsController < ApplicationController
   def edit; end
 
   def update
-    organization = Organization.find(params[:id])
-    organization.update!(permitted_params)
+    @organization.update!(permitted_params)
     flash[:success] = "Organization updated"
     redirect_to organization_path
-  rescue StandardError => e
-    flash[:error] = e
-    redirect_to root_path
   end
 
   def destroy; end
