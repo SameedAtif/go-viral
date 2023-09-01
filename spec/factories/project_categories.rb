@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :project_categories do
+  factory :project_category do
     project
     category
   end

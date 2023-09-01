@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :load_organization, except: :create
-  before_action :authorize_resource!, except: :create
+  before_action :authorize_resource!, except: %i[create show]
 
   def new; end
 
