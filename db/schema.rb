@@ -117,7 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
     t.string "resource_type", null: false
     t.string "user_type", null: false
     t.bigint "user_id"
-    t.string "type", null: false
+    t.string "notification_type", null: false
     t.jsonb "extra"
     t.datetime "read_at"
     t.datetime "cleared_at"

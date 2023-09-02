@@ -24,8 +24,10 @@
           1,
           null,
           1,
+          null,
+          1,
           4,
-          40,
+          0,
           null,
           null,
           null
@@ -44,24 +46,14 @@
           null
         ]
       },
-      "/Users/satif/Desktop/projects/go_viral/app/controllers/organizations_controller.rb": {
+      "/Users/satif/Desktop/projects/go_viral/app/controllers/notifications_controller.rb": {
         "lines": [
           1,
           1,
-          1,
-          1,
           null,
           1,
-          null,
           1,
-          5,
-          5,
-          4,
-          4,
-          4,
-          null,
-          4,
-          4,
+          1,
           null,
           null,
           1,
@@ -69,34 +61,7 @@
           1,
           null,
           1,
-          3,
-          3,
-          3,
-          null,
-          null,
           1,
-          null,
-          1,
-          null,
-          1,
-          5,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          3,
-          null,
-          null,
-          null,
-          null,
-          1,
-          9,
-          null,
-          null,
-          1,
-          9,
           null,
           null
         ]
@@ -109,37 +74,19 @@
           1,
           null,
           1,
-          49,
-          49,
+          1,
+          1,
           null,
-          49,
+          1,
           null,
           null
         ]
       },
-      "/Users/satif/Desktop/projects/go_viral/app/controllers/projects_controller.rb": {
+      "/Users/satif/Desktop/projects/go_viral/app/models/notification.rb": {
         "lines": [
           1,
           1,
           1,
-          1,
-          null,
-          1,
-          4,
-          4,
-          2,
-          2,
-          2,
-          2,
-          null,
-          null,
-          1,
-          11,
-          11,
-          11,
-          9,
-          9,
-          9,
           null,
           null,
           1,
@@ -147,67 +94,102 @@
           1,
           null,
           1,
-          19,
-          19,
-          null,
-          null,
           1,
-          null,
           1,
-          null,
-          1,
-          11,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          19,
-          null,
-          null,
-          null,
-          null,
-          1,
-          25,
-          null,
-          null,
-          1,
-          25,
           null,
           null
         ]
       },
-      "/Users/satif/Desktop/projects/go_viral/app/controllers/users/registrations_controller.rb": {
+      "/Users/satif/Desktop/projects/go_viral/app/models/project.rb": {
         "lines": [
           1,
           1,
           null,
           1,
-          null,
-          1,
-          2,
-          null,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/controllers/users/sessions_controller.rb": {
-        "lines": [
-          1,
-          1,
-          3,
-          3,
-          null,
-          null,
           1,
           null,
           1,
-          3,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null
         ]
@@ -223,33 +205,8 @@
           1,
           null,
           1,
-          80,
+          0,
           null,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/client.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/organization_detail.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null,
-          1,
           null
         ]
       },
@@ -259,38 +216,17 @@
           1,
           null,
           1,
-          49,
-          49,
+          1,
+          1,
           null,
           null
         ]
       },
-      "/Users/satif/Desktop/projects/go_viral/app/policies/organization_policy.rb": {
+      "/Users/satif/Desktop/projects/go_viral/app/policies/notification_policy.rb": {
         "lines": [
           1,
           1,
-          4,
-          null,
-          null,
           1,
-          null,
-          5,
-          null,
-          null,
-          1,
-          3,
-          null,
-          null,
-          null,
-          3,
-          1,
-          2,
-          2,
-          null,
-          null,
-          null,
-          null,
-          null,
           null,
           null
         ]
@@ -303,9 +239,9 @@
           1,
           null,
           1,
-          49,
-          49,
-          49,
+          1,
+          1,
+          1,
           null,
           null,
           1,
@@ -349,247 +285,6 @@
           1,
           null,
           1,
-          null,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/reviewer.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/project.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/policies/project_policy.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          4,
-          null,
-          null,
-          null,
-          1,
-          null,
-          21,
-          null,
-          null,
-          null,
-          1,
-          null,
-          4,
-          null,
-          null,
-          1,
-          null,
-          11,
-          null,
-          null,
-          1,
-          null,
-          19,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          19,
-          null,
-          17,
-          2,
-          2,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/project_platform.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/project_category.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/project_milestone.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/example_work.rb": {
-        "lines": [
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/platform.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/category.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/influencer.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null,
           null,
           null
         ]
@@ -746,6 +441,65 @@
         "branches": {
         }
       },
+      "/Users/satif/Desktop/projects/go_viral/app/controllers/organizations_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/Users/satif/Desktop/projects/go_viral/app/controllers/project_applications_controller.rb": {
         "lines": [
           0,
@@ -858,6 +612,107 @@
         "branches": {
         }
       },
+      "/Users/satif/Desktop/projects/go_viral/app/controllers/projects_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/controllers/users/registrations_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/controllers/users/sessions_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/Users/satif/Desktop/projects/go_viral/app/jobs/application_job.rb": {
         "lines": [
           0,
@@ -874,6 +729,48 @@
       "/Users/satif/Desktop/projects/go_viral/app/mailers/application_mailer.rb": {
         "lines": [
           0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/category.rb": {
+        "lines": [
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/client.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/example_work.rb": {
+        "lines": [
           0,
           0,
           0
@@ -948,10 +845,45 @@
         "branches": {
         }
       },
+      "/Users/satif/Desktop/projects/go_viral/app/models/influencer.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/Users/satif/Desktop/projects/go_viral/app/models/influencer_platform.rb": {
         "lines": [
           0,
           0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/organization_detail.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
           0,
           0
         ],
@@ -979,6 +911,26 @@
         "branches": {
         }
       },
+      "/Users/satif/Desktop/projects/go_viral/app/models/platform.rb": {
+        "lines": [
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/Users/satif/Desktop/projects/go_viral/app/models/project_application.rb": {
         "lines": [
           0,
@@ -995,6 +947,16 @@
           0,
           0,
           null,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/project_category.rb": {
+        "lines": [
+          0,
           0,
           0,
           0
@@ -1041,6 +1003,33 @@
         "branches": {
         }
       },
+      "/Users/satif/Desktop/projects/go_viral/app/models/project_milestone.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/project_platform.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/Users/satif/Desktop/projects/go_viral/app/models/project_review.rb": {
         "lines": [
           0,
@@ -1052,8 +1041,100 @@
         ],
         "branches": {
         }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/reviewer.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/policies/organization_policy.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/policies/project_policy.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
       }
     },
-    "timestamp": 1693581409
+    "timestamp": 1693647168
   }
 }

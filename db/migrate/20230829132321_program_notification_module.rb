@@ -9,7 +9,7 @@ class ProgramNotificationModule < ActiveRecord::Migration[7.0]
       t.string  :resource_type, null: false
       t.string  :user_type, null: false
       t.belongs_to :user, foreign_key: true
-      t.string  :type, null: false
+      t.string  :notification_type, null: false
       t.jsonb  :extra
       t.datetime  :read_at
       t.datetime  :cleared_at
