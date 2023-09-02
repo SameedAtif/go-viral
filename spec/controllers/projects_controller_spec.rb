@@ -633,7 +633,7 @@ RSpec.describe ProjectsController do
           sign_in(project.organization.owner.user, scope: :user)
         end
         context "when user is signed in as client" do
-          it "will update the project" do
+          it "will not raise an error" do
             session_params = {user_role: User::USER_ROLES[:client]}
             expect do
               get 'edit', params: updation_params, session: session_params
@@ -641,7 +641,7 @@ RSpec.describe ProjectsController do
           end
         end
         context "when user is signed in as creator" do
-          it "will not update the project" do
+          it "will raise an error" do
             session_params = {user_role: User::USER_ROLES[:influencer]}
             expect do
               get 'edit', params: updation_params, session: session_params
@@ -655,7 +655,7 @@ RSpec.describe ProjectsController do
         before :each do
           sign_in(user, scope: :user)
         end
-        it "will not update the project" do
+        it "will raise an error" do
           session_params = {user_role: User::USER_ROLES[:client]}
           expect do
             get 'edit', params: updation_params, session: session_params
@@ -671,7 +671,7 @@ RSpec.describe ProjectsController do
         before :each do
           sign_in(user, scope: :user)
         end
-        it "will not update client permitted fields" do
+        it "will not raise an error" do
           session_params = {user_role: User::USER_ROLES[:reviewer]}
           expect do
             get 'edit', params: updation_params, session: session_params
