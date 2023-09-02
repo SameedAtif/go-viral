@@ -112,6 +112,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
     t.index ["user_id"], name: "index_influencers_on_user_id", unique: true
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "resource_id", null: false
+    t.string "resource_type", null: false
+    t.string "user_type", null: false
+    t.bigint "user_id"
+    t.string "type", null: false
+    t.jsonb "extra"
+    t.datetime "read_at"
+    t.datetime "cleared_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resource_type", "resource_id"], name: "index_notifications_on_resource_type_and_resource_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "organization_details", force: :cascade do |t|
     t.bigint "client_id"
     t.bigint "organization_id"
@@ -338,6 +353,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
   add_foreign_key "influencer_platforms", "platforms"
   add_foreign_key "influencers", "reviewers"
   add_foreign_key "influencers", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "organization_details", "clients"
   add_foreign_key "organization_details", "organizations"
   add_foreign_key "organization_feedbacks", "influencers"
