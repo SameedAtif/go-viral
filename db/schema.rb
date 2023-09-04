@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -112,6 +112,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.index ["user_id"], name: "index_influencers_on_user_id", unique: true
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "resource_id", null: false
+    t.string "resource_type", null: false
+    t.string "user_type", null: false
+    t.bigint "user_id"
+    t.string "notification_type", null: false
+    t.jsonb "extra"
+    t.datetime "read_at"
+    t.datetime "cleared_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resource_type", "resource_id"], name: "index_notifications_on_resource_type_and_resource_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "organization_details", force: :cascade do |t|
     t.bigint "client_id"
     t.bigint "organization_id"
@@ -161,6 +176,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.string "youtube_url"
     t.string "tiktok_url"
     t.boolean "verified"
+    t.bigint "reviewer_id"
+    t.index ["reviewer_id"], name: "index_organizations_on_reviewer_id"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -262,7 +279,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.bigint "client_id"
     t.string "title", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -279,7 +295,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
     t.boolean "is_draft"
     t.integer "views"
     t.bigint "reviewer_id"
-    t.index ["client_id"], name: "index_projects_on_client_id"
+    t.bigint "organization_id"
+    t.index ["organization_id"], name: "index_projects_on_organization_id"
     t.index ["reviewer_id"], name: "index_projects_on_reviewer_id"
   end
 
@@ -336,12 +353,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
   add_foreign_key "influencer_platforms", "platforms"
   add_foreign_key "influencers", "reviewers"
   add_foreign_key "influencers", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "organization_details", "clients"
   add_foreign_key "organization_details", "organizations"
   add_foreign_key "organization_feedbacks", "influencers"
   add_foreign_key "organization_feedbacks", "organizations"
   add_foreign_key "organization_reviews", "organizations"
   add_foreign_key "organization_reviews", "reviewers"
+  add_foreign_key "organizations", "reviewers"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
   add_foreign_key "project_categories", "categories"
@@ -358,7 +377,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_083717) do
   add_foreign_key "project_platforms", "projects"
   add_foreign_key "project_reviews", "projects"
   add_foreign_key "project_reviews", "reviewers"
-  add_foreign_key "projects", "clients"
+  add_foreign_key "projects", "organizations"
   add_foreign_key "projects", "reviewers"
   add_foreign_key "reviewers", "users"
 end

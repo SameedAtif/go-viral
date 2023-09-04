@@ -18,4 +18,10 @@ Rails.application.routes.draw do
   resources :project_milestones, only: :show do
     resources :project_deliverables
   end
+
+  resources :users, only: [] do
+    resources :notifications, only: :index
+  end
+
+  resources :notifications, only: [:update, :destroy]
 end

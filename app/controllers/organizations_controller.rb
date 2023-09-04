@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
-  before_action :load_organization, except: :create
-  before_action :authorize_resource!, except: :create
+  before_action :load_organization, except: %i[create new]
+  before_action :authorize_resource!, except: %i[create show]
+  skip_before_action :authenticate_user!, only: :show
 
   def new; end
 
@@ -13,9 +14,6 @@ class OrganizationsController < ApplicationController
     end
     flash[:success] = "Organization successfully created"
     redirect_to root_path
-  rescue StandardError => e
-    flash[:error] = e
-    redirect_to root_path
   end
 
   def show; end
@@ -23,13 +21,9 @@ class OrganizationsController < ApplicationController
   def edit; end
 
   def update
-    organization = Organization.find(params[:id])
-    organization.update!(permitted_params)
+    @organization.update!(permitted_params)
     flash[:success] = "Organization updated"
     redirect_to organization_path
-  rescue StandardError => e
-    flash[:error] = e
-    redirect_to root_path
   end
 
   def destroy; end
