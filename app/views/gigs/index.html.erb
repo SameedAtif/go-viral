@@ -1,6 +1,6 @@
 <% if current_user %>
   <h1>Hello <%= current_user.first_name %></h1>
-  <% if session[:user_role] == "Client" %>
+  <% if session[:user_role] == User::USER_ROLES[:client] %>
     <h1>Client Dashboard</h1>
     <%= link_to "Create Campaign", new_project_path %>
     <%= link_to "Manage Organization", organization_path %>
@@ -11,7 +11,7 @@
         <div>
       <% end %>
     <% end %>
-  <% elsif session[:user_role] == "Influencer" %>
+  <% elsif session[:user_role] == User::USER_ROLES[:influencer] %>
     <h1>Influencer Dashboard</h1>
     <% Project.all.each do |project|%>
       <p><%= project.title %> | <%= project.budget %> | <%= link_to  "Campaign details", project_path(project.id) %></p>

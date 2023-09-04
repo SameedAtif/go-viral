@@ -4,6 +4,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
+    params.require(:sign_up).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end
 end

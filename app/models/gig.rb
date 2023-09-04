@@ -10,6 +10,7 @@ class Gig < ApplicationRecord
 
   #One Gig can have multiple categories
   has_many :gig_categories
+  has_many :gig_reviews
 
   validates_presence_of :title
   validates_length_of :title, minimum: 3

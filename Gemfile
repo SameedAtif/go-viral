@@ -60,6 +60,10 @@ group :development, :test do
   # https://medium.com/@diegomelo_92702/ruby-intellisense-on-vs-code-with-solargraph-c1bea883561e
   gem "solargraph"
   gem "solargraph-rails"
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -74,10 +78,15 @@ group :development do
 end
 
 group :test do
+  gem 'simplecov'
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "database_cleaner"
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'shoulda-matchers'
 end
 
 gem "tailwindcss-rails", "~> 2.0"
+
+gem "pundit", "~> 2.3"
