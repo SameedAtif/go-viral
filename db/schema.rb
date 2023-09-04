@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_15_131422) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_203213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_131422) do
     t.string "title", default: "", null: false
     t.string "description", default: "", null: false
     t.float "price"
+    t.integer "delivery_estimation", default: 1, null: false
+    t.integer "review_limit", default: 1, null: false
     t.index ["gig_id"], name: "index_gig_categories_on_gig_id"
   end
 
@@ -62,6 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_131422) do
   create_table "gigs", force: :cascade do |t|
     t.bigint "influencer_id"
     t.string "title", default: "", null: false
+    t.string "status", default: "draft"
+    t.integer "views", default: 0
     t.index ["influencer_id"], name: "index_gigs_on_influencer_id"
   end
 
