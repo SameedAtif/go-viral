@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :project do
-    client
+    organization
     title { Faker::Book.title }
     description { Faker::Quote.famous_last_words }
     budget { rand(0.00..1000.00) }
