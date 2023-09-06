@@ -2,66 +2,62 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe ProjectApplicationsController do
-  # Who can create? Client
-  # describe "GET new" do
-  #   let(:client_user) do
-  #     user = create :user, :client
-  #     client = create :client, user: user
-  #     organization = create :organization, :verified
-  #     create :organization_detail, :owner, client: client, organization: organization
-  #     user
-  #   end
-  #   let(:creation_params) {
-  #     {
-  #       project: {
-  #         title: Faker::Book.title,
-  #         description: Faker::Quote.famous_last_words,
-  #         budget: rand(0.00..1000.00),
-  #         start_time: DateTime.current,
-  #         end_time: 1.month.from_now,
-  #         required_number_of_influencers: rand(1..5),
-  #         status: 'draft',
-  #         payment_type: 'Cash',
-  #         target_audience: 'Gen-Z',
-  #         views: rand(100..500)
-  #       }
-  #     }
-  #   }
+  # Who can create? Creator
+  describe "GET new" do
+    let(:influencer_user) do
+      user = create :user, :influencer
+      influencer = create :influencer, user: user
+      user
+    end
+    let(:project) { create :project, :reviewed, :payment_verified }
+    let(:creation_params) {
+      {
+        project_id: project.id
+      }
+    }
 
-  #   context "when user is signed_in" do
-  #     before :each do
-  #       sign_in(client_user, scope: :user)
-  #     end
-  #     context "when user is signed in as creator" do
-  #       it "will not create the project" do
-  #         session_params = {user_role: User::USER_ROLES[:influencer]}
-  #         expect do
-  #           get 'new', params: creation_params, session: session_params
-  #         end.to raise_error(Pundit::NotAuthorizedError)
-  #       end
-  #     end
+    context "when user is signed_in" do
+      before :each do
+        sign_in(influencer_user, scope: :user)
+      end
+      context "when user is signed in as client" do
+        it "will not create the project application" do
+          session_params = {user_role: User::USER_ROLES[:client]}
+          expect do
+            get 'new', params: creation_params, session: session_params
+          end.to raise_error(Pundit::NotAuthorizedError)
+        end
+      end
 
-  #     context "when user is client" do
-  #       let(:session_params) {{user_role: User::USER_ROLES[:client]}}
+      context "when user is creator" do
+        let(:session_params) {{user_role: User::USER_ROLES[:influencer]}}
 
-  #       it "will create project" do
-  #         get 'new', params: creation_params, session: session_params
-  #         expect do
-  #           get 'new', params: creation_params
-  #         end.not_to raise_error
-  #       end
-  #     end
+        context "when user is not verified" do
+          it "will not create project application" do
+            expect do
+              get 'new', params: creation_params, session: session_params
+            end.to raise_error(Pundit::NotAuthorizedError)
+          end
+        end
+        context "when user is reviewed" do
+          it "will create project application" do
+            influencer_user.influencer.update(reviewed: true)
+            expect do
+              get 'new', params: creation_params, session: session_params
+            end.not_to raise_error
+          end
+        end
+      end
 
-
-  #     context "when client is absent" do
-  #       it "will not create project" do
-  #         expect do
-  #           get 'new', params: creation_params
-  #         end.to raise_error(Pundit::NotAuthorizedError)
-  #       end
-  #     end
-  #   end
-  # end
+      context "when client is absent" do
+        it "will not create project" do
+          expect do
+            get 'new', params: creation_params
+          end.to raise_error(Pundit::NotAuthorizedError)
+        end
+      end
+    end
+  end
 
   describe "POST create" do
     let(:influencer_user) do
@@ -144,8 +140,8 @@ RSpec.describe ProjectApplicationsController do
   end
 
   # Who can update?
-  # - Client who is the owner
-  # - Reviewer can only update reviewed property
+  # - Creator who is reviewed
+  # - Client who is the owner of the project
   describe "PUT/PATCH update" do
     let(:influencer_user) do
       user = create :user, :influencer
@@ -204,14 +200,25 @@ RSpec.describe ProjectApplicationsController do
         before :each do
           sign_in(project_application.influencer.user, scope: :user)
         end
-        it "will update creator allowed fields" do
-          session_params = {user_role: User::USER_ROLES[:influencer]}
-          put 'update', params: updation_params, session: session_params
-          update_keys = [
-            :title, :description
-          ].map { |k, _| k.to_sym}
-          update_keys.each do |key|
-            expect(project_application.reload.send(key)).to eq(updation_params[:project_application][key])
+        context "when valid status is passed" do
+          it "will update creator allowed fields" do
+            session_params = {user_role: User::USER_ROLES[:influencer]}
+            updation_params[:project_application][:status] = 'ready_for_review'
+            put 'update', params: updation_params, session: session_params
+            update_keys = [
+              :title, :description
+            ].map { |k, _| k.to_sym}
+            update_keys.each do |key|
+              expect(project_application.reload.send(key)).to eq(updation_params[:project_application][key])
+            end
+          end
+        end
+        context "when invalid status is passed" do
+          it "will raise pundit authorizatione error" do
+            session_params = {user_role: User::USER_ROLES[:influencer]}
+            expect do
+              put 'update', params: updation_params, session: session_params
+            end.to raise_error(Pundit::NotAuthorizedError)
           end
         end
       end
@@ -232,77 +239,42 @@ RSpec.describe ProjectApplicationsController do
   end
 
   # describe "GET edit" do
-  #   let(:client_user) do
-  #     user = create :user, :client
-  #     client = create :client, user: user
-  #     create :organization_detail, :owner, client: client
+  #   let(:influencer_user) do
+  #     user = create :user, :influencer
+  #     influencer = create :influencer, :reviewed, user: user
   #     user
   #   end
-  #   let(:project) { create(:project, organization: client_user.client.organization) }
+  #   let(:project_application) do
+  #     client = create :client, user: influencer_user
+  #     organization = create :organization, :verified
+  #     create :organization_detail, :owner, client: client, organization: organization
+  #     project = create :project, organization: organization
+  #     create :project_application, project: project, influencer: influencer_user.influencer
+  #   end
   #   let(:updation_params) {
   #     {
-  #       id: project.id,
-  #       project: {
-  #         title: Faker::Book.title,
-  #         description: Faker::Quote.famous_last_words,
-  #         budget: rand(0.00..1000.00),
-  #         start_time: DateTime.current,
-  #         end_time: 1.month.from_now,
-  #         required_number_of_influencers: 6,
-  #         status: 'ready_for_review',
-  #         payment_type: 'exposure',
-  #         target_audience: 'Boomer',
-  #         views: rand(100..500)
-  #       }
+  #       id: project_application.id
   #     }
   #   }
 
   #   context "when user is signed_in" do
-  #     context "when user is owner" do
+  #     context "when user is signed in as client" do
   #       before :each do
-  #         sign_in(project.organization.owner.user, scope: :user)
+  #         sign_in(project_application.project.organization.owner.user, scope: :user)
   #       end
-  #       context "when user is signed in as client" do
-  #         it "will not raise an error" do
-  #           session_params = {user_role: User::USER_ROLES[:client]}
-  #           expect do
-  #             get 'edit', params: updation_params, session: session_params
-  #           end.not_to raise_error
-  #         end
-  #       end
-  #       context "when user is signed in as creator" do
-  #         it "will raise an error" do
-  #           session_params = {user_role: User::USER_ROLES[:influencer]}
-  #           expect do
-  #             get 'edit', params: updation_params, session: session_params
-  #           end.to raise_error(Pundit::NotAuthorizedError)
-  #         end
-  #       end
-  #     end
-
-  #     context "when user is not the owner" do
-  #       let(:user) { create(:user, :client)}
-  #       before :each do
-  #         sign_in(user, scope: :user)
-  #       end
-  #       it "will raise an error" do
-  #         session_params = {user_role: User::USER_ROLES[:client]}
+  #       it "will not raise an error" do
+  #         session_params = {user_role: User::USER_ROLES[:influencer]}
   #         expect do
   #           get 'edit', params: updation_params, session: session_params
   #         end.to raise_error(Pundit::NotAuthorizedError)
   #       end
   #     end
-
-  #     context "when user is of type reviewer" do
-  #       let(:user) do
-  #         reviewer = create(:reviewer)
-  #         reviewer.user
-  #       end
+  #     context "when user is signed in as creator" do
   #       before :each do
-  #         sign_in(user, scope: :user)
+  #         sign_in(project_application.influencer.user, scope: :user)
   #       end
   #       it "will not raise an error" do
-  #         session_params = {user_role: User::USER_ROLES[:reviewer]}
+  #         session_params = {user_role: User::USER_ROLES[:client]}
   #         expect do
   #           get 'edit', params: updation_params, session: session_params
   #         end.not_to raise_error

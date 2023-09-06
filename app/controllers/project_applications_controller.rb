@@ -3,8 +3,7 @@ class ProjectApplicationsController < ApplicationController
   before_action :set_project_application, only: :update
 
   def index
-    @project_applications = @project.project_applications
-    # authorize @project_applications
+    @project_applications = policy_scope(@project.project_applications)
   end
 
   def new
@@ -25,7 +24,11 @@ class ProjectApplicationsController < ApplicationController
   def update
     authorize @project_application
     # When a client approves or rejects the application.
-    @project_application.update!(permitted_params)
+    if (verified_role(:client) && valid_client_status?) || (verified_role(:influencer) && valid_creator_status?)
+      @project_application.update!(permitted_params)
+    else
+      raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
+    end
   end
 
   private
@@ -46,5 +49,25 @@ class ProjectApplicationsController < ApplicationController
     params.require(:project_application).permit(
       policy(@project_application).permitted_attributes
     )
+  end
+
+  def valid_creator_status?
+    status = params.dig(:project_application, :status)
+    return true if status.blank?
+
+    ['draft', 'ready_for_review'].include?(status)
+  end
+
+  def valid_client_status?
+    status = params.dig(:project_application, :status)
+    return true if status.blank?
+
+    ['approved', 'rejected'].include?(status)
+  end
+
+  def verified_role(user_type)
+    role = current_user.send(user_type)
+
+    role.present? && session[:user_role] == User::USER_ROLES[user_type]
   end
 end

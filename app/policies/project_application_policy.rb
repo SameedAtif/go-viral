@@ -1,4 +1,14 @@
 class ProjectApplicationPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user.client.present? && current_role == User::USER_ROLES[:client]
+        scope
+      else
+        []
+      end
+    end
+  end
+
   def edit?
     # Also add if the user is a reviewer
     (user == record.influencer.user && current_role == User::USER_ROLES[:influencer] && user.influencer.reviewed)
@@ -12,7 +22,7 @@ class ProjectApplicationPolicy < ApplicationPolicy
 
   def new?
     # Also add if the user is a reviewer
-    user == record.influencer.user && current_role == User::USER_ROLES[:influencer] && user.influencer.reviewed
+    current_role == User::USER_ROLES[:influencer] && user.influencer.reviewed
   end
 
   def create?
