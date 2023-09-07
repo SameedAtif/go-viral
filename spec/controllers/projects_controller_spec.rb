@@ -237,7 +237,7 @@ RSpec.describe ProjectsController do
           start_time: DateTime.current,
           end_time: 1.month.from_now,
           required_number_of_influencers: 6,
-          status: 'ready_for_review',
+          status: Project::STATUSES_MAP[:cancelled],
           payment_type: 'exposure',
           target_audience: 'Boomer',
           views: rand(100..500)
@@ -583,7 +583,7 @@ RSpec.describe ProjectsController do
           reviewer_updation_params = {
             id: project.id,
             project: {
-              status: 'under_review',
+              status: Project::STATUSES_MAP[:approved],
               reviewed: true,
               payment_verified: true,
               reviewer_id: user.reviewer.id

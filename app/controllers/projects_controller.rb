@@ -1,3 +1,4 @@
+# TODO: Restrict project status to entity
 class ProjectsController < ApplicationController
   before_action :load_project, except: %i[create new]
   before_action :authorize_resource!, except: %i[create new show]

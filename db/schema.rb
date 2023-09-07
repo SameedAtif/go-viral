@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_145632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -287,7 +287,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_132321) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer "required_number_of_influencers", default: 1, null: false
-    t.string "status"
+    t.string "status", default: "pending_review"
     t.string "payment_type"
     t.string "target_audience"
     t.boolean "payment_verified"

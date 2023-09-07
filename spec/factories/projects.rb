@@ -4,10 +4,10 @@ FactoryBot.define do
     title { Faker::Book.title }
     description { Faker::Quote.famous_last_words }
     budget { rand(0.00..1000.00) }
-    start_time { DateTime.current}
+    start_time { 1.day.from_now }
     end_time { 1.month.from_now}
     required_number_of_influencers { rand(1..5)}
-    status { 'draft' }
+    status { Project::STATUSES_MAP[:pending_review] }
     payment_type { 'Cash' }
     target_audience { 'Gen-Z' }
     views { rand(100..500) }

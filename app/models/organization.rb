@@ -1,3 +1,5 @@
+# TODO: Organization notification
+
 class Organization < ApplicationRecord
   has_many :projects
   has_many :organization_reviews

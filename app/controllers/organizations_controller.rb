@@ -1,3 +1,5 @@
+# TODO: Restrict organization status to entity
+
 class OrganizationsController < ApplicationController
   before_action :load_organization, except: %i[create new]
   before_action :authorize_resource!, except: %i[create show]

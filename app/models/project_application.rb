@@ -1,3 +1,8 @@
+
+# TODO: Validate budget should be <= to project_budget
+# TODO: Validate delivery_date should be <= to project_end_date
+# TODO: project_application should be associated to project_influencer
+
 class ProjectApplication < ApplicationRecord
   belongs_to :project
   belongs_to :influencer
@@ -20,7 +25,7 @@ class ProjectApplication < ApplicationRecord
   private
 
   def application_locked
-    return unless [STATUS_TYPES_MAP[:approved], STATUS_TYPES_MAP[:rejected]].include?(status_was) && DateTime.current < project.start_time
+    return if DateTime.current < project.start_time
 
     errors.add(:base, "This campaign application is now locked")
   end
@@ -43,12 +48,14 @@ class ProjectApplication < ApplicationRecord
   end
 
   def notify_client
+    return unless status == STATUS_TYPES_MAP[:ready_for_review]
+
     Notification.create!(
       resource_id: project_id,
       resource_type: project.class.name,
       user_id: influencer.user_id,
-      user_type: User::USER_ROLES[:influencer],
-      notification_type: Notification::NOTIFICATION_TYPES_MAP[:influencer_rejected_for_project]
+      user_type: User::USER_ROLES[:client],
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_influencer_applied_to_project]
     )
   end
 end
