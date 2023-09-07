@@ -75,6 +75,7 @@ RSpec.describe ProjectApplicationsController do
           title: "This is a sample title",
           description: "This is a sample title. This is a sample title.",
           budge: 100.10,
+          status: 'draft',
           delivery_date: 15.days.from_now
         }
       }
@@ -115,8 +116,9 @@ RSpec.describe ProjectApplicationsController do
 
           it "will not create with restricted params and value" do
             creation_params[:project_application].merge!(status: "approved")
-            post 'create', params: creation_params, session: session_params
-            expect(ProjectApplication.last.status).not_to eq("approved")
+            expect do
+              post 'create', params: creation_params, session: session_params
+            end.to raise_error(Pundit::NotAuthorizedError)
           end
         end
 

@@ -1,6 +1,7 @@
 class ProjectApplicationsController < ApplicationController
   before_action :set_project, only: %i[index new create]
   before_action :set_project_application, only: :update
+  before_action :validate_status, only: %i[create update]
 
   def index
     @project_applications = policy_scope(@project.project_applications)
@@ -16,19 +17,13 @@ class ProjectApplicationsController < ApplicationController
     @project_application.project_id = @project.id
     @project_application.influencer_id = current_user.influencer.id
     authorize @project_application
-    @project_application.status = "in-review"
     @project_application.save!
     redirect_to @project
   end
 
   def update
     authorize @project_application
-    # When a client approves or rejects the application.
-    if (verified_role(:client) && valid_client_status?) || (verified_role(:influencer) && valid_creator_status?)
-      @project_application.update!(permitted_params)
-    else
-      raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
-    end
+    @project_application.update!(permitted_params)
   end
 
   private
@@ -42,7 +37,7 @@ class ProjectApplicationsController < ApplicationController
   end
 
   def creation_params
-    params.require(:project_application).permit(:title, :description, :budget, :delivery_date)
+    params.require(:project_application).permit(:title, :description, :budget, :status, :delivery_date)
   end
 
   def permitted_params
@@ -55,19 +50,25 @@ class ProjectApplicationsController < ApplicationController
     status = params.dig(:project_application, :status)
     return true if status.blank?
 
-    ['draft', 'ready_for_review'].include?(status)
+    [::ProjectApplication::STATUS_TYPES_MAP[:draft], ::ProjectApplication::STATUS_TYPES_MAP[:ready_for_review]].include?(status)
   end
 
   def valid_client_status?
     status = params.dig(:project_application, :status)
     return true if status.blank?
 
-    ['approved', 'rejected'].include?(status)
+    [::ProjectApplication::STATUS_TYPES_MAP[:approved], ::ProjectApplication::STATUS_TYPES_MAP[:rejected]].include?(status)
   end
 
   def verified_role(user_type)
     role = current_user.send(user_type)
 
     role.present? && session[:user_role] == User::USER_ROLES[user_type]
+  end
+
+  def validate_status
+    return if (verified_role(:client) && valid_client_status?) || (verified_role(:influencer) && valid_creator_status?)
+
+    raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
   end
 end
