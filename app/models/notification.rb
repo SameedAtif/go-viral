@@ -1,4 +1,3 @@
-# TODO: Restrict notification to based on entity
 class Notification < ApplicationRecord
   belongs_to :source, polymorphic: true, optional: true
   belongs_to :user
@@ -13,7 +12,9 @@ class Notification < ApplicationRecord
     client_project_expired: 'client_project_expired',
     creator_new_campaign_published: 'creator_new_campaign_published',
     creator_campaign_in_progress: 'creator_campaign_in_progress',
-    creator_campaign_cancelled: 'creator_campaign_cancelled'
+    creator_campaign_cancelled: 'creator_campaign_cancelled',
+    reviewer_organization_created: 'reviewer_organization_created',
+    client_organization_verified: 'client_organization_verified'
   }
   NOTIFICATION_TYPES = NOTIFICATION_TYPES_MAP.values
 

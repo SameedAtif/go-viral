@@ -25,7 +25,8 @@ class ProjectPolicy < ApplicationPolicy
     record_attributes = [
       :id, :title, :description, :budget, :start_time, :end_time,
       :required_number_of_influencers, :payment_type,
-      :target_audience, :is_draft,
+      :targeted_demographic_start_age, :targeted_demographic_end_age,
+      :is_draft, targeted_geographic_audience: [],
       project_platforms_attributes: %i[id platform_id _destroy],
       project_categories_attributes: %i[id category_id _destroy],
       project_milestones_attributes: %i[id title description reach conversion budget _destroy],

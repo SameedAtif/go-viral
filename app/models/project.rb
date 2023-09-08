@@ -1,7 +1,3 @@
-# TODO: Do something about target_audience
-# TODO: Do something about payment_type
-# TODO: Add remaining column validations
-
 class Project < ApplicationRecord
   belongs_to :organization
 
@@ -40,11 +36,24 @@ class Project < ApplicationRecord
     cancelled: 'cancelled'
   }.freeze
   STATUSES = STATUSES_MAP.values
+  PAYMENT_TYPES_MAP = {
+    cash: 'cash',
+    credit: 'credit',
+    exposure: 'exposure'
+  }
+  PAYMENT_TYPES = PAYMENT_TYPES_MAP.values
+
+  validates_presence_of :title, :description, :payment_type, :start_time, :end_time,
+                        :required_number_of_influencers, :targeted_demographic_start_age,
+                        :targeted_demographic_end_age
+  validates_length_of :title, :description, minimum: 3
+
+  validates :end_time, comparison: { greater_than: :start_time }
+  validates :targeted_demographic_end_age, comparison: { greater_than: :targeted_demographic_start_age }
 
   validates :status, inclusion: { in: STATUSES }
-  validates_presence_of :title, :description
+  validates :payment_type, inclusion: { in: PAYMENT_TYPES }
   validates :budget, presence: true, numericality: { only_float: true }
-  validates_length_of :title, :description, minimum: 3
 
   after_save_commit :notify_client, :notify_reviewer, :notify_creators, if: -> { saved_change_to_attribute?('status') }
 

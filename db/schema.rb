@@ -289,13 +289,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_145632) do
     t.integer "required_number_of_influencers", default: 1, null: false
     t.string "status", default: "pending_review"
     t.string "payment_type"
-    t.string "target_audience"
     t.boolean "payment_verified"
     t.boolean "reviewed"
     t.boolean "is_draft"
     t.integer "views"
     t.bigint "reviewer_id"
     t.bigint "organization_id"
+    t.integer "targeted_demographic_start_age"
+    t.integer "targeted_demographic_end_age"
+    t.string "targeted_geographic_audience", default: [], array: true
     t.index ["organization_id"], name: "index_projects_on_organization_id"
     t.index ["reviewer_id"], name: "index_projects_on_reviewer_id"
   end

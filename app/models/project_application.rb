@@ -1,8 +1,4 @@
 
-# TODO: Validate budget should be <= to project_budget
-# TODO: Validate delivery_date should be <= to project_end_date
-# TODO: project_application should be associated to project_influencer
-
 class ProjectApplication < ApplicationRecord
   belongs_to :project
   belongs_to :influencer

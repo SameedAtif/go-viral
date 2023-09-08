@@ -8,8 +8,10 @@ FactoryBot.define do
     end_time { 1.month.from_now}
     required_number_of_influencers { rand(1..5)}
     status { Project::STATUSES_MAP[:pending_review] }
-    payment_type { 'Cash' }
-    target_audience { 'Gen-Z' }
+    payment_type { Project::PAYMENT_TYPES_MAP[:cash] }
+    targeted_demographic_start_age { 10 }
+    targeted_demographic_end_age { 15 }
+    targeted_geographic_audience { ['Pakistan'] }
     views { rand(100..500) }
     trait :reviewed do
       reviewed { true }

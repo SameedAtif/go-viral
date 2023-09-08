@@ -1,5 +1,3 @@
-# TODO: Restrict organization status to entity
-
 class OrganizationsController < ApplicationController
   before_action :load_organization, except: %i[create new]
   before_action :authorize_resource!, except: %i[create show]
@@ -12,7 +10,7 @@ class OrganizationsController < ApplicationController
       organization = Organization.create!(creation_params)
       client = Client.find_or_create_by!(user: current_user)
       session[:user_role] = User::USER_ROLES[:client]
-      OrganizationDetail.find_or_create_by!(organization: organization, client: client, client_role: 'Owner')
+      OrganizationDetail.find_or_create_by!(organization: organization, client: client, client_role: OrganizationDetail::CLIENT_ROLES_MAP[:owner])
     end
     flash[:success] = "Organization successfully created"
     redirect_to root_path

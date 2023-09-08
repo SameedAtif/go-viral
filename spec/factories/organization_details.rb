@@ -3,7 +3,7 @@ FactoryBot.define do
     organization
     client
     trait :owner do
-      client_role { 'Owner' }
+      client_role { OrganizationDetail::CLIENT_ROLES_MAP[:owner] }
     end
   end
 end
