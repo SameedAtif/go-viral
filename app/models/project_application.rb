@@ -13,8 +13,10 @@ class ProjectApplication < ApplicationRecord
 
   validate :application_locked
   validates :status, inclusion: { in: STATUS_TYPES }
-  validates_presence_of :title, :description, :status
+  validates_presence_of :title, :description, :status, :budget, :delivery_date
   validates_length_of :title, :description, minimum: 3
+  validate :budget_less_than_equal_to_project_budget
+  validate :delivery_date_less_than_equal_to_project_end_time
 
   after_update_commit :create_project_influencer, :remove_project_influencer, :notify_client, if: -> { saved_change_to_attribute?('status') }
 
@@ -53,5 +55,17 @@ class ProjectApplication < ApplicationRecord
       user_type: User::USER_ROLES[:client],
       notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_influencer_applied_to_project]
     )
+  end
+
+  def budget_less_than_equal_to_project_budget
+    return if budget <= project.budget
+
+    errors.add(:budget, "Budget should be less than equal to project budget")
+  end
+
+  def delivery_date_less_than_equal_to_project_end_time
+    return if delivery_date <= project.end_time
+
+    errors.add(:delivery_date, "Delivery date should be less than equal to project end time")
   end
 end
