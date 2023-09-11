@@ -61,7 +61,7 @@ RSpec.describe OrganizationsController do
         post 'create', params: creation_params
         expect(OrganizationDetail.count).to eq(1)
         expect(
-          OrganizationDetail.find_by(organization: Organization.last, client: Client.last, client_role: 'Owner')
+          OrganizationDetail.find_by(organization: Organization.last, client: Client.last, client_role: OrganizationDetail::CLIENT_ROLES_MAP[:owner])
         ).to be_present
       end
 

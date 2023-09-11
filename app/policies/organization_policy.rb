@@ -1,11 +1,13 @@
 class OrganizationPolicy < ApplicationPolicy
   def edit?
-    (user == record.owner.user && current_role == User::USER_ROLES[:client]) || user.reviewer?
+    (user == record.owner.user && current_role == User::USER_ROLES[:client]) ||
+    (user.reviewer? && current_role == User::USER_ROLES[:reviewer])
   end
 
   def update?
     # Also add if the user is a reviewer
-    (user == record.owner.user && current_role == User::USER_ROLES[:client]) || user.reviewer?
+    (user == record.owner.user && current_role == User::USER_ROLES[:client]) ||
+    (user.reviewer? && current_role == User::USER_ROLES[:reviewer])
   end
 
   def permitted_attributes

@@ -16,9 +16,6 @@ class ProjectDeliverablesController < ApplicationController
     @project_deliverable.influencer_id = current_user.influencer.id
     @project_deliverable.save!
     redirect_to @project_milestone
-  rescue StandardError => e
-    flash[:error] = e
-    render 'new'
   end
 
   def update
@@ -28,9 +25,6 @@ class ProjectDeliverablesController < ApplicationController
       project_client = current_user.client.projects.find(params[:project_id])
       project_application.update!(status: validate_client_statuses) if project_client.present?
     end
-  rescue StandardError => e
-    flash[:error] = e
-    render 'new'
   end
 
   private
