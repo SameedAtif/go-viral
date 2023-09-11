@@ -19,7 +19,12 @@ Rails.application.routes.draw do
   resources :project_milestones, only: :show do
     resources :project_deliverables, except: :update
   end
+  resources :project_deliverables, only: :show do
+    resources :project_deliverable_reviews, except: :update
+  end
   resources :project_deliverables, only: :update
+  resources :project_deliverable_reviews, only: :update
+
   resources :users, only: [] do
     resources :notifications, only: :index
   end

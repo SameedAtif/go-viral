@@ -7,7 +7,5 @@ FactoryBot.define do
     achieved_conversion { rand(0..1000) }
     remarks { Faker::Quote.famous_last_words }
     rating { rand(0.0..5.0) }
-    title { Faker::Book.title }
-    description { Faker::Quote.famous_last_words }
   end
 end

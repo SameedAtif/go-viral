@@ -9,7 +9,10 @@ RSpec.describe ProjectDeliverablesController do
       user
     end
     let(:project) do
-      project = create :project, :reviewed, :payment_verified
+      client = create :client, user: influencer_user
+      organization = create :organization, :verified
+      create :organization_detail, :owner, client: client, organization: organization
+      project = create :project, :reviewed, :payment_verified, organization: organization
       create :project_milestone, project: project
       create :project_influencer, project: project, influencer: influencer_user.influencer
       project
@@ -18,7 +21,6 @@ RSpec.describe ProjectDeliverablesController do
       {
         project_milestone_id: project.project_milestones.first.id,
         project_deliverable: {
-          project_id: project.id,
           influencer_id: influencer_user.influencer.id,
           project_milestone_id: project.project_milestones.first.id,
           title: "This is a sample title",
