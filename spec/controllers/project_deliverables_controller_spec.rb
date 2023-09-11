@@ -11,15 +11,16 @@ RSpec.describe ProjectDeliverablesController do
     let(:project) do
       project = create :project, :reviewed, :payment_verified
       create :project_milestone, project: project
+      create :project_influencer, project: project, influencer: influencer_user.influencer
       project
     end
     let(:creation_params) {
       {
-        project_id: project.id,
+        project_milestone_id: project.project_milestones.first.id,
         project_deliverable: {
           project_id: project.id,
           influencer_id: influencer_user.influencer.id,
-          project_milestone_id: project.project_milestones.first.id
+          project_milestone_id: project.project_milestones.first.id,
           title: "This is a sample title",
           description: "This is a sample title. This is a sample title."
         }
@@ -58,13 +59,6 @@ RSpec.describe ProjectDeliverablesController do
             post 'create', params: creation_params, session: session_params
             expect(ProjectDeliverable.count).to eq(1)
           end
-
-          it "will not create with restricted params and value" do
-            creation_params[:project_deliverable].merge!(status: "approved")
-            expect do
-              post 'create', params: creation_params, session: session_params
-            end.to raise_error(Pundit::NotAuthorizedError)
-          end
         end
 
         context "when creator is not part of project" do
@@ -100,17 +94,15 @@ RSpec.describe ProjectDeliverablesController do
       organization = create :organization, :verified
       create :organization_detail, :owner, client: client, organization: organization
       project = create :project, organization: organization
-      create :project_deliverable, project: project, influencer: influencer_user.influencer
+      project_milestone = create :project_milestone, project: project
+      create :project_deliverable, project_milestone: project_milestone
     end
     let(:updation_params) {
       {
         id: project_deliverable.id,
         project_deliverable: {
           title: "This is a sample title",
-          description: "This is a sample title. This is a sample title.",
-          budge: 100.10,
-          status: "approved",
-          delivery_date: 16.days.from_now
+          description: "This is a sample title. This is a sample title."
         }
       }
     }
@@ -119,7 +111,7 @@ RSpec.describe ProjectDeliverablesController do
       it "will not be updated" do
         put 'update', params: updation_params
         update_keys = [
-          :title, :description, :budget, :delivery_date
+          :title, :description
         ].map { |k, _| k.to_sym}
         update_keys.each do |key|
           expect(project_deliverable.reload.send(key)).not_to eq(updation_params[:project_deliverable][key])
@@ -130,17 +122,13 @@ RSpec.describe ProjectDeliverablesController do
     context "when user is signed_in" do
       context "when user is signed in as client" do
         before :each do
-          sign_in(project_deliverable.project.organization.owner.user, scope: :user)
+          sign_in(project_deliverable.project_milestone.project.organization.owner.user, scope: :user)
         end
-        it "will update client allowed fields" do
+        it "will throw pundit authorization errro" do
           session_params = {user_role: User::USER_ROLES[:client]}
-          put 'update', params: updation_params, session: session_params
-          update_keys = [
-            :status
-          ].map { |k, _| k.to_sym}
-          update_keys.each do |key|
-            expect(project_deliverable.reload.send(key)).to eq(updation_params[:project_deliverable][key])
-          end
+          expect do
+            put 'update', params: updation_params, session: session_params
+          end.to raise_error(Pundit::NotAuthorizedError)
         end
       end
       context "when user is signed in as creator" do
@@ -150,7 +138,7 @@ RSpec.describe ProjectDeliverablesController do
         context "when valid status is passed" do
           it "will update creator allowed fields" do
             session_params = {user_role: User::USER_ROLES[:influencer]}
-            updation_params[:project_deliverable][:status] = 'ready_for_review'
+            project_deliverable.influencer.update(reviewed: true)
             put 'update', params: updation_params, session: session_params
             update_keys = [
               :title, :description

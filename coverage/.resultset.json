@@ -74,10 +74,10 @@
           1,
           null,
           1,
-          56,
-          56,
+          64,
+          64,
           null,
-          56,
+          64,
           null,
           null
         ]
@@ -213,6 +213,42 @@
           9,
           null,
           5,
+          null,
+          null
+        ]
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/controllers/project_deliverables_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          4,
+          4,
+          4,
+          4,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          5,
+          null,
+          null,
+          1,
+          4,
+          null,
+          null,
+          1,
+          4,
+          4,
           null,
           null
         ]
@@ -428,7 +464,7 @@
           1,
           1,
           null,
-          247,
+          277,
           null,
           1,
           null,
@@ -576,13 +612,13 @@
           4,
           null,
           1,
-          86,
+          87,
           null,
           null,
           1,
           null,
           1,
-          82,
+          92,
           6,
           null,
           null,
@@ -624,8 +660,8 @@
           1,
           null,
           1,
-          56,
-          56,
+          64,
+          64,
           null,
           null
         ]
@@ -647,9 +683,9 @@
           1,
           null,
           1,
-          56,
-          56,
-          56,
+          64,
+          64,
+          64,
           null,
           null,
           1,
@@ -915,12 +951,68 @@
           1,
           null,
           1,
+          6,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/project_milestone.rb": {
+        "lines": [
+          1,
           1,
           null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/models/project_deliverable.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/satif/Desktop/projects/go_viral/app/policies/project_deliverable_policy.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          4,
+          null,
+          null,
+          1,
+          4,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          0,
           null,
           null,
           null,
           null,
+          0,
           null,
           null,
           null
@@ -984,21 +1076,6 @@
         "lines": [
           1,
           1,
-          1,
-          null
-        ]
-      },
-      "/Users/satif/Desktop/projects/go_viral/app/models/project_milestone.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
           1,
           null
         ]
@@ -1194,55 +1271,6 @@
         "branches": {
         }
       },
-      "/Users/satif/Desktop/projects/go_viral/app/controllers/project_deliverables_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/Users/satif/Desktop/projects/go_viral/app/jobs/application_job.rb": {
         "lines": [
           0,
@@ -1364,21 +1392,6 @@
         "branches": {
         }
       },
-      "/Users/satif/Desktop/projects/go_viral/app/models/project_deliverable.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/Users/satif/Desktop/projects/go_viral/app/models/project_deliverable_review.rb": {
         "lines": [
           0,
@@ -1406,6 +1419,6 @@
         }
       }
     },
-    "timestamp": 1694175422
+    "timestamp": 1694438617
   }
 }

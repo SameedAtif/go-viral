@@ -17,9 +17,9 @@ Rails.application.routes.draw do
   resources :project_applications, only: %i[update]
   # When you submit a deliverable for a milestone, you can view the milestone
   resources :project_milestones, only: :show do
-    resources :project_deliverables
+    resources :project_deliverables, except: :update
   end
-
+  resources :project_deliverables, only: :update
   resources :users, only: [] do
     resources :notifications, only: :index
   end
