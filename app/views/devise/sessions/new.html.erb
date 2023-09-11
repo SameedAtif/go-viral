@@ -1,26 +1,115 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="flex min-h-full">
+  <div class="relative hidden flex-1 w-0 lg:w-1/2 xl:w-3/5 lg:block">
+    <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80" alt="">
+    <div class='absolute flex w-full h-screen'>
+      <div class="m-auto">
+        <h3 class='text-center text-white text-5xl font-bold'>TheCreatorBazaar</h3>
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+  <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:w-1/2 xl:w-2/5 lg:px-10 xl:px-20">
+    <div class="mx-auto w-full lg:w-[30rem]">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md lg:max-w-full">
+        <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+      </div>
 
-<%= render "devise/shared/links" %>
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px] lg:max-w-full">
+        <div class="bg-white px-6 py-12 shadow-lg sm:rounded-lg sm:px-12">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { class: "space-y-6" }) do |f| %>
+            <div>
+              <%= f.label :email, "Email address", class: 'block text-sm font-medium leading-6 text-gray-700 text-sm leading-tight' %>
+              <div class="mt-2">
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true, class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+              </div>
+            </div>
+
+            <div>
+              <%= f.label :password, "Password",  class: 'block text-sm font-medium leading-6 text-gray-700 text-sm leading-tight' %>
+              <div class="mt-2">
+                <%= f.password_field :password, autocomplete: "current-password", required: "required", class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <% if devise_mapping.rememberable? %>
+                <div class="flex items-center">
+                  <%= f.check_box :remember_me, class: 'h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600' %>
+                  <%= f.label :remember_me, 'Remember me', class: 'ml-3 block text-sm leading-6 text-gray-900' %>
+                </div>
+              <% end %>
+
+              <div class="text-sm leading-6">
+                <%= link_to "Forgot password?", new_password_path(resource_name), class: "font-semibold text-indigo-600 hover:text-indigo-500" %>
+              </div>
+            </div>
+
+            <div>
+              <%= f.submit "Sign in", class: 'flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' %>
+            </div>
+          <% end %>
+
+          <!-- Currently not using other sign in options START -->
+
+          <!-- div>
+            <div class="relative mt-10">
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-gray-200"></div>
+              </div>
+              <div class="relative flex justify-center text-sm font-medium leading-6">
+                <span class="bg-white px-6 text-gray-900">Or continue with</span>
+              </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-3 gap-3">
+              <a href="#" class="flex w-full items-center justify-center gap-3 rounded-md px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0] border border-gray-300 ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                  <g clip-path="url(#clip0_47_2239)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M20.5 10C20.5 4.477 16.023 0 10.5 0C4.977 0 0.5 4.477 0.5 10C0.5 14.991 4.157 19.128 8.938 19.878V12.891H6.398V10H8.938V7.797C8.938 5.291 10.43 3.907 12.715 3.907C13.809 3.907 14.953 4.102 14.953 4.102V6.562H13.693C12.45 6.562 12.063 7.333 12.063 8.124V10H14.836L14.393 12.89H12.063V19.878C16.843 19.128 20.5 14.991 20.5 10Z" fill="#6B7280"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_47_2239">
+                      <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+
+              <a href="#" class="flex w-full items-center justify-center gap-3 rounded-md px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0] border border-gray-300 ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                  <g clip-path="url(#clip0_47_2245)">
+                    <path d="M19.9313 8.19763C20.0479 8.86883 20.106 9.54888 20.105 10.2301C20.105 13.2726 19.0175 15.8451 17.125 17.5864H17.1275C15.4725 19.1151 13.1975 20.0001 10.5 20.0001C7.84784 20.0001 5.3043 18.9466 3.42893 17.0712C1.55357 15.1958 0.5 12.6523 0.5 10.0001C0.5 7.34797 1.55357 4.80443 3.42893 2.92907C5.3043 1.0537 7.84784 0.00013343 10.5 0.00013343C12.9824 -0.0289395 15.3798 0.903674 17.19 2.60263L14.335 5.45763C13.303 4.47385 11.9256 3.93512 10.5 3.95763C7.89125 3.95763 5.675 5.71763 4.885 8.08763C4.46613 9.32951 4.46613 10.6745 4.885 11.9164H4.88875C5.6825 14.2826 7.895 16.0426 10.5038 16.0426C11.8513 16.0426 13.0088 15.6976 13.9063 15.0876H13.9025C14.4236 14.7424 14.8694 14.2951 15.2129 13.7729C15.5565 13.2506 15.7906 12.6641 15.9013 12.0489H10.5V8.19888L19.9313 8.19763Z" fill="#6B7280"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_47_2245">
+                      <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+
+              <a href="#" class="flex w-full items-center justify-center gap-3 rounded-md px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0] border border-gray-300 ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                  <g clip-path="url(#clip0_47_2248)">
+                    <path d="M16.1114 19.1976C15.0227 20.253 13.834 20.0864 12.6897 19.5864C11.4787 19.0754 10.3677 19.0532 9.09011 19.5864C7.49031 20.2752 6.64598 20.0752 5.69054 19.1976C0.269003 13.6094 1.0689 5.09936 7.22368 4.78828C8.72349 4.86605 9.7678 5.6104 10.6455 5.67706C11.9564 5.41043 13.2118 4.64386 14.6116 4.74385C16.2892 4.87716 17.5557 5.54374 18.3889 6.74359C14.9227 8.82111 15.7448 13.3872 18.9222 14.6648C18.2889 16.3313 17.4668 17.9866 16.1003 19.2087L16.1114 19.1976ZM10.5344 4.72163C10.3677 2.24416 12.3786 0.199975 14.6894 0C15.0116 2.8663 12.0897 4.99937 10.5344 4.72163Z" fill="#6B7280"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_47_2248">
+                      <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            </div>
+          </div -->
+
+          <!-- Currently not using other sign in options END -->
+
+          <p class="mt-6 text-center text-sm text-gray-500">
+            Don't have an account?
+            <%= link_to "Register here", new_registration_path(resource_name), class: "font-semibold leading-6 text-indigo-600 hover:text-indigo-500" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

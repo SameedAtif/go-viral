@@ -43,3 +43,27 @@ themeToggleBtn.addEventListener('click', function() {
     }
 
 });
+
+var profileToggleIcon = document.getElementById('dropdownNavbarLink');
+
+document.addEventListener('turbo:load', () => {
+    // Code to be executed when the DOM is ready
+    console.log("CHal ja bhai!!!")
+});
+
+$(document).ready(function(){
+    $("#dropdownNavbar").click(function(){
+        console.log("kamnslcnasnclk's ")
+    });
+});
+
+var profileListing = document.getElementById('dropdownNavbar')
+
+themeToggleBtn.addEventListener('click', function () {
+    if (profileToggleIcon.value == "on") {
+        profileToggleIcon.value = "off";
+    }
+    else if (profileToggleIcon.value == "on") {
+        profileToggleIcon.value = "off";
+    }
+});
