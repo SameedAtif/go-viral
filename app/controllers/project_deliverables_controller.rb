@@ -1,16 +1,7 @@
 class ProjectDeliverablesController < ApplicationController
-  def index
-    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
-    @project_deliverables = @project_milestone.project_deliverables
-  end
-
-  def new
-    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
-    @project_deliverable = ProjectDeliverable.new(project_id: params[:project_id])
-  end
+  before_action :load_project_milestone, except: :update
 
   def create
-    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
     @project_deliverable = ProjectDeliverable.new(permitted_params)
     @project_deliverable.project_milestone_id = @project_milestone.id
     @project_deliverable.influencer_id = current_user.influencer.id
@@ -39,5 +30,9 @@ class ProjectDeliverablesController < ApplicationController
 
   def validate_client_statuses
     ['approved', 'rejected'].find{ |type| type == params[:status] }
+  end
+
+  def load_project_milestone
+    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
   end
 end
