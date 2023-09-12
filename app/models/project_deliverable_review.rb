@@ -13,4 +13,13 @@ class ProjectDeliverableReview < ApplicationRecord
   validates :status, inclusion: { in: STATUS_TYPES }
   validates_length_of :remarks, minimum: 3
   validates :achieved_reach, :achieved_conversion, numericality: { only_integer: true }
+  validate :deliverable_locked
+
+  private
+
+  def deliverable_locked
+    return if DateTime.current < project_deliverable.project_milestone.end_time
+
+    errors.add(:base, "This campaign deliverable is now locked")
+  end
 end

@@ -6,10 +6,17 @@ class ProjectDeliverable < ApplicationRecord
 
   validates_presence_of :title, :description
   validates_length_of :title, :description, minimum: 3
+  validate :deliverable_locked
 
   after_save_commit :notify_client, on: %i[create update]
 
   private
+
+  def deliverable_locked
+    return if DateTime.current < project_milestone.end_time
+
+    errors.add(:base, "This campaign deliverable is now locked")
+  end
 
   def notify_client
     Notification.create!(

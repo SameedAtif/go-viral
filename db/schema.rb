@@ -256,6 +256,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.float "budget", default: 0.0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["project_id"], name: "index_project_milestones_on_project_id"
   end
 

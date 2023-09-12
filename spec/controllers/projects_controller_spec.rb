@@ -169,7 +169,9 @@ RSpec.describe ProjectsController do
                   description: Faker::Quote.famous_last_words,
                   reach: rand(1..10000),
                   conversion: rand(1..1000),
-                  budget: rand(1.00..100.00)
+                  budget: rand(1.00..100.00),
+                  start_time: DateTime.current,
+                  end_time: 2.days.from_now
                 }
               ]
             }
@@ -283,7 +285,9 @@ RSpec.describe ProjectsController do
                   description: Faker::Quote.famous_last_words,
                   reach: 20000,
                   conversion: 2000,
-                  budget: 200.00
+                  budget: 200.00,
+                  start_time: DateTime.current,
+                  end_time: 2.days.from_now
                 }
               ]
             }

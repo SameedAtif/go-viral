@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
       :is_draft, targeted_geographic_audience: [],
       project_platforms_attributes: %i[platform_id _destroy],
       project_categories_attributes: %i[category_id _destroy],
-      project_milestones_attributes: %i[title description reach conversion budget _destroy],
+      project_milestones_attributes: %i[title description reach conversion budget start_time end_time _destroy],
       example_works_attributes: %i[title description _destroy]
     )
   end

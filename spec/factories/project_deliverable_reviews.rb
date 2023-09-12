@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :project_deliverable_review do
-    project_deliveable
+    project_deliverable
     client
     project
     achieved_reach { rand(0..1000) }

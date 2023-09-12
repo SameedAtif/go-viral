@@ -76,24 +76,29 @@ RSpec.describe ProjectDeliverableReviewsController do
   # - Client who is the owner of the project
   describe "PUT/PATCH update" do
     let(:client_user) do
-      user = create :user, :influencer
-      influencer = create :influencer, :reviewed, user: user
+      user = create :user, :client
+      client = create :client, user: user
       user
     end
     let(:project_deliverable_review) do
-      client = create :client, user: client_user
       organization = create :organization, :verified
-      create :organization_detail, :owner, client: client, organization: organization
-      project = create :project, organization: organization
-      project_milestone = create :project_milestone, project: project
-      create :project_deliverable_review, project_milestone: project_milestone
+      create :organization_detail, :owner, client: client_user.client, organization: organization
+      project = create :project, :reviewed, :payment_verified, organization: organization
+      milestone = create :project_milestone, project: project
+      influencer = create :influencer, :reviewed
+      project_influencer = create :project_influencer, project: project, influencer: influencer
+      project_deliverable = create :project_deliverable, project_milestone: milestone, influencer: influencer
+      create :project_deliverable_review, project_deliverable: project_deliverable
     end
     let(:updation_params) {
       {
         id: project_deliverable_review.id,
         project_deliverable_review: {
-          title: "This is a sample title",
-          description: "This is a sample title. This is a sample title."
+          achieved_reach: 10001,
+          achieved_conversion: 1001,
+          remarks: "Faker::Quote.famous_last_words",
+          rating: 3.5,
+          status: "approved"
         }
       }
     }
@@ -102,7 +107,11 @@ RSpec.describe ProjectDeliverableReviewsController do
       it "will not be updated" do
         put 'update', params: updation_params
         update_keys = [
-          :title, :description
+          :achieved_reach,
+          :achieved_conversion,
+          :remarks,
+          :rating,
+          :status
         ].map { |k, _| k.to_sym}
         update_keys.each do |key|
           expect(project_deliverable_review.reload.send(key)).not_to eq(updation_params[:project_deliverable_review][key])
@@ -111,40 +120,33 @@ RSpec.describe ProjectDeliverableReviewsController do
     end
 
     context "when user is signed_in" do
-      context "when user is signed in as client" do
+      context "when user is signed in as creator" do
         before :each do
-          sign_in(project_deliverable_review.project_milestone.project.organization.owner.user, scope: :user)
+          sign_in(client_user, scope: :user)
         end
         it "will throw pundit authorization errro" do
-          session_params = {user_role: User::USER_ROLES[:client]}
+          session_params = {user_role: User::USER_ROLES[:influencer]}
           expect do
             put 'update', params: updation_params, session: session_params
           end.to raise_error(Pundit::NotAuthorizedError)
         end
       end
-      context "when user is signed in as creator" do
+      context "when user is signed in as client" do
         before :each do
-          sign_in(project_deliverable_review.influencer.user, scope: :user)
+          sign_in(project_deliverable_review.client.user, scope: :user)
         end
-        context "when valid status is passed" do
-          it "will update creator allowed fields" do
-            session_params = {user_role: User::USER_ROLES[:influencer]}
-            project_deliverable_review.influencer.update(reviewed: true)
-            put 'update', params: updation_params, session: session_params
-            update_keys = [
-              :title, :description
-            ].map { |k, _| k.to_sym}
-            update_keys.each do |key|
-              expect(project_deliverable_review.reload.send(key)).to eq(updation_params[:project_deliverable_review][key])
-            end
-          end
-        end
-        context "when invalid status is passed" do
-          it "will raise pundit authorizatione error" do
-            session_params = {user_role: User::USER_ROLES[:influencer]}
-            expect do
-              put 'update', params: updation_params, session: session_params
-            end.to raise_error(Pundit::NotAuthorizedError)
+        it "will update creator allowed fields" do
+          session_params = {user_role: User::USER_ROLES[:client]}
+          put 'update', params: updation_params, session: session_params
+          update_keys = [
+            :achieved_reach,
+            :achieved_conversion,
+            :remarks,
+            :rating,
+            :status
+          ].map { |k, _| k.to_sym}
+          update_keys.each do |key|
+            expect(project_deliverable_review.reload.send(key)).to eq(updation_params[:project_deliverable_review][key])
           end
         end
       end
