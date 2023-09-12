@@ -14,7 +14,10 @@ class Notification < ApplicationRecord
     creator_campaign_in_progress: 'creator_campaign_in_progress',
     creator_campaign_cancelled: 'creator_campaign_cancelled',
     reviewer_organization_created: 'reviewer_organization_created',
-    client_organization_verified: 'client_organization_verified'
+    client_organization_verified: 'client_organization_verified',
+    client_influencer_delivered_milestone: 'client_influencer_delivered_milestone',
+    creator_project_deliverable_approved: 'creator_project_deliverable_approved',
+    creator_project_deliverable_rejected: 'creator_project_deliverable_rejected'
   }
   NOTIFICATION_TYPES = NOTIFICATION_TYPES_MAP.values
 

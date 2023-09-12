@@ -65,7 +65,7 @@ RSpec.describe ProjectApplicationsController do
       influencer = create :influencer, user: user
       user
     end
-    let(:project) { create :project, :reviewed, :payment_verified }
+    let(:project) { create :project,  :reviewed, :payment_verified, budget: 100.10 }
     let(:creation_params) {
       {
         project_id: project.id,
@@ -154,7 +154,7 @@ RSpec.describe ProjectApplicationsController do
       client = create :client, user: influencer_user
       organization = create :organization, :verified
       create :organization_detail, :owner, client: client, organization: organization
-      project = create :project, organization: organization
+      project = create :project, budget: 100.10, organization: organization
       create :project_application, project: project, influencer: influencer_user.influencer
     end
     let(:updation_params) {

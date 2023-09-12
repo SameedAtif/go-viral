@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_145632) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -221,6 +221,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_145632) do
     t.float "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "ready_for_review"
     t.index ["client_id"], name: "index_project_deliverable_reviews_on_client_id"
     t.index ["project_deliverable_id"], name: "index_project_deliverable_reviews_on_project_deliverable_id"
     t.index ["project_id"], name: "index_project_deliverable_reviews_on_project_id"
@@ -255,6 +256,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_145632) do
     t.float "budget", default: 0.0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["project_id"], name: "index_project_milestones_on_project_id"
   end
 
