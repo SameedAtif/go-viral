@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "client_project_transactions", force: :cascade do |t|
+    t.bigint "system_project_transaction_id"
+    t.bigint "project_application_id"
+    t.bigint "project_id"
+    t.bigint "client_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.string "transaction_type", null: false
+    t.string "transaction_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_project_transactions_on_client_id"
+    t.index ["project_application_id"], name: "index_client_project_transactions_on_project_application_id"
+    t.index ["project_id"], name: "index_client_project_transactions_on_project_id"
+    t.index ["system_project_transaction_id"], name: "index_clnt_proj_trans_on_sys_proj_trans"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -101,6 +118,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.index ["platform_id"], name: "index_influencer_platforms_on_platform_id"
   end
 
+  create_table "influencer_project_transactions", force: :cascade do |t|
+    t.bigint "system_project_transaction_id"
+    t.bigint "project_id"
+    t.bigint "project_application_id"
+    t.bigint "influencer_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.string "transaction_type", null: false
+    t.string "transaction_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["influencer_id"], name: "index_influencer_project_transactions_on_influencer_id"
+    t.index ["project_application_id"], name: "index_influencer_project_transactions_on_project_application_id"
+    t.index ["project_id"], name: "index_influencer_project_transactions_on_project_id"
+    t.index ["system_project_transaction_id"], name: "index_inf_proj_trans_on_sys_proj_trans"
+  end
+
   create_table "influencers", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -158,6 +192,70 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_organization_reviews_on_organization_id"
     t.index ["reviewer_id"], name: "index_organization_reviews_on_reviewer_id"
+  end
+
+  create_table "organization_system_package_resource_transactions", force: :cascade do |t|
+    t.bigint "organization_system_package_transaction_id"
+    t.bigint "organization_system_package_resource_id"
+    t.string "resource_name", null: false
+    t.string "property_name"
+    t.string "property_type"
+    t.string "operation", null: false
+    t.string "operation_value", null: false
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_system_package_resource_id"], name: "index_org_sys_pkg_r_trans_on_org_sys_pkg_r"
+    t.index ["organization_system_package_transaction_id"], name: "index_org_sys_pkg_r_trans_on_org_sys_pkg_trans"
+  end
+
+  create_table "organization_system_package_resources", force: :cascade do |t|
+    t.bigint "organization_system_package_id"
+    t.string "resource_name", null: false
+    t.string "property_name"
+    t.string "property_type"
+    t.string "operation", null: false
+    t.string "operation_value", null: false
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_system_package_id"], name: "index_org_sys_pkg_r_on_org_sys_pkg"
+  end
+
+  create_table "organization_system_package_transactions", force: :cascade do |t|
+    t.bigint "organization_system_package_id"
+    t.bigint "user_id"
+    t.string "transaction_type", null: false
+    t.string "package_name", null: false
+    t.string "package_description", null: false
+    t.string "transaction_token", null: false
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_system_package_id"], name: "index_org_sys_pkg_on_org_sys_pkg_trans"
+    t.index ["user_id"], name: "index_organization_system_package_transactions_on_user_id"
+  end
+
+  create_table "organization_system_packages", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.string "package_name", null: false
+    t.string "package_description", null: false
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_organization_system_packages_on_organization_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -312,6 +410,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.index ["user_id"], name: "index_reviewers_on_user_id"
   end
 
+  create_table "system_project_transactions", force: :cascade do |t|
+    t.bigint "project_application_id"
+    t.bigint "project_id"
+    t.bigint "client_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.string "transaction_type", null: false
+    t.string "transaction_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_system_project_transactions_on_client_id"
+    t.index ["project_application_id"], name: "index_system_project_transactions_on_project_application_id"
+    t.index ["project_id"], name: "index_system_project_transactions_on_project_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
@@ -342,6 +455,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "client_project_transactions", "clients"
+  add_foreign_key "client_project_transactions", "project_applications"
+  add_foreign_key "client_project_transactions", "projects"
+  add_foreign_key "client_project_transactions", "system_project_transactions"
   add_foreign_key "clients", "users"
   add_foreign_key "example_works", "projects"
   add_foreign_key "gig_categories", "gigs"
@@ -356,6 +473,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
   add_foreign_key "gigs", "reviewers"
   add_foreign_key "influencer_platforms", "influencers"
   add_foreign_key "influencer_platforms", "platforms"
+  add_foreign_key "influencer_project_transactions", "influencers"
+  add_foreign_key "influencer_project_transactions", "project_applications"
+  add_foreign_key "influencer_project_transactions", "projects"
+  add_foreign_key "influencer_project_transactions", "system_project_transactions"
   add_foreign_key "influencers", "reviewers"
   add_foreign_key "influencers", "users"
   add_foreign_key "notifications", "users"
@@ -365,6 +486,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
   add_foreign_key "organization_feedbacks", "organizations"
   add_foreign_key "organization_reviews", "organizations"
   add_foreign_key "organization_reviews", "reviewers"
+  add_foreign_key "organization_system_package_resource_transactions", "organization_system_package_resources"
+  add_foreign_key "organization_system_package_resource_transactions", "organization_system_package_transactions"
+  add_foreign_key "organization_system_package_resources", "organization_system_packages"
+  add_foreign_key "organization_system_package_transactions", "organization_system_packages"
+  add_foreign_key "organization_system_package_transactions", "users"
+  add_foreign_key "organization_system_packages", "organizations"
   add_foreign_key "organizations", "reviewers"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
@@ -385,4 +512,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
   add_foreign_key "projects", "organizations"
   add_foreign_key "projects", "reviewers"
   add_foreign_key "reviewers", "users"
+  add_foreign_key "system_project_transactions", "clients"
+  add_foreign_key "system_project_transactions", "project_applications"
+  add_foreign_key "system_project_transactions", "projects"
 end
