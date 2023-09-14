@@ -8,4 +8,7 @@ class Client < ApplicationRecord
   # One Client can buy multiple gigs
   has_many :gig_clients, dependent: :destroy
   has_many :gigs, through: :gig_clients
+  has_many :organization_system_package_transactions
+  has_many :system_project_transactions
+  has_many :client_project_transactions
 end

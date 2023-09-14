@@ -7,10 +7,10 @@ class OrganizationsController < ApplicationController
 
   def create
     Organization.transaction do
-      organization = Organization.create!(creation_params)
       client = Client.find_or_create_by!(user: current_user)
-      session[:user_role] = User::USER_ROLES[:client]
+      organization = Organization.create!(creation_params)
       OrganizationDetail.find_or_create_by!(organization: organization, client: client, client_role: OrganizationDetail::CLIENT_ROLES_MAP[:owner])
+      session[:user_role] = User::USER_ROLES[:client]
     end
     flash[:success] = "Organization successfully created"
     redirect_to root_path
@@ -32,7 +32,7 @@ class OrganizationsController < ApplicationController
 
   def creation_params
     params.require(:organization).permit(
-      :name, :address_1, :address_2, :city, :country, :phone_number,
+      :name, :address_1, :address_2, :city, :country, :phone_number, :payment_plan,
       :website_url, :facebook_url, :instagram_url, :tiktok_url, :youtube_url
     )
   end

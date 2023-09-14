@@ -25,6 +25,10 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :project_platforms,
                                 allow_destroy: true
 
+  has_many :system_project_transactions
+  has_many :influencer_project_transactions
+  has_many :client_project_transactions
+
   STATUSES_MAP = {
     pending_review: 'pending_review',
     approved: 'approved',

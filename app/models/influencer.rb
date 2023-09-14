@@ -11,6 +11,8 @@ class Influencer < ApplicationRecord
   has_many :project_influencers
   has_many :project, through: :project_influencers
 
+  has_many :influencer_project_transactions
+
   accepts_nested_attributes_for :influencer_platforms,
                                 allow_destroy: true
                                 # reject_if: proc { |att| att['platform_id'].blank?}

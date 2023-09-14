@@ -12,6 +12,7 @@ FactoryBot.define do
     linkedin_url { Faker::Internet.url(host: 'linkedin.com') }
     youtube_url { Faker::Internet.url(host: 'youtube.com') }
     tiktok_url { Faker::Internet.url(host: 'tiktok.com') }
+    payment_plan { 'basic' }
     trait :verified do
       verified { true }
     end

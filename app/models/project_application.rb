@@ -3,6 +3,10 @@ class ProjectApplication < ApplicationRecord
   belongs_to :project
   belongs_to :influencer
 
+  has_many :system_project_transactions
+  has_many :influencer_project_transactions
+  has_many :client_project_transactions
+
   STATUS_TYPES_MAP = {
     draft: 'draft',
     ready_for_review: 'ready_for_review',

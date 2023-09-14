@@ -13,4 +13,8 @@ class ClientProjectTransaction < ApplicationRecord
   validates_presence_of :gross_price, :fee, :transaction_token, :transaction_type
   validates_numericality_of :fee, :gross_price, only_float: true, greater_than_equal_to: 0.00
   validates_inclusion_of :transaction_type, in: TRANSACTION_TYPES
+
+  def readonly?
+    !new_record?
+  end
 end
