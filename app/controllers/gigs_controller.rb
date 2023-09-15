@@ -1,26 +1,25 @@
 class GigsController < ApplicationController
   def index
-    @gigs = current_user.influencer.gigs.where(status: "approved")
+    @gigs = Gig.approved
   end
 
   def new
     @gig = Gig.new
+    authorize @gig
     @gig.gig_platforms.build
   end
 
   def create
     @gig = Gig.new(permitted_params)
     @gig.influencer = current_user.influencer
+    authorize @gig
     @gig.save!
     flash[:success] = 'Gig successfully created'
     redirect_to root_path
-  rescue StandardError => e
-    flash[:error] = e
-    render 'new'
   end
 
   def show
-    @gig = current_user.influencer.gigs.find_by(id: params[:gig_id])
+    @gig = Gig.find_by(id: params[:gig_id])
   end
 
   def edit
@@ -53,9 +52,10 @@ class GigsController < ApplicationController
 
   def permitted_params
     params.require(:gig).permit(
-      :id, :title,
+      :id, :title, :description,
       gig_categories_attributes: %i[id gig_id title description price delivery_estimation review_limit _destroy],
-      gig_platforms_attributes: %i[id gig_id _destroy]
+      gig_platforms_attributes: %i[id gig_id _destroy],
+      gig_faqs_attributes: %i[id gig_id question answer]
     )
   end
 end
