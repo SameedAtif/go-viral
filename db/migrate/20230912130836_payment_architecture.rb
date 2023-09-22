@@ -18,12 +18,11 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.string :entity_name, null: false
       t.string :package_name, null: false
       t.string :package_description, null: false
+      t.string :payment_plan
       t.float :gross_price, precision: 64, scale: 12
       t.float :fee, precision: 64, scale: 12
       t.float :discount, precision: 64, scale: 12
       t.datetime :discount_expires_at
-      t.datetime :start_time, null: false
-      t.datetime :end_time, null: false
 
       t.timestamps
     end
@@ -32,6 +31,9 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.belongs_to :organization, foreign_key: true, index: true
       t.belongs_to :system_package, foreign_key: true, index: true
       t.boolean :refunded, default: false
+      t.string :payment_plan
+      t.datetime :start_time, null: false
+      t.datetime :end_time, null: false
 
       t.timestamps
     end
@@ -39,6 +41,7 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
     create_table :organization_system_package_transactions do |t|
       t.belongs_to :organization_system_package, foreign_key: true, index: {name: "index_org_sys_pkg_on_org_sys_pkg_trans"}
       t.belongs_to :client, foreign_key: true, index: true
+      t.belongs_to :reviewer, foreign_key: true, index: true
       t.string :transaction_type, null: false
       t.string :package_name, null: false
       t.string :package_description, null: false
@@ -55,11 +58,9 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
 
     create_table :system_package_resources do |t|
       t.belongs_to :system_package, foreign_key: true, index: true
+      t.string :category, null: false
       t.string :resource_name, null: false
-      t.string :property_name
-      t.string :property_type
-      t.string :operation, null: false
-      t.string :operation_value, null: false
+      t.string :resource_value, null: false
       t.float :gross_price, precision: 64, scale: 12
       t.float :fee, precision: 64, scale: 12
       t.float :discount, precision: 64, scale: 12
@@ -79,10 +80,7 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.belongs_to :organization_system_package_transaction, foreign_key: true, index: {name: "index_org_sys_pkg_r_trans_on_org_sys_pkg_trans"}
       t.belongs_to :organization_system_package_resource, foreign_key: true, index: {name: "index_org_sys_pkg_r_trans_on_org_sys_pkg_r"}
       t.string :resource_name, null: false
-      t.string :property_name
-      t.string :property_type
-      t.string :operation, null: false
-      t.string :operation_value, null: false
+      t.string :resource_value, null: false
       t.float :gross_price, precision: 64, scale: 12
       t.float :fee, precision: 64, scale: 12
       t.float :discount, precision: 64, scale: 12
@@ -133,7 +131,19 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_column :organizations, :payment_plan, :string, null: false
-    #Ex:- add_column("admin_users", "username", :string, :limit =>25, :after => "email")
+    create_table :organization_package_downgrade_requests do |t|
+      t.references :current_package, index: {name: "index_curr_sys_pkg_on_sys_pkg"}, foreign_key: {to_table: :system_packages}
+      t.references :requested_package, index: {name: "index_req_sys_pkg_on_sys_pkg"}, foreign_key: {to_table: :system_packages}
+      t.float :refundable_amount, precision: 64, scale: 12
+      t.float :fee, precision: 64, scale: 12
+      t.string :reason, null: false
+      t.string :status, null: false, default: OrganizationPackageDowngradeRequest::STATUS_TYPES_MAP[:pending_review]
+      t.boolean :resolved, null: false, default: false
+      t.belongs_to :reviewer, foreign_key: true, index: {name: "index_org_sys_pkg_dgrade_rev"}
+      t.belongs_to :organization, foreign_key: true, index: {name: "index_org_sys_pkg_dgrade_clt"}
+      t.timestamps
+    end
+
+    add_column :organizations, :payment_plan, :string
   end
 end

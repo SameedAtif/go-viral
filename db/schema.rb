@@ -183,6 +183,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.index ["organization_id"], name: "index_organization_feedbacks_on_organization_id"
   end
 
+  create_table "organization_package_downgrade_requests", force: :cascade do |t|
+    t.bigint "current_package_id"
+    t.bigint "requested_package_id"
+    t.float "refundable_amount"
+    t.float "fee"
+    t.string "reason", null: false
+    t.string "status", default: "pending_review", null: false
+    t.boolean "resolved", default: false, null: false
+    t.bigint "reviewer_id"
+    t.bigint "organization_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["current_package_id"], name: "index_curr_sys_pkg_on_sys_pkg"
+    t.index ["organization_id"], name: "index_org_sys_pkg_dgrade_clt"
+    t.index ["requested_package_id"], name: "index_req_sys_pkg_on_sys_pkg"
+    t.index ["reviewer_id"], name: "index_org_sys_pkg_dgrade_rev"
+  end
+
   create_table "organization_reviews", force: :cascade do |t|
     t.bigint "organization_id"
     t.bigint "reviewer_id"
@@ -198,10 +216,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.bigint "organization_system_package_transaction_id"
     t.bigint "organization_system_package_resource_id"
     t.string "resource_name", null: false
-    t.string "property_name"
-    t.string "property_type"
-    t.string "operation", null: false
-    t.string "operation_value", null: false
+    t.string "resource_value", null: false
     t.float "gross_price"
     t.float "fee"
     t.float "discount"
@@ -224,6 +239,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
   create_table "organization_system_package_transactions", force: :cascade do |t|
     t.bigint "organization_system_package_id"
     t.bigint "client_id"
+    t.bigint "reviewer_id"
     t.string "transaction_type", null: false
     t.string "package_name", null: false
     t.string "package_description", null: false
@@ -238,12 +254,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_organization_system_package_transactions_on_client_id"
     t.index ["organization_system_package_id"], name: "index_org_sys_pkg_on_org_sys_pkg_trans"
+    t.index ["reviewer_id"], name: "index_organization_system_package_transactions_on_reviewer_id"
   end
 
   create_table "organization_system_packages", force: :cascade do |t|
     t.bigint "organization_id"
     t.bigint "system_package_id"
     t.boolean "refunded", default: false
+    t.string "payment_plan"
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_organization_system_packages_on_organization_id"
@@ -267,7 +287,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.string "tiktok_url"
     t.boolean "verified"
     t.bigint "reviewer_id"
-    t.string "payment_plan", null: false
+    t.string "payment_plan"
     t.index ["reviewer_id"], name: "index_organizations_on_reviewer_id"
   end
 
@@ -405,11 +425,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
 
   create_table "system_package_resources", force: :cascade do |t|
     t.bigint "system_package_id"
+    t.string "category", null: false
     t.string "resource_name", null: false
-    t.string "property_name"
-    t.string "property_type"
-    t.string "operation", null: false
-    t.string "operation_value", null: false
+    t.string "resource_value", null: false
     t.float "gross_price"
     t.float "fee"
     t.float "discount"
@@ -423,12 +441,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.string "entity_name", null: false
     t.string "package_name", null: false
     t.string "package_description", null: false
+    t.string "payment_plan"
     t.float "gross_price"
     t.float "fee"
     t.float "discount"
     t.datetime "discount_expires_at"
-    t.datetime "start_time", null: false
-    t.datetime "end_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -507,6 +524,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
   add_foreign_key "organization_details", "organizations"
   add_foreign_key "organization_feedbacks", "influencers"
   add_foreign_key "organization_feedbacks", "organizations"
+  add_foreign_key "organization_package_downgrade_requests", "organizations"
+  add_foreign_key "organization_package_downgrade_requests", "reviewers"
+  add_foreign_key "organization_package_downgrade_requests", "system_packages", column: "current_package_id"
+  add_foreign_key "organization_package_downgrade_requests", "system_packages", column: "requested_package_id"
   add_foreign_key "organization_reviews", "organizations"
   add_foreign_key "organization_reviews", "reviewers"
   add_foreign_key "organization_system_package_resource_transactions", "organization_system_package_resources"
@@ -515,6 +536,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
   add_foreign_key "organization_system_package_resources", "system_package_resources"
   add_foreign_key "organization_system_package_transactions", "clients"
   add_foreign_key "organization_system_package_transactions", "organization_system_packages"
+  add_foreign_key "organization_system_package_transactions", "reviewers"
   add_foreign_key "organization_system_packages", "organizations"
   add_foreign_key "organization_system_packages", "system_packages"
   add_foreign_key "organizations", "reviewers"

@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   root "dotcom#index"
 
   get '/dashboard', :to => 'dotcom#dashboard'
-  resource :organization
+  resource :organization do
+    resources :organization_system_packages, only: :create
+    resources :organization_package_downgrade_requests, only: :create
+  end
+  resources :organization_system_packages, only: :destroy
+  resources :organization_package_downgrade_requests, only: :update
+
   resources :influencers
   # Already made all the associations so changing the name would be very time taking (sorry)
   resources :projects, path: :campaigns do
@@ -30,4 +36,6 @@ Rails.application.routes.draw do
   end
 
   resources :notifications, only: [:update, :destroy]
+
+  resources :system_packages, only: :create
 end

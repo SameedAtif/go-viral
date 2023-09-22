@@ -1,14 +1,13 @@
 class OrganizationSystemPackageTransaction < ApplicationRecord
   belongs_to :organization_system_package
   belongs_to :client
-  belongs_to :user
+  belongs_to :reviewer, optional: true
 
   has_many :organization_system_package_resource_transactions
 
   validates_presence_of :transaction_type, :transaction_token, :package_name, :package_description,
                         :transaction_token, :gross_price, :fee
-  validates_numericality_of :fee, :gross_price, :discount, only_float: true, greater_than_equal_to: 0.00
-  validates :discount_expires_at, :start_time, comparison: { greater_than_equal_to: DateTime.current }
+  validates_numericality_of :fee, :gross_price, :discount, only_float: true, greater_than_or_equal_to: 0.00
   validates :end_time, comparison: { greater_than: :start_time }
 
   # validate :match_with_system_package

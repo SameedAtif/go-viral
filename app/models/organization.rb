@@ -4,6 +4,7 @@ class Organization < ApplicationRecord
   has_many :organization_details, dependent: :destroy
   has_many :clients, through: :organization_details
   has_many :organization_system_packages
+  has_many :organization_package_downgrade_requests
 
   validates_presence_of :name, :address_1, :address_2, :city, :country, :phone_number
 
@@ -13,6 +14,10 @@ class Organization < ApplicationRecord
 
   def owner
     organization_details.find_by(client_role: OrganizationDetail::CLIENT_ROLES_MAP[:owner]).client
+  end
+
+  def current_package
+    organization_system_packages.last
   end
 
   private

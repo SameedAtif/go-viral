@@ -55,7 +55,7 @@ class ProjectApplication < ApplicationRecord
     Notification.create!(
       resource_id: project_id,
       resource_type: project.class.name,
-      user_id: influencer.user_id,
+      user_id: project.organization.owner.user_id,
       user_type: User::USER_ROLES[:client],
       notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_influencer_applied_to_project]
     )

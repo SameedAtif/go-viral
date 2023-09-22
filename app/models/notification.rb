@@ -17,7 +17,8 @@ class Notification < ApplicationRecord
     client_organization_verified: 'client_organization_verified',
     client_influencer_delivered_milestone: 'client_influencer_delivered_milestone',
     creator_project_deliverable_approved: 'creator_project_deliverable_approved',
-    creator_project_deliverable_rejected: 'creator_project_deliverable_rejected'
+    creator_project_deliverable_rejected: 'creator_project_deliverable_rejected',
+    client_package_downgrade_update: 'client_package_downgrade_update'
   }
   NOTIFICATION_TYPES = NOTIFICATION_TYPES_MAP.values
 
