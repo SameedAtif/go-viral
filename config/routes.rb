@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get '/dashboard', :to => 'dotcom#dashboard'
   resource :organization
   resources :influencers
+
+  resources :gigs
   # Already made all the associations so changing the name would be very time taking (sorry)
   resources :projects, path: :campaigns do
     resources :project_applications
