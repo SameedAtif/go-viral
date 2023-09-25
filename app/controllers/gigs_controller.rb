@@ -1,6 +1,6 @@
 class GigsController < ApplicationController
   skip_before_action :authenticate_user!
-  layout 'pages_with_search_bar'
+  layout "pages_with_search_bar"
   
   def index
     @gigs = Gig.all
