@@ -1,0 +1,56 @@
+<nav class="bg-[#e0f0fe] border-gray-200">
+  <div class="max-w-screen-2xl flex flex-wrap items-center md:justify-between mx-auto p-4">
+    <a href="#" class="order-2 md:order-1 flex items-center py-4 mx-auto md:mx-0">
+      <span class="self-center text-2xl font-semibold whitespace-nowrap">TheCreatorBazaar</span>
+    </a>
+    <button data-dropdownToggle="navbar-dropdown" type="button" class="order-1 md:order-2 dropdownNavbarLink inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+      </svg>
+    </button>
+    <div class="order-3 hidden w-full md:block md:w-auto" id="navbar-dropdown">
+      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 sm:border sm:border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
+        <li class="py-2.5">
+          <button type="button" class="text-neutral-600 bg-white hover:border hover:border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0">
+            Create a Campaign
+          </button>
+        </li>
+        <li class="py-4">
+          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Orders</a>
+        </li>
+        <li class="py-4">
+          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Influencers</a>
+        </li>
+        <li class="py-4">
+          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Campaign</a>
+        </li>
+        <li class="py-2.5">
+          <button data-dropdownToggle="profiledropdown" class="dropdownNavbarLink flex items-center justify-between w-full py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-10 h-10 rounded-full" src="https://picsum.photos/200" alt="user photo">
+          </button>
+
+          <div class="relative"> <!-- Add a relative positioning container -->
+            <div id="profiledropdown" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2"> <!-- Apply absolute positioning -->
+              <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                </li>
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                </li>
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
+                </li>
+              </ul>
+              <div class="py-1">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
