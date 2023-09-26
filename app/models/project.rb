@@ -51,17 +51,34 @@ class Project < ApplicationRecord
                         :required_number_of_influencers, :targeted_demographic_start_age,
                         :targeted_demographic_end_age
   validates_length_of :title, :description, minimum: 3
-
   validates :end_time, comparison: { greater_than: :start_time }
   validates :targeted_demographic_end_age, comparison: { greater_than: :targeted_demographic_start_age }
-
   validates :status, inclusion: { in: STATUSES }
   validates :payment_type, inclusion: { in: PAYMENT_TYPES }
   validates :budget, presence: true, numericality: { only_float: true }
+  validate :project_limit, :influencer_limit
 
   after_save_commit :notify_client, :notify_reviewer, :notify_creators, if: -> { saved_change_to_attribute?('status') }
 
   private
+
+  def project_limit
+    resource_limit = organization.current_package.system_package_resources.find_by(
+      resource_name: SystemPackageResource::RESOURCE_NAME_TYPES[:number_of_projects]
+    ).resource_value
+    return if organization.projects.count <= resource_limit.to_i
+
+    errors.add(:base, 'Cannot create project. Project limit exceeded.')
+  end
+
+  def influencer_limit
+    resource_limit = organization.current_package.system_package_resources.find_by(
+      resource_name: SystemPackageResource::RESOURCE_NAME_TYPES[:number_of_influencers]
+    ).resource_value
+    return if influencers.count <= resource_limit.to_i || required_number_of_influencers <= resource_limit.to_i
+
+    errors.add(:base, 'Cannot add influencer. Influencer limit exceeded.')
+  end
 
   def notify_reviewer
     return unless status == STATUSES_MAP[:pending_review] || new_record?

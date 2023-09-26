@@ -1,6 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 basic_client_package = SystemPackage.create!(
-  entity_name: SystemPackage::ENTITY_NAME_TYPES[:organization],
+  entity_name: SystemPackage::ENTITY_NAME_TYPES[:client],
   package_name: 'Basic',
   package_description: "Get a feel of the bazaar.",
   discount: 0,

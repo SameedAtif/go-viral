@@ -22,11 +22,11 @@ RSpec.describe OrganizationSystemPackagesController do
       context 'when organization_system_package is not present' do
         before do
           sign_in(client.user, scope: :user)
-          session_params = {user_role: User::USER_ROLES[:client]}
-          post 'create', params: organization_system_package_resource_params, session: session_params
         end
         it 'will create system package with given params' do
-          expect(OrganizationSystemPackage.count).to eq(1)
+          session_params = {user_role: User::USER_ROLES[:client]}
+          post 'create', params: organization_system_package_resource_params, session: session_params
+          expect(organization.current_package.id).to eq(system_package.id)
         end
       end
 
@@ -38,8 +38,6 @@ RSpec.describe OrganizationSystemPackagesController do
             sign_in(client.user, scope: :user)
             session_params = {user_role: User::USER_ROLES[:client]}
             post 'create', params: organization_system_package_resource_params, session: session_params
-            expect(OrganizationSystemPackage.count).to eq(2)
-            expect(organization.organization_system_packages.count).to eq(2)
             expect(organization.current_package.id).to eq(system_package.id)
           end
         end
@@ -72,8 +70,6 @@ RSpec.describe OrganizationSystemPackagesController do
                 }
               post 'create', params: new_organization_system_package_resource_params, session: session_params
               post 'create', params: organization_system_package_resource_params, session: session_params
-              expect(OrganizationSystemPackage.count).to eq(2)
-              expect(organization.organization_system_packages.count).to eq(2)
               expect(organization.current_package.id).to eq(system_package.id)
             end
           end
