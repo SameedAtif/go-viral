@@ -2,7 +2,7 @@
 class OrganizationPackageDowngradeRequest < ApplicationRecord
   belongs_to :current_package, class_name: 'SystemPackage', foreign_key: 'current_package_id'
   belongs_to :requested_package, class_name: 'SystemPackage', foreign_key: 'requested_package_id'
-  belongs_to :reviewer
+  belongs_to :reviewer, optional: true
   belongs_to :organization
 
   STATUS_TYPES_MAP = {
@@ -32,9 +32,9 @@ class OrganizationPackageDowngradeRequest < ApplicationRecord
     return if status == STATUS_TYPES_MAP[:pending_review]
 
     Notification.create!(
-      resource_id: client.id,
-      resource_type: client.class.name,
-      user_id: influencer.user_id,
+      resource_id: organization.id,
+      resource_type: organization.class.name,
+      user_id: organization.owner.user_id,
       user_type: User::USER_ROLES[:client],
       notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_package_downgrade_update]
     )
@@ -43,11 +43,11 @@ class OrganizationPackageDowngradeRequest < ApplicationRecord
   def notify_reviewer
     Reviewer.all.pluck(:user_id).each do |user_id|
       Notification.create!(
-        resource_id: client.id,
-        resource_type: client.class.name,
+        resource_id: organization.id,
+        resource_type: organization.class.name,
         user_id: user_id,
         user_type: User::USER_ROLES[:reviewer],
-        notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_pending_project_review]
+        notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_package_downgrade_request]
       )
     end
   end
@@ -55,7 +55,6 @@ class OrganizationPackageDowngradeRequest < ApplicationRecord
   def mark_as_resolved!
     return if status == STATUS_TYPES_MAP[:pending_review]
 
-    self.resolved = true
-    self.save!
+    update_column(:resolved, true)
   end
 end

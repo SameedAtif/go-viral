@@ -28,12 +28,12 @@ class OrganizationSystemPackagesController < ApplicationController
         @org_sys_pkg.end_time = 100.years.from_now
       end
       resolved_request = @organization.organization_package_downgrade_requests.where(
-        resolved: true, current_package: @organization.current_package, requested_package: @org_sys_pkg.system_package,
+        current_package: @organization.current_package, requested_package: @org_sys_pkg.system_package,
         status: OrganizationPackageDowngradeRequest::STATUS_TYPES_MAP[:approved]
-      )
+      ).last
       if resolved_request.present? && @organization.current_package.present?
         # TODO: Move this to perform_at(5.days.from_now)
-        @organization.current_package.refund!(
+        @organization.current_org_sys_package.refund!(
           amount: resolved_request.refundable_amount, fee: resolved_request.fee, reviewer_id: resolved_request.reviewer.id
         )
       end
@@ -56,20 +56,10 @@ class OrganizationSystemPackagesController < ApplicationController
     @organization.update!(payment_plan: @system_package.package_name)
   end
 
-  def destroy
-    # TODO: This functionality should not be exposed. End user can only 'request a refund'. Only reviewer can refund.
-    @org_sys_pkg = OrganizationSystemPackage.find(params[:id])
-    @org_sys_pkg.refund!
-  end
-
   private
 
   def load_organization
     @organization = Organization.find(params[:organization_id])
-  end
-
-  def permitted_params
-    params.require(:organization_system_package).permit(:system_package_id)
   end
 
   def organization_system_package_transaction_payload(transaction_token, transaction_type, system_package)

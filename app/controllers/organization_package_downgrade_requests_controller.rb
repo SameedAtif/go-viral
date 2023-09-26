@@ -3,7 +3,8 @@ class OrganizationPackageDowngradeRequestsController < ApplicationController
   before_action :set_organization, only: :create
 
   def create
-    resource = @organization.organization_package_downgrade_request.new(creation_params)
+    resource = OrganizationPackageDowngradeRequest.new(creation_params)
+    resource.organization = @organization
     resource.current_package = @organization.current_package
     authorize resource
     resource.save!
@@ -11,13 +12,15 @@ class OrganizationPackageDowngradeRequestsController < ApplicationController
 
   def update
     authorize @resource
-    @resource.update!(permitted_params)
+    @resource.assign_attributes(permitted_params)
+    @resource.reviewer = current_user.reviewer
+    @resource.save!
   end
 
   private
 
   def set_resource
-    @resource = OrganizationPackageDowngradeRequest.find(params[:organization_package_downgrade_request])
+    @resource = OrganizationPackageDowngradeRequest.find(params[:id])
   end
 
   def set_organization

@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     resources :organization_system_packages, only: :create
     resources :organization_package_downgrade_requests, only: :create
   end
-  resources :organization_system_packages, only: :destroy
   resources :organization_package_downgrade_requests, only: :update
 
   resources :influencers

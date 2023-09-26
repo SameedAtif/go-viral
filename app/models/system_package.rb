@@ -25,6 +25,6 @@ class SystemPackage < ApplicationRecord
   validates_inclusion_of :payment_plan, in: PAYMENT_PLANS, allow_blank: true
 
   def total_price
-    gross_price + gross_price * fee
+    gross_price + (gross_price * fee)
   end
 end
