@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :organization
 
   has_many :notifications, as: :source
+  has_many :project_disputes
   has_many :project_reviews
   # One Project can have many project-milestones
   has_many :project_applications

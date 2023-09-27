@@ -28,7 +28,7 @@ class OrganizationSystemPackagesController < ApplicationController
         @org_sys_pkg.end_time = 100.years.from_now
       end
       resolved_request = @organization.organization_package_downgrade_requests.where(
-        current_package: @organization.current_package, requested_package: @org_sys_pkg.system_package,
+        resolved: true, current_package: @organization.current_package, requested_package: @org_sys_pkg.system_package,
         status: OrganizationPackageDowngradeRequest::STATUS_TYPES_MAP[:approved]
       ).last
       if resolved_request.present? && @organization.current_package.present?

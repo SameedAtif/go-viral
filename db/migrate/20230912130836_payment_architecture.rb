@@ -100,6 +100,7 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.string :transaction_type, null: false
       t.string :transaction_token, null: false
 
+      t.index [:project_application_id, :project_id, :transaction_type], unique: true, name: "index_sys_pro_trans_on_pro_app_&_pro_&_trans_t"
       t.timestamps
     end
 
@@ -110,9 +111,10 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.belongs_to :influencer, foreign_key: true, index: true
       t.float :gross_price, precision: 64, scale: 12
       t.float :fee, precision: 64, scale: 12
-
-      t.string :transaction_type, null: false
-      t.string :transaction_token, null: false
+      t.boolean :credited
+      t.datetime :credited_at
+      t.string :transaction_type
+      t.string :transaction_token
 
       t.timestamps
     end
@@ -124,9 +126,10 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.belongs_to :client, foreign_key: true, index: true
       t.float :gross_price, precision: 64, scale: 12
       t.float :fee, precision: 64, scale: 12
-
-      t.string :transaction_type, null: false
-      t.string :transaction_token, null: false
+      t.boolean :credited
+      t.datetime :credited_at
+      t.string :transaction_type
+      t.string :transaction_token
 
       t.timestamps
     end
@@ -141,6 +144,22 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.boolean :resolved, null: false, default: false
       t.belongs_to :reviewer, foreign_key: true, index: {name: "index_org_sys_pkg_dgrade_rev"}
       t.belongs_to :organization, foreign_key: true, index: {name: "index_org_sys_pkg_dgrade_clt"}
+      t.timestamps
+    end
+
+    create_table :project_disputes do |t|
+      t.belongs_to :project
+      t.belongs_to :client
+      t.belongs_to :influencer
+      t.belongs_to :reviewer
+
+      t.string :created_by # influencer or client
+      t.string :status, null: false, default: ProjectDispute::STATUS_TYPES_MAP[:pending_review] #pending_review, under_review, resolved
+      t.string :resolved_in_favor
+      t.string :detail
+
+      t.datetime :resolved_at
+
       t.timestamps
     end
 

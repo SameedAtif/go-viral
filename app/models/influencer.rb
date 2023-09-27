@@ -2,6 +2,7 @@ class Influencer < ApplicationRecord
   belongs_to :user
 
   has_many :gigs
+  has_many :project_disputes
   has_many :project_applications
   has_many :project_deliverables
   # One Influencer can be on multiple platforms

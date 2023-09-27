@@ -4,9 +4,9 @@ class Notification < ApplicationRecord
 
   NOTIFICATION_TYPES_MAP = {
     new_project_request: 'new_project_request',
-    influencer_approved_for_project: 'influencer_approved_for_project',
-    influencer_rejected_for_project: 'influencer_rejected_for_project',
-    client_influencer_applied_to_project: 'client_influencer_applied_to_project',
+    creator_approved_for_project: 'creator_approved_for_project',
+    creator_rejected_for_project: 'creator_rejected_for_project',
+    client_creator_applied_to_project: 'client_creator_applied_to_project',
     client_project_approved: 'client_project_approved',
     client_project_rejected: 'client_project_rejected',
     client_project_expired: 'client_project_expired',
@@ -15,11 +15,13 @@ class Notification < ApplicationRecord
     creator_campaign_cancelled: 'creator_campaign_cancelled',
     reviewer_organization_created: 'reviewer_organization_created',
     client_organization_verified: 'client_organization_verified',
-    client_influencer_delivered_milestone: 'client_influencer_delivered_milestone',
+    client_creator_delivered_milestone: 'client_creator_delivered_milestone',
     creator_project_deliverable_approved: 'creator_project_deliverable_approved',
     creator_project_deliverable_rejected: 'creator_project_deliverable_rejected',
     client_package_downgrade_update: 'client_package_downgrade_update',
-    client_package_downgrade_request: 'client_package_downgrade_request'
+    client_package_downgrade_request: 'client_package_downgrade_request',
+    creator_project_amount_credited: 'creator_project_amount_credited',
+    creator_project_amount_debited: 'creator_project_amount_debited'
   }
   NOTIFICATION_TYPES = NOTIFICATION_TYPES_MAP.values
 

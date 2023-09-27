@@ -11,4 +11,5 @@ class Client < ApplicationRecord
   has_many :organization_system_package_transactions
   has_many :system_project_transactions
   has_many :client_project_transactions
+  has_many :project_disputes
 end

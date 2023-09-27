@@ -28,8 +28,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.bigint "client_id"
     t.float "gross_price"
     t.float "fee"
-    t.string "transaction_type", null: false
-    t.string "transaction_token", null: false
+    t.boolean "credited"
+    t.datetime "credited_at"
+    t.string "transaction_type"
+    t.string "transaction_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_client_project_transactions_on_client_id"
@@ -125,8 +127,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.bigint "influencer_id"
     t.float "gross_price"
     t.float "fee"
-    t.string "transaction_type", null: false
-    t.string "transaction_token", null: false
+    t.boolean "credited"
+    t.datetime "credited_at"
+    t.string "transaction_type"
+    t.string "transaction_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["influencer_id"], name: "index_influencer_project_transactions_on_influencer_id"
@@ -349,6 +353,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.index ["project_milestone_id"], name: "index_project_deliverables_on_project_milestone_id"
   end
 
+  create_table "project_disputes", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "client_id"
+    t.bigint "influencer_id"
+    t.bigint "reviewer_id"
+    t.string "created_by"
+    t.string "status", default: "pending_review", null: false
+    t.string "resolved_in_favor"
+    t.string "detail"
+    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_project_disputes_on_client_id"
+    t.index ["influencer_id"], name: "index_project_disputes_on_influencer_id"
+    t.index ["project_id"], name: "index_project_disputes_on_project_id"
+    t.index ["reviewer_id"], name: "index_project_disputes_on_reviewer_id"
+  end
+
   create_table "project_influencers", force: :cascade do |t|
     t.bigint "project_id"
     t.bigint "influencer_id"
@@ -461,6 +483,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_system_project_transactions_on_client_id"
+    t.index ["project_application_id", "project_id", "transaction_type"], name: "index_sys_pro_trans_on_pro_app_&_pro_&_trans_t", unique: true
     t.index ["project_application_id"], name: "index_system_project_transactions_on_project_application_id"
     t.index ["project_id"], name: "index_system_project_transactions_on_project_id"
   end
