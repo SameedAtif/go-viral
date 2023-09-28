@@ -17,8 +17,10 @@ Rails.application.routes.draw do
   resources :influencers
   # Already made all the associations so changing the name would be very time taking (sorry)
   resources :projects, path: :campaigns do
+    resources :project_disputes, only: :create
     resources :project_applications, only: %i[new index create]
   end
+  resources :project_disputes, only: :update
   resources :project_applications, only: %i[update]
   # When you submit a deliverable for a milestone, you can view the milestone
   resources :project_milestones, only: :show do
