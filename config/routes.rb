@@ -39,4 +39,5 @@ Rails.application.routes.draw do
   resources :notifications, only: [:update, :destroy]
 
   resources :system_packages, only: :create
+  resources :system_project_transactions, only: :create
 end
