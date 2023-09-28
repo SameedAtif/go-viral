@@ -476,6 +476,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.bigint "project_application_id"
     t.bigint "project_id"
     t.bigint "client_id"
+    t.bigint "project_dispute_id"
     t.float "gross_price"
     t.float "fee"
     t.string "transaction_type", null: false
@@ -485,6 +486,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
     t.index ["client_id"], name: "index_system_project_transactions_on_client_id"
     t.index ["project_application_id", "project_id", "transaction_type"], name: "index_sys_pro_trans_on_pro_app_&_pro_&_trans_t", unique: true
     t.index ["project_application_id"], name: "index_system_project_transactions_on_project_application_id"
+    t.index ["project_dispute_id"], name: "index_system_project_transactions_on_project_dispute_id"
     t.index ["project_id"], name: "index_system_project_transactions_on_project_id"
   end
 
@@ -572,6 +574,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
   add_foreign_key "project_deliverable_reviews", "projects"
   add_foreign_key "project_deliverables", "influencers"
   add_foreign_key "project_deliverables", "project_milestones"
+  add_foreign_key "project_disputes", "clients"
+  add_foreign_key "project_disputes", "influencers"
+  add_foreign_key "project_disputes", "projects"
+  add_foreign_key "project_disputes", "reviewers"
   add_foreign_key "project_influencers", "influencers"
   add_foreign_key "project_influencers", "projects"
   add_foreign_key "project_milestones", "projects"
@@ -585,5 +591,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_130836) do
   add_foreign_key "system_package_resources", "system_packages"
   add_foreign_key "system_project_transactions", "clients"
   add_foreign_key "system_project_transactions", "project_applications"
+  add_foreign_key "system_project_transactions", "project_disputes"
   add_foreign_key "system_project_transactions", "projects"
 end

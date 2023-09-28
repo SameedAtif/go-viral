@@ -90,10 +90,27 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
+    create_table :project_disputes do |t|
+      t.belongs_to :project, foreign_key: true, index: true
+      t.belongs_to :client, foreign_key: true, index: true
+      t.belongs_to :influencer, foreign_key: true, index: true
+      t.belongs_to :reviewer, foreign_key: true, index: true
+
+      t.string :created_by # influencer or client
+      t.string :status, null: false, default: ProjectDispute::STATUS_TYPES_MAP[:pending_review] #pending_review, under_review, resolved
+      t.string :resolved_in_favor
+      t.string :detail
+
+      t.datetime :resolved_at
+
+      t.timestamps
+    end
+
     create_table :system_project_transactions do |t|
       t.belongs_to :project_application, foreign_key: true, index: true
       t.belongs_to :project, foreign_key: true, index: true
       t.belongs_to :client, foreign_key: true, index: true
+      t.belongs_to :project_dispute, foreign_key: true, index: true
       t.float :gross_price, precision: 64, scale: 12
       t.float :fee, precision: 64, scale: 12
 
@@ -144,22 +161,6 @@ class PaymentArchitecture < ActiveRecord::Migration[7.0]
       t.boolean :resolved, null: false, default: false
       t.belongs_to :reviewer, foreign_key: true, index: {name: "index_org_sys_pkg_dgrade_rev"}
       t.belongs_to :organization, foreign_key: true, index: {name: "index_org_sys_pkg_dgrade_clt"}
-      t.timestamps
-    end
-
-    create_table :project_disputes do |t|
-      t.belongs_to :project
-      t.belongs_to :client
-      t.belongs_to :influencer
-      t.belongs_to :reviewer
-
-      t.string :created_by # influencer or client
-      t.string :status, null: false, default: ProjectDispute::STATUS_TYPES_MAP[:pending_review] #pending_review, under_review, resolved
-      t.string :resolved_in_favor
-      t.string :detail
-
-      t.datetime :resolved_at
-
       t.timestamps
     end
 

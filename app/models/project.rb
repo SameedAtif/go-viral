@@ -60,6 +60,7 @@ class Project < ApplicationRecord
   validate :project_limit, :influencer_limit
 
   after_save_commit :notify_client, :notify_reviewer, :notify_creators, if: -> { saved_change_to_attribute?('status') }
+  after_update_commit :notify_project_creators, if: -> { saved_change_to_attribute?('payment_verified') }
 
   private
 
@@ -117,6 +118,19 @@ class Project < ApplicationRecord
         user_id: user_id,
         user_type: User::USER_ROLES[:influencer],
         notification_type: creator_notification_type
+      )
+    end
+  end
+
+  def notify_project_creators
+    return unless payment_verified
+    influencers.pluck(:user_id).each do |user_id|
+      Notification.create!(
+        resource_id: project_id,
+        resource_type: project.class.name,
+        user_id: user_id,
+        user_type: User::USER_ROLES[:influencer],
+        notification_type: Notification::NOTIFICATION_TYPES_MAP[:creator_project_payment_is_approved]
       )
     end
   end

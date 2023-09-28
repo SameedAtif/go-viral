@@ -2,6 +2,7 @@ class SystemProjectTransaction < ApplicationRecord
   belongs_to :project
   belongs_to :project_application
   belongs_to :client
+  belongs_to :project_dispute, optional: true
 
   TRANSACTION_TYPES_MAP = {
     credit: 'credit', # credit = going in to the wallet
@@ -13,7 +14,7 @@ class SystemProjectTransaction < ApplicationRecord
   validates_numericality_of :fee, :gross_price, only_float: true, greater_than_or_equal_to: 0.00
   validates_inclusion_of :transaction_type, in: TRANSACTION_TYPES
 
-  after_create_commit :schedule_influencer_credit_transaction
+  after_create_commit :schedule_influencer_credit_transaction, :mark_payment_approved
 
   def readonly?
     !new_record?
@@ -45,5 +46,11 @@ class SystemProjectTransaction < ApplicationRecord
       fee: fee,
       transaction_type: InfluencerProjectTransaction::TRANSACTION_TYPES_MAP[:credit]
     )
+  end
+
+  def mark_payment_approved
+    return if transaction_type == "debit"
+
+    project.update(payment_verified: true)
   end
 end

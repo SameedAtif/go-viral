@@ -100,7 +100,21 @@ RSpec.describe ProjectDisputesController do
         end
       end
       context 'when user is a reviewer' do
-        let(:project_dispute) { create(:project_dispute, :reviewer_assigned, :created_by_client) }
+        let(:client) do
+          client = create(:client)
+          org = create(:organization, :verified)
+          org_detail = create(:organization_detail, :owner, organization: org, client: client)
+          client
+        end
+        let(:influencer) { create(:influencer, :reviewed) }
+        let(:project) do
+          project = create :project, :reviewed, :payment_verified, organization: client.organization
+          pro_app = create(:project_application, influencer: influencer, project: project)
+          create(:project_influencer, project: project, influencer: influencer)
+          create(:system_project_transaction, client: client, project: project, project_application: pro_app)
+          project
+        end
+        let(:project_dispute) { create(:project_dispute, :reviewer_assigned, :created_by_client, project: project, influencer: influencer) }
         let(:project_dispute_params) { {
           id: project_dispute.id,
           project_dispute: {

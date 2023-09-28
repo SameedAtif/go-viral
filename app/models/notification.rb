@@ -21,7 +21,11 @@ class Notification < ApplicationRecord
     client_package_downgrade_update: 'client_package_downgrade_update',
     client_package_downgrade_request: 'client_package_downgrade_request',
     creator_project_amount_credited: 'creator_project_amount_credited',
-    creator_project_amount_debited: 'creator_project_amount_debited'
+    creator_project_amount_debited: 'creator_project_amount_debited',
+    reviewer_dispute_opened: 'reviewer_dispute_opened',
+    dispute_is_under_review: 'dispute_is_under_review',
+    dispute_marked_as_resolved: 'dispute_marked_as_resolved',
+    creator_project_payment_is_approved: 'creator_project_payment_is_approved'
   }
   NOTIFICATION_TYPES = NOTIFICATION_TYPES_MAP.values
 
