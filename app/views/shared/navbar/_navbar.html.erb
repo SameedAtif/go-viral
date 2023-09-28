@@ -13,17 +13,17 @@
       <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 sm:border sm:border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
         <li class="py-2.5">
           <button type="button" class="text-neutral-600 bg-white hover:border hover:border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0">
-            Create a Campaign
+            <%= t("create_campaign") %>
           </button>
         </li>
         <li class="py-4">
-          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Orders</a>
+          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.order") %></a>
         </li>
         <li class="py-4">
-          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Influencers</a>
+          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.influencers") %></a>
         </li>
         <li class="py-4">
-          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Campaign</a>
+          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.campaign") %></a>
         </li>
         <li class="py-2.5">
           <button data-dropdownToggle="profiledropdown" class="dropdownNavbarLink flex items-center justify-between w-full py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto">
@@ -35,17 +35,17 @@
             <div id="profiledropdown" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2"> <!-- Apply absolute positioning -->
               <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"><%= t("header.navbar.profile_menu.dashboard") %></a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"><%= t("header.navbar.profile_menu.settings") %></a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"><%= t("header.navbar.profile_menu.earnings") %></a>
                 </li>
               </ul>
               <div class="py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><%= t("header.navbar.profile_menu.sign_out") %></a>
               </div>
             </div>
           </div>
