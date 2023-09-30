@@ -1,8 +1,8 @@
 <nav class="bg-white border-b border- ">
   <div class="max-w-screen-2xl flex flex-wrap items-center md:justify-between mx-auto py-2 px-4">
-    <a href="#" class="order-2 lg:order-1 flex items-center py-4 mx-auto md:mx-0">
+    <%= link_to root_path, class: "order-2 lg:order-1 flex items-center py-4 mx-auto md:mx-0" do %>
       <span class="self-center text-2xl font-semibold whitespace-nowrap">TheCreatorBazaar</span>
-    </a>
+    <% end %>
 
     <div class="order-3 lg:order-2 flex flex-1 items-center px-2 ml-6 justify-end lg:justify-start">
       <div class="w-full md:w-96 min-w-max max-w-lg lg:max-w-md">
@@ -30,7 +30,7 @@
           <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.order") %></a>
         </li>
         <li class="py-4">
-          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.influencers") %></a>
+          <%= link_to t("header.navbar.influencers"), gigs_path, class: "block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0" %>
         </li>
         <li class="py-4">
           <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.campaign") %></a>

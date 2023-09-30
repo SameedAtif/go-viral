@@ -50,6 +50,11 @@ en:
       all_filters: "All Filters"
     dotcom:
       index:
+        title: "Home Page"
         find_creator: "Find The Perfect Creator"
         for_your_business: "for your business"
         plateforms_heading: "Collab by plateforms"
+
+    gigs:
+      index:
+        title: "Gigs"

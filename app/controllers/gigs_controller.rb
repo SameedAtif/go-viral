@@ -18,7 +18,7 @@ class GigsController < ApplicationController
   end
 
   def show
-    @gig = Gig.find(params[:gig_id])
+    # @gig = Gig.find(params[:gig_id])
   end
 
   def update
