@@ -12,7 +12,7 @@ class ProjectInfluencer < ApplicationRecord
       resource_type: project.class.name,
       user_id: influencer.user_id,
       user_type: User::USER_ROLES[:influencer],
-      notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_influencer_applied_to_project]
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_creator_applied_to_project]
     )
   end
 end
