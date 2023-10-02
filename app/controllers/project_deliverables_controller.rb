@@ -1,36 +1,18 @@
 class ProjectDeliverablesController < ApplicationController
-  def index
-    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
-    @project_deliverables = @project_milestone.project_deliverables
-  end
-
-  def new
-    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
-    @project_deliverable = ProjectDeliverable.new(project_id: params[:project_id])
-  end
+  before_action :load_project_milestone, except: :update
+  before_action :authorize_resource!, only: :update
 
   def create
-    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
     @project_deliverable = ProjectDeliverable.new(permitted_params)
     @project_deliverable.project_milestone_id = @project_milestone.id
     @project_deliverable.influencer_id = current_user.influencer.id
+    authorize @project_deliverable
     @project_deliverable.save!
     redirect_to @project_milestone
-  rescue StandardError => e
-    flash[:error] = e
-    render 'new'
   end
 
   def update
-    project_deliverable = ProjectDeliverable.find(params[:id])
-    project_deliverable.update!(permitted_params)
-    if session[:user_role] == User::USER_ROLES[:client]
-      project_client = current_user.client.projects.find(params[:project_id])
-      project_application.update!(status: validate_client_statuses) if project_client.present?
-    end
-  rescue StandardError => e
-    flash[:error] = e
-    render 'new'
+    @project_deliverable.update!(permitted_params)
   end
 
   private
@@ -39,11 +21,12 @@ class ProjectDeliverablesController < ApplicationController
     params.require(:project_deliverable).permit(:title, :description)
   end
 
-  def client_update_params
-    params.permit(:status)
+  def load_project_milestone
+    @project_milestone = ProjectMilestone.find(params[:project_milestone_id])
   end
 
-  def validate_client_statuses
-    ['approved', 'rejected'].find{ |type| type == params[:status] }
+  def authorize_resource!
+    @project_deliverable = ProjectDeliverable.find(params[:id])
+    authorize @project_deliverable
   end
 end

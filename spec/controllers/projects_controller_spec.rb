@@ -21,8 +21,10 @@ RSpec.describe ProjectsController do
           end_time: 1.month.from_now,
           required_number_of_influencers: rand(1..5),
           status: 'draft',
-          payment_type: 'Cash',
-          target_audience: 'Gen-Z',
+          payment_type: Project::PAYMENT_TYPES_MAP[:cash],
+          targeted_demographic_start_age: 5,
+          targeted_demographic_end_age: 15,
+          targeted_geographic_audience: 'America',
           views: rand(100..500)
         }
       }
@@ -80,9 +82,10 @@ RSpec.describe ProjectsController do
           start_time: DateTime.current,
           end_time: 1.month.from_now,
           required_number_of_influencers: rand(1..5),
-          status: 'draft',
-          payment_type: 'Cash',
-          target_audience: 'Gen-Z',
+          payment_type: Project::PAYMENT_TYPES_MAP[:cash],
+          targeted_demographic_start_age: 5,
+          targeted_demographic_end_age: 15,
+          targeted_geographic_audience: 'America',
           views: rand(100..500)
         }
       }
@@ -127,6 +130,7 @@ RSpec.describe ProjectsController do
             creation_params[:project].merge!(project_platform_attributes)
             post 'create', params: creation_params, session: session_params
             expect(ProjectPlatform.count).to eq(1)
+
           end
         end
 
@@ -165,7 +169,9 @@ RSpec.describe ProjectsController do
                   description: Faker::Quote.famous_last_words,
                   reach: rand(1..10000),
                   conversion: rand(1..1000),
-                  budget: rand(1.00..100.00)
+                  budget: rand(1.00..100.00),
+                  start_time: DateTime.current,
+                  end_time: 2.days.from_now
                 }
               ]
             }
@@ -231,15 +237,17 @@ RSpec.describe ProjectsController do
       {
         id: project.id,
         project: {
-          title: Faker::Book.title,
-          description: Faker::Quote.famous_last_words,
+          title: "Faker::Book.title",
+          description: "Faker::Quote.famous_last_words",
           budget: rand(0.00..1000.00),
           start_time: DateTime.current,
           end_time: 1.month.from_now,
           required_number_of_influencers: 6,
-          status: 'ready_for_review',
-          payment_type: 'exposure',
-          target_audience: 'Boomer',
+          status: Project::STATUSES_MAP[:cancelled],
+          payment_type: Project::PAYMENT_TYPES_MAP[:exposure],
+          targeted_demographic_start_age: 5,
+          targeted_demographic_end_age: 16,
+          targeted_geographic_audience: ['Syria'],
           views: rand(100..500)
         }
       }
@@ -249,7 +257,10 @@ RSpec.describe ProjectsController do
       it "will not be updated" do
         put 'update', params: updation_params
         update_keys = [
-          :title, :description, :budget, :status, :required_number_of_influencers, :target_audience
+          :title, :description, :budget, :status, :required_number_of_influencers, :payment_type,
+          :targeted_demographic_start_age,
+          :targeted_demographic_end_age,
+          :targeted_geographic_audience
         ].map { |k, _| k.to_sym}
         update_keys.each do |key|
           expect(project.reload.send(key)).not_to eq(updation_params[:project][key])
@@ -274,7 +285,9 @@ RSpec.describe ProjectsController do
                   description: Faker::Quote.famous_last_words,
                   reach: 20000,
                   conversion: 2000,
-                  budget: 200.00
+                  budget: 200.00,
+                  start_time: DateTime.current,
+                  end_time: 2.days.from_now
                 }
               ]
             }
@@ -312,7 +325,9 @@ RSpec.describe ProjectsController do
             session_params = {user_role: User::USER_ROLES[:client]}
             put 'update', params: updation_params, session: session_params
             update_keys = [
-              :title, :description, :budget, :required_number_of_influencers, :target_audience
+              :title, :description, :budget, :required_number_of_influencers, :targeted_demographic_start_age,
+              :targeted_demographic_end_age,
+              :targeted_geographic_audience
             ].map { |k, _| k.to_sym}
             update_keys.each do |key|
               expect(project.reload.send(key)).to eq(updation_params[:project][key])
@@ -569,9 +584,12 @@ RSpec.describe ProjectsController do
         end
         it "will not update client permitted fields" do
           session_params = {user_role: User::USER_ROLES[:reviewer]}
+          updation_params[:project][:status] = Project::STATUSES_MAP[:approved]
           put 'update', params: updation_params, session: session_params
           update_keys = [
-            :title, :description, :budget, :required_number_of_influencers, :target_audience
+            :title, :description, :budget, :required_number_of_influencers, :targeted_demographic_start_age,
+            :targeted_demographic_end_age,
+            :targeted_geographic_audience
           ].map { |k, _| k.to_sym}
           update_keys.each do |key|
             expect(project.reload.send(key)).not_to eq(updation_params[:project][key])
@@ -583,7 +601,7 @@ RSpec.describe ProjectsController do
           reviewer_updation_params = {
             id: project.id,
             project: {
-              status: 'under_review',
+              status: Project::STATUSES_MAP[:approved],
               reviewed: true,
               payment_verified: true,
               reviewer_id: user.reviewer.id
@@ -620,8 +638,10 @@ RSpec.describe ProjectsController do
           end_time: 1.month.from_now,
           required_number_of_influencers: 6,
           status: 'ready_for_review',
-          payment_type: 'exposure',
-          target_audience: 'Boomer',
+          payment_type: Project::PAYMENT_TYPES_MAP[:exposure],
+          targeted_demographic_start_age: 5,
+          targeted_demographic_end_age: 16,
+          targeted_geographic_audience: ['Syria'],
           views: rand(100..500)
         }
       }

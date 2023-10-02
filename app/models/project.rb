@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :organization
 
   has_many :notifications, as: :source
+  has_many :project_disputes
   has_many :project_reviews
   # One Project can have many project-milestones
   has_many :project_applications
@@ -25,9 +26,143 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :project_platforms,
                                 allow_destroy: true
 
-  validates_presence_of :title, :description
-  validates :budget, presence: true, numericality: { only_float: true }
+  has_many :system_project_transactions
+  has_many :influencer_project_transactions
+  has_many :client_project_transactions
+
+  STATUSES_MAP = {
+    pending_review: 'pending_review',
+    approved: 'approved',
+    rejected: 'rejected',
+    published: 'published',
+    in_progress: 'in_progress',
+    completed: 'completed',
+    expired: 'expired',
+    cancelled: 'cancelled'
+  }.freeze
+  STATUSES = STATUSES_MAP.values
+  PAYMENT_TYPES_MAP = {
+    cash: 'cash',
+    credit: 'credit',
+    exposure: 'exposure'
+  }
+  PAYMENT_TYPES = PAYMENT_TYPES_MAP.values
+
+  validates_presence_of :title, :description, :payment_type, :start_time, :end_time,
+                        :required_number_of_influencers, :targeted_demographic_start_age,
+                        :targeted_demographic_end_age
   validates_length_of :title, :description, minimum: 3
+  validates :end_time, comparison: { greater_than: :start_time }
+  validates :targeted_demographic_end_age, comparison: { greater_than: :targeted_demographic_start_age }
+  validates :status, inclusion: { in: STATUSES }
+  validates :payment_type, inclusion: { in: PAYMENT_TYPES }
+  validates :budget, presence: true, numericality: { only_float: true }
+  validate :project_limit, :influencer_limit
+
+  after_save_commit :notify_client, :notify_reviewer, :notify_creators, if: -> { saved_change_to_attribute?('status') }
+  after_update_commit :notify_project_creators, if: -> { saved_change_to_attribute?('payment_verified') }
+
+  private
+
+  def project_limit
+    resource_limit = organization.current_package.system_package_resources.find_by(
+      resource_name: SystemPackageResource::RESOURCE_NAME_TYPES[:number_of_projects]
+    ).resource_value
+    return if organization.projects.count <= resource_limit.to_i
+
+    errors.add(:base, 'Cannot create project. Project limit exceeded.')
+  end
+
+  def influencer_limit
+    resource_limit = organization.current_package.system_package_resources.find_by(
+      resource_name: SystemPackageResource::RESOURCE_NAME_TYPES[:number_of_influencers]
+    ).resource_value
+    return if influencers.count <= resource_limit.to_i || required_number_of_influencers <= resource_limit.to_i
+
+    errors.add(:base, 'Cannot add influencer. Influencer limit exceeded.')
+  end
+
+  def notify_reviewer
+    return unless status == STATUSES_MAP[:pending_review] || new_record?
+
+    Reviewer.all.pluck(:user_id).each do |user_id|
+      Notification.create!(
+        resource_id: project_id,
+        resource_type: project.class.name,
+        user_id: user_id,
+        user_type: User::USER_ROLES[:reviewer],
+        notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_pending_project_review]
+      )
+    end
+  end
+
+  def notify_client
+    return unless [STATUSES_MAP[:approved], STATUSES_MAP[:rejected], STATUSES_MAP[:expired]].include?(status)
+
+    Notification.create!(
+      resource_id: id,
+      resource_type: self.class.name,
+      user_id: organization.owner.user_id,
+      user_type: User::USER_ROLES[:client],
+      notification_type: client_notification_type
+    )
+  end
+
+  def notify_creators
+    return unless [STATUSES_MAP[:published], STATUSES_MAP[:in_progress]].include?(status)
+
+    notifiable_creators.pluck(:user_id).each do |user_id|
+      Notification.create!(
+        resource_id: project_id,
+        resource_type: project.class.name,
+        user_id: user_id,
+        user_type: User::USER_ROLES[:influencer],
+        notification_type: creator_notification_type
+      )
+    end
+  end
+
+  def notify_project_creators
+    return unless payment_verified
+    influencers.pluck(:user_id).each do |user_id|
+      Notification.create!(
+        resource_id: project_id,
+        resource_type: project.class.name,
+        user_id: user_id,
+        user_type: User::USER_ROLES[:influencer],
+        notification_type: Notification::NOTIFICATION_TYPES_MAP[:creator_project_payment_is_approved]
+      )
+    end
+  end
+
+  def client_notification_type
+    if status == STATUSES_MAP[:approved]
+      Notification::NOTIFICATION_TYPES_MAP[:client_project_approved]
+    elsif status == STATUSES_MAP[:rejected]
+      Notification::NOTIFICATION_TYPES_MAP[:client_project_rejected]
+    elsif status == STATUSES_MAP[:expired]
+      Notification::NOTIFICATION_TYPES_MAP[:client_project_expired]
+    end
+  end
+
+  def creator_notification_type
+    if status == STATUSES_MAP[:published]
+      Notification::NOTIFICATION_TYPES_MAP[:creator_new_campaign_published]
+    elsif status == STATUSES_MAP[:in_progress]
+      Notification::NOTIFICATION_TYPES_MAP[:creator_campaign_in_progress]
+    elsif status == STATUSES_MAP[:cancelled]
+      Notification::NOTIFICATION_TYPES_MAP[:creator_campaign_cancelled]
+    end
+  end
+
+  def notifiable_creators
+    if status == STATUSES_MAP[:published]
+      # TODO: Add subscription functionality
+      Influencer.all
+    elsif [STATUSES_MAP[:in_progress], STATUSES_MAP[:cancelled]].include?(status)
+      influencers
+    end
+  end
 
   # remove project duration
   # project -> expire-time # will expire the campaign after this

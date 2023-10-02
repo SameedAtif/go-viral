@@ -2,46 +2,68 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "@nathanvda/cocoon"
-import 'flowbite';
-import 'flowbite-datepicker';
 
-var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+$(document).ready(function () {
 
-// Change the icons inside the button based on previous settings
-if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    themeToggleLightIcon.classList.remove('hidden');
-} else {
-    themeToggleDarkIcon.classList.remove('hidden');
-}
+    // For the Filters sidebar start    
+    var divs = document.querySelectorAll('.dropdownNavbarLink');
 
-var themeToggleBtn = document.getElementById('theme-toggle');
+    function handleDivClick(event) {
+        // Access the "data-dropdownToggle" attribute of the clicked div
+        var dropdownToggleValue = event.currentTarget.getAttribute('data-dropdownToggle');
 
-themeToggleBtn.addEventListener('click', function() {
+        // Toggle the view of dropdown
+        if ($(`#${dropdownToggleValue}`).hasClass('hidden'))
+            $(`#${dropdownToggleValue}`).removeClass('hidden')
+        else
+            $(`#${dropdownToggleValue}`).addClass('hidden')
+    }
 
-    // toggle icons inside button
-    themeToggleDarkIcon.classList.toggle('hidden');
-    themeToggleLightIcon.classList.toggle('hidden');
+    // Add a click event listener to each div
+    divs.forEach(function (div) {
+        div.addEventListener('click', handleDivClick);
+    });
+    // For the Filters sidebar end
 
-    // if set via local storage previously
-    if (localStorage.getItem('color-theme')) {
-        if (localStorage.getItem('color-theme') === 'light') {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
+
+
+    // Stick Filters bar to the top start
+    var navbar = document.getElementById("filters_nav_bar");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add('fixed', 'w-full', 'top-0', 'z-10')
         } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        }
-
-    // if NOT set via local storage previously
-    } else {
-        if (document.documentElement.classList.contains('dark')) {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        } else {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
+            navbar.classList.remove('fixed', 'w-full', 'top-0', 'z-10');
         }
     }
+
+    window.onscroll = function() { myFunction() };
+    // Stick Filters bar to the top start
+
+    
+
+    // script to show dropdowns and hide when clicked outside the scope start
+    const dropdownButtons = document.querySelectorAll('.dropdown-button');
+    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+
+    dropdownButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !isExpanded);
+            dropdownMenus[index].style.display = isExpanded ? 'none' : 'block';
+        });
+
+        // Close the menu when clicking outside of it
+        document.addEventListener('click', (event) => {
+            if (dropdownMenus[index].contains(event.target) || button.contains(event.target)) {
+                return;
+            }
+            button.setAttribute('aria-expanded', 'false');
+            dropdownMenus[index].style.display = 'none';
+        });
+    });
+    // script to show dropdowns and hide when clicked outside the scope end
 
 });

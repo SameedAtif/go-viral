@@ -1,1 +1,101 @@
-<%= render '/shared/navbar' %>
+<div class="bg-gradient-to-b from-[#e0f0fe] to-white ">
+  <div class="mx-auto max-w-screen-2xl">
+    <div class="relative isolate overflow-hidden px-6 py-24 sm:px-24 xl:py-32">
+        <% social_media_icons = [
+            { image: "Instagram.png", alt: "Instagram", position: "left-52 top-30" },
+            { image: "Facebook.png", alt: "Facebook", position: "right-48 top-30" },
+            { image: "WeChat.png", alt: "WeChat", position: "left-64 top-2/3" },
+            { image: "Snapchat.png", alt: "Snapchat", position: "left-0 top-3/4" },
+            { image: "Telegram.png", alt: "Telegram", position: "right-1/4 top-1/2" },
+            { image: "Tiktok.png", alt: "Tiktok", position: "left-32 top-2/3" },
+            { image: "Twitter.png", alt: "Twitter", position: "right-0 top-1/4" },
+            { image: "Whatsapp.png", alt: "Whatsapp", position: "left-4 md:left-20 top-36" },
+            { image: "Youtube.png", alt: "YouTube", position: "right-36 top-2/3" },
+            { image: "Reddit.png", alt: "Reddit", position: "right-0 bottom-12" },
+            { image: "Line.png", alt: "Line", position: "left-3/4 top-3/4" }
+        ] %>
+
+        <% social_media_icons.each do |icon| %>
+            <div class="absolute <%= icon[:position] %> transform -translate-y-1/2">
+                <%= image_tag(asset_url("home_page_banner_assets/#{icon[:image]}"), alt: icon[:alt]) %>
+            </div>
+        <% end %>
+
+        <h2 class="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-neutral-600 sm:text-4xl"><%= t("body.dotcom.index.find_creator") %></h2>
+        <p class="mx-auto mt-2 max-w-xl text-center text-lg leading-8  text-neutral-600"><%= t("body.dotcom.index.for_your_business") %></p>
+        <form class="mx-auto mt-10 flex max-w-lg gap-x-4">
+            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+            <div class="relative w-full">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </div>
+                <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" placeholder='<%= t("header.navbar.influencers_search") %>' required>
+            </div>
+        </form>
+
+    </div>
+  </div>
+</div>
+
+<div class="bg-white">
+  <!--div class="py-16 sm:py-24 xl:mx-auto xl:max-w-7xl xl:px-8 !max-w-screen-2xl" -->
+  <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 sm:pb-24 lg:px-8">
+    <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
+      <h2 class="text-2xl font-medium tracking-tight text-neutral-600"><%= t("body.dotcom.index.plateforms_heading") %></h2>
+      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+        <%= t("body.view_all") %>
+      </a>
+    </div>
+
+    <div class="mt-4 flow-root">
+      <div class="-my-2">
+        <div class="relative box-content h-[10rem] overflow-x-auto py-2 xl:overflow-visible">
+            <% social_media_icons = [
+                { title: "Instagram", alt: "Instagram", image: "category-instagram.png" },
+                { title: "Youtube", alt: "Youtube", image: "category-youtube.png" },
+                { title: "Facebook", alt: "Facebook", image: "category-facebook.png" },
+                { title: "Tiktok", alt: "Tiktok", image: "category-tiktok.png" }
+            ] %>
+            <div class="absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0">
+                <% social_media_icons.each do |icon| %>
+                    <a href="#" class="relative flex h-[8.75rem] w-[18.875rem] flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
+                        <span aria-hidden="true" class="absolute inset-0">
+                            <%= image_tag(asset_url("category_slidebar/#{icon[:image]}"), alt: icon[:alt]) %>
+                        </span>
+                        <span aria-hidden="true" class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"></span>
+                        <span class="relative mt-auto text-center text-xl font-bold text-white"><%# icon[:title] %></span>
+                    </a>
+                <% end %>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 px-4 sm:hidden">
+      <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+        <%= t("body.view_all") %>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white">
+  <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 sm:pb-24 lg:px-8">
+    <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
+      <h2 class="text-center text-2xl font-medium tracking-tight text-neutral-600"><%= t("body.listing_heading") %></h2>
+      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+        <%= t("body.view_all") %>
+      </a>
+    </div>
+
+    <%= render "shared/partials/card_list" %>
+
+    <div class="mt-6 px-4 sm:hidden">
+      <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+        <%= t("body.view_all") %>
+      </a>
+    </div>
+  </div>
+</div>

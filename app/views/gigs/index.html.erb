@@ -1,46 +1,21 @@
-<% if current_user %>
-  <h1>Hello <%= current_user.first_name %></h1>
-  <% if session[:user_role] == User::USER_ROLES[:client] %>
-    <h1>Client Dashboard</h1>
-    <%= link_to "Create Campaign", new_project_path %>
-    <%= link_to "Manage Organization", organization_path %>
-    <% if current_user.client.projects.present? %>
-      <% current_user.client.projects.each do |project| %>
-        <div>
-          <p><%= project.title %> | <%= project.budget %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
-        <div>
-      <% end %>
-    <% end %>
-  <% elsif session[:user_role] == User::USER_ROLES[:influencer] %>
-    <h1>Influencer Dashboard</h1>
-    <% Project.all.each do |project|%>
-      <p><%= project.title %> | <%= project.budget %> | <%= link_to  "Campaign details", project_path(project.id) %></p>
-    <% end %>
-  <% end %>
-  <% if current_user.client.present? %>
-    <%= button_to(
-      "Switch to Client",
-      switch_session_path(type: '2'),
-      method: :put
-    ) %>
-  <% else %>
-    <%= link_to "Setup Business profile", new_organization_path %>
-  <% end %>
-  <% if current_user.influencer.present?%>
-     <%= button_to(
-      "Switch to Influencer",
-      switch_session_path(type: '1'),
-      method: :put
-    ) %>
-  <% else %>
-    <%= link_to "Setup Influencer profile", new_influencer_path %>
-  <% end %>
-  <%= button_to(
-      "Log Out",
-      destroy_user_session_path,
-      method: :delete
-  ) %>
-<% else %>
-  <%= link_to "Sign up", new_user_registration_path %>
-  <%= link_to "Sign In", new_user_session_path %>
-<% end %>
+<%= render 'gigs_filter_bar'%>
+
+<div class="bg-white">
+  <div class="mx-auto max-w-screen-2xl mt-4 px-4 sm:px-6 sm:pb-24 lg:px-8">
+    <div class="px-4 py-2 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
+      <h2 class="text-neutral-600 text-xl font-medium tracking-tight"><%= t("body.listing_heading") %></h2>
+      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+        <%= t("body.view_all") %>
+      </a>
+    </div>
+
+    <%= render "shared/partials/card_list" %>
+
+    <div class="mt-6 px-4 sm:hidden">
+      <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+        <%= t("body.view_all") %>
+      </a>
+    </div>
+  </div>
+</div>
+

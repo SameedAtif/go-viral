@@ -1,17 +1,75 @@
+
 class ProjectApplication < ApplicationRecord
   belongs_to :project
   belongs_to :influencer
 
-  validates_presence_of :title, :description, :status
-  validates_length_of :title, :description, minimum: 3
+  has_many :system_project_transactions
+  has_many :influencer_project_transactions
+  has_many :client_project_transactions
 
-  after_update :create_project_influencer
+  STATUS_TYPES_MAP = {
+    draft: 'draft',
+    ready_for_review: 'ready_for_review',
+    approved: 'approved',
+    rejected: 'rejected'
+  }.freeze
+  STATUS_TYPES = STATUS_TYPES_MAP.values
+
+  validate :application_locked
+  validates :status, inclusion: { in: STATUS_TYPES }
+  validates_presence_of :title, :description, :status, :budget, :delivery_date
+  validates_length_of :title, :description, minimum: 3
+  validate :budget_less_than_equal_to_project_budget
+  validate :delivery_date_less_than_equal_to_project_end_time
+
+  after_update_commit :create_project_influencer, :remove_project_influencer, :notify_client, if: -> { saved_change_to_attribute?('status') }
 
   private
 
-  def create_project_influencer
-    return if status != 'approved' && saved_change_to_attribute?('status')
+  def application_locked
+    return if DateTime.current < project.start_time
 
-    project.project_influencers.find_or_create_by!(influencer: influencer)
+    errors.add(:base, "This campaign application is now locked")
+  end
+
+  def create_project_influencer
+    project.project_influencers.find_or_create_by!(influencer: influencer) if status == STATUS_TYPES_MAP[:approved]
+  end
+
+  def remove_project_influencer
+    return unless status == STATUS_TYPES_MAP[:rejected]
+
+    project.project_influencers.find_by(influencer: influencer)&.destroy!
+    Notification.create!(
+      resource_id: project_id,
+      resource_type: project.class.name,
+      user_id: influencer.user_id,
+      user_type: User::USER_ROLES[:influencer],
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[:creator_rejected_for_project]
+    )
+  end
+
+  def notify_client
+    return unless status == STATUS_TYPES_MAP[:ready_for_review]
+
+    Notification.create!(
+      resource_id: project_id,
+      resource_type: project.class.name,
+      user_id: project.organization.owner.user_id,
+      user_type: User::USER_ROLES[:client],
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_creator_applied_to_project]
+    )
+  end
+
+  def budget_less_than_equal_to_project_budget
+    return if budget <= project.budget
+
+    errors.add(:budget, "Budget should be less than equal to project budget")
+  end
+
+  def delivery_date_less_than_equal_to_project_end_time
+    return if delivery_date <= project.end_time
+
+    errors.add(:delivery_date, "Delivery date should be less than equal to project end time")
   end
 end
