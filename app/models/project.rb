@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
   belongs_to :organization
+  belongs_to :reviewer, optional: true
 
   has_many :notifications, as: :source
   has_many :project_disputes
@@ -87,8 +88,8 @@ class Project < ApplicationRecord
 
     Reviewer.all.pluck(:user_id).each do |user_id|
       Notification.create!(
-        resource_id: project_id,
-        resource_type: project.class.name,
+        resource_id: id,
+        resource_type: self.class.name,
         user_id: user_id,
         user_type: User::USER_ROLES[:reviewer],
         notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_pending_project_review]
@@ -113,8 +114,8 @@ class Project < ApplicationRecord
 
     notifiable_creators.pluck(:user_id).each do |user_id|
       Notification.create!(
-        resource_id: project_id,
-        resource_type: project.class.name,
+        resource_id: id,
+        resource_type: self.class.name,
         user_id: user_id,
         user_type: User::USER_ROLES[:influencer],
         notification_type: creator_notification_type
@@ -126,8 +127,8 @@ class Project < ApplicationRecord
     return unless payment_verified
     influencers.pluck(:user_id).each do |user_id|
       Notification.create!(
-        resource_id: project_id,
-        resource_type: project.class.name,
+        resource_id: id,
+        resource_type: self.class.name,
         user_id: user_id,
         user_type: User::USER_ROLES[:influencer],
         notification_type: Notification::NOTIFICATION_TYPES_MAP[:creator_project_payment_is_approved]

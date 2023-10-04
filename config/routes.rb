@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
   resources :influencers
 
+  resources :gig_packages, only: [] do
+    resources :system_gig_transactions, only: :create
+  end
   resources :gigs
   # Already made all the associations so changing the name would be very time taking (sorry)
   resources :projects, path: :campaigns do

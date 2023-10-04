@@ -16,13 +16,13 @@ class GigsController < ApplicationController
   # TODO: Add remaining gig_package validation [D]
   # TODO: Add model validations [D]
   # TODO: Add column 'status [pending-review/accepted/rejected/payment-approved/influencer-credited/order-closed]' to gig_clients [D]
-  # TODO: notifications
-  # TODO: Gig Order (will be handled through Gig Client )
+  # TODO: notifications [D]
+  # TODO: Gig Order (will be handled through Gig Client)
   # TODO: RSpec
   # TODO: Create seed data
 
   def index
-    @gigs = Gig.approved
+    @gigs = Gig.all
   end
 
   def new

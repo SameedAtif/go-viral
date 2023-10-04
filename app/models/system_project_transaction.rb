@@ -35,7 +35,7 @@ class SystemProjectTransaction < ApplicationRecord
         ]
       }
     ).any?
-    return if on_going_dispute && unapproved_deliverable_review
+    return if on_going_dispute && unapproved_deliverable_review && transaction_type == InfluencerGigTransaction::TRANSACTION_TYPES_MAP[:credit]
 
     InfluencerProjectTransaction.find_or_create_by!(
       system_project_transaction: self,
