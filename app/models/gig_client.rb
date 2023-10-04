@@ -9,6 +9,7 @@ class GigClient < ApplicationRecord
     pending_review: 'pending_review',
     accepted: 'accepted',
     rejected: 'rejected',
+    request_rolled_back: 'request_rolled_back',
     creator_credited: 'creator_credited',
     order_closed: 'order_closed'
   }
@@ -64,7 +65,8 @@ class GigClient < ApplicationRecord
 
   def schedule_client_refund_transaction
     # TODO: Move to background job
-    return unless [GigClient::STATUSES_MAP[:pending_review]].include?(status)
+    return unless [GigClient::STATUSES_MAP[:pending_review], GigClient::STATUSES_MAP[:accepted]].include?(status)
+
 
     ClientGigTransaction.create!(
       system_gig_transaction: system_gig_transaction,
