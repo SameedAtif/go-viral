@@ -2,6 +2,8 @@ class GigDispute < ApplicationRecord
   belongs_to :gig_client
   belongs_to :reviewer, optional: true
 
+  has_many :system_gig_transactions
+
   STATUS_TYPES_MAP = {
     pending_review: 'pending_review',
     review_in_progress: 'review_in_progress',

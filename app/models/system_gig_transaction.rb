@@ -4,6 +4,8 @@ class SystemGigTransaction < ApplicationRecord
   belongs_to :gig_dispute, optional: true
 
   has_many :gig_clients
+  has_many :influencer_gig_transactions
+  has_many :client_gig_transactions
 
   TRANSACTION_TYPES_MAP = {
     credit: 'credit', # credit = going in to the wallet

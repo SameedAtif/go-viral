@@ -13,6 +13,7 @@ class Influencer < ApplicationRecord
   has_many :project, through: :project_influencers
 
   has_many :influencer_project_transactions
+  has_many :influencer_gig_transactions
 
   accepts_nested_attributes_for :influencer_platforms,
                                 allow_destroy: true

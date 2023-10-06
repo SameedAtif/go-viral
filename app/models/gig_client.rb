@@ -4,6 +4,11 @@ class GigClient < ApplicationRecord
   belongs_to :gig_package
   belongs_to :system_gig_transaction
 
+  has_many :gig_disputes
+  has_many :influencer_gig_transactions
+  has_many :client_gig_transactions
+  has_many :gig_deliverables
+  has_many :gig_deliverable_reviews
   # if it's not accepted, it would automatically be rejected in 1 day and the full payment would be refunded to the client.
   STATUSES_MAP = {
     pending_review: 'pending_review',

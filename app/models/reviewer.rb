@@ -5,4 +5,5 @@ class Reviewer < ApplicationRecord
   has_many :organization_reviews
   has_many :gig_reviews
   has_many :project_disputes
+  has_many :gig_disputes
 end

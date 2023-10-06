@@ -13,6 +13,8 @@ class Gig < ApplicationRecord
   has_many :gig_packages
   has_many :gig_reviews
   has_many :gig_faqs
+  has_many :client_gig_reviews
+  has_many :influencer_gig_transactions
 
   STATUSES_MAP = {
     draft: 'draft',
