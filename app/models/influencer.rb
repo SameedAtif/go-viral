@@ -18,4 +18,8 @@ class Influencer < ApplicationRecord
   accepts_nested_attributes_for :influencer_platforms,
                                 allow_destroy: true
                                 # reject_if: proc { |att| att['platform_id'].blank?}
+
+  has_many :influencer_portfolios, dependent: :destroy
+  accepts_nested_attributes_for :influencer_portfolios,
+                                allow_destroy: true
 end

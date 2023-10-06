@@ -96,5 +96,14 @@ class GigSupportModule < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    create_table :influencer_portfolios do |t|
+      t.belongs_to :influencer, foreign_key: true, index: true
+      t.string :title
+      t.string :description
+
+      t.timestamps
+    end
+
   end
 end

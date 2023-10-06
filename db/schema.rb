@@ -228,6 +228,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
     t.index ["platform_id"], name: "index_influencer_platforms_on_platform_id"
   end
 
+  create_table "influencer_portfolios", force: :cascade do |t|
+    t.bigint "influencer_id"
+    t.string "title"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["influencer_id"], name: "index_influencer_portfolios_on_influencer_id"
+  end
+
   create_table "influencer_project_transactions", force: :cascade do |t|
     t.bigint "system_project_transaction_id"
     t.bigint "project_id"
@@ -679,6 +688,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
   add_foreign_key "influencer_gig_transactions", "system_gig_transactions"
   add_foreign_key "influencer_platforms", "influencers"
   add_foreign_key "influencer_platforms", "platforms"
+  add_foreign_key "influencer_portfolios", "influencers"
   add_foreign_key "influencer_project_transactions", "influencers"
   add_foreign_key "influencer_project_transactions", "project_applications"
   add_foreign_key "influencer_project_transactions", "projects"
