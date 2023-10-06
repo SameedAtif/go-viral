@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe GigClientsController do
-  describe '#create' do
+  describe '#update' do
     context 'when user is signed in' do
       let(:client) do
         client = create(:client)

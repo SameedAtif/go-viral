@@ -13,10 +13,9 @@ RSpec.describe GigDeliverablesController do
     let(:gig) { create :gig, :reviewed, influencer: influencer }
     let(:gig_package) { create :gig_package, gig: gig }
     let(:system_gig_transaction) { create :system_gig_transaction, gig_package: gig_package, client: client }
-    let(:gig_client) { create(:gig_client, gig: gig, client: client, gig_package: gig_package, system_gig_transaction: system_gig_transaction)}
     let(:creation_params) {
       {
-        gig_client_id: gig_client.id,
+        gig_client_id: system_gig_transaction.gig_clients.first.id,
         gig_deliverable: {
           title: "This is a sample title",
           description: "This is a sample title. This is a sample title."
@@ -73,8 +72,7 @@ RSpec.describe GigDeliverablesController do
     let(:gig) { create :gig, :reviewed, influencer: influencer }
     let(:gig_package) { create :gig_package, gig: gig }
     let(:system_gig_transaction) { create :system_gig_transaction, gig_package: gig_package, client: client }
-    let(:gig_client) { create(:gig_client, gig: gig, client: client, gig_package: gig_package, system_gig_transaction: system_gig_transaction)}
-    let(:gig_deliverable) { create(:gig_deliverable, gig_client: gig_client)}
+    let(:gig_deliverable) { create(:gig_deliverable, gig_client: system_gig_transaction.gig_clients.first)}
     let(:updation_params) {
       {
         id: gig_deliverable.id,

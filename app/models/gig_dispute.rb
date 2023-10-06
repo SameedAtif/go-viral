@@ -1,7 +1,5 @@
 class GigDispute < ApplicationRecord
-  belongs_to :gig
-  belongs_to :client
-  belongs_to :gig_package
+  belongs_to :gig_client
   belongs_to :reviewer, optional: true
 
   STATUS_TYPES_MAP = {
@@ -35,8 +33,8 @@ class GigDispute < ApplicationRecord
   def notify_reviewer
     Reviewer.all.pluck(:user_id).each do |user_id|
       Notification.create!(
-        resource_id: gig.id,
-        resource_type: gig.class.name,
+        resource_id: gig_client.gig.id,
+        resource_type: gig_client.gig.class.name,
         user_id: user_id,
         user_type: User::USER_ROLES[:reviewer],
         notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_dispute_opened]
@@ -45,19 +43,20 @@ class GigDispute < ApplicationRecord
   end
 
   def notify_parties
-    [influencer, client].each do |role|
-      Notification.create!(
-        resource_id: gig.id,
-        resource_type: gig.class.name,
-        user_id: role.user.id,
-        user_type: User::USER_ROLES[user_type(role)],
-        notification_type: Notification::NOTIFICATION_TYPES_MAP[notification_type]
-      )
-    end
-  end
-
-  def user_type(role)
-    role.class == Influencer ? :influencer : :client
+    Notification.create!(
+      resource_id: gig_client.gig.id,
+      resource_type: gig_client.gig.class.name,
+      user_id: gig_client.gig.influencer.user.id,
+      user_type: User::USER_ROLES[:influencer],
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[notification_type]
+    )
+    Notification.create!(
+      resource_id: gig_client.gig.id,
+      resource_type: gig_client.gig.class.name,
+      user_id: gig_client.client.user.id,
+      user_type: User::USER_ROLES[:client],
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[notification_type]
+    )
   end
 
   def notification_type
@@ -70,18 +69,19 @@ class GigDispute < ApplicationRecord
   end
 
   def issue_refund
-    return unless saved_change_to_attribute?('resolved_in_favor') && status == "payment_approved"
+    transaction = gig_client.system_gig_transaction
     # find the influencer gig application and system_gig_transaction
+    return unless saved_change_to_attribute?('resolved_in_favor') && status == "payment_approved"
+    # This means someone tried to issue a refund over a refund
+    return unless transaction.transaction_type == 'debit'
 
-    gig_client = GigClient.find_by(gig_package: gig_package, gig: gig, influencer: influencer)
-    transaction = SystemGigTransaction.find_by(client: client, gig_package: gig_package)
     if resolved_in_favor == RESOURCE_TYPES_MAP[:client]
       ClientGigTransaction.create!(
         system_gig_transaction: transaction,
         gig_client: gig_client,
         client: client,
         transaction_type: ClientGigTransaction::TRANSACTION_TYPES_MAP[:credit],
-        gross_price: gig_client.budget,
+        gross_price: gig_client.gig_package.price,
         fee: 0.00
       )
     elsif resolved_in_favor == RESOURCE_TYPES_MAP[:influencer]
@@ -91,7 +91,7 @@ class GigDispute < ApplicationRecord
         gig_client: gig_client,
         influencer: influencer,
         transaction_type: InfluencerGigTransaction::TRANSACTION_TYPES_MAP[:credit],
-        gross_price: gig_client.budget,
+        gross_price: gig_client.gig_package.price,
         fee: 0.00
       )
     end

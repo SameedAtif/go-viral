@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   end
   resources :gig_clients, only: :update do
     resources :gig_deliverables, only: :create
+    resources :gig_disputes, only: :create
   end
+  resources :gig_disputes, only: :update
   resources :gig_deliverables, only: :show do
     resources :gig_deliverable_reviews, except: :update
   end

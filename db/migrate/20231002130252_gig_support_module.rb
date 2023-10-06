@@ -21,9 +21,7 @@ class GigSupportModule < ActiveRecord::Migration[7.0]
     end
 
     create_table :gig_disputes do |t|
-      t.belongs_to :gig, foreign_key: true, index: true
-      t.belongs_to :client, foreign_key: true, index: true
-      t.belongs_to :gig_package, foreign_key: true, index: true
+      t.belongs_to :gig_client, foreign_key: true, index: true
       t.belongs_to :reviewer, foreign_key: true, index: true
 
       t.string :created_by # influencer or client

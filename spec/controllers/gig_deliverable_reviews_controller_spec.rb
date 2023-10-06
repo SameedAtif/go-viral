@@ -14,8 +14,7 @@ RSpec.describe GigDeliverableReviewsController do
     let(:gig) { create :gig, :reviewed, influencer: influencer }
     let(:gig_package) { create :gig_package, gig: gig }
     let(:system_gig_transaction) { create :system_gig_transaction, gig_package: gig_package, client: client }
-    let(:gig_client) { create(:gig_client, gig: gig, client: client, gig_package: gig_package, system_gig_transaction: system_gig_transaction)}
-    let(:gig_deliverable) { create(:gig_deliverable, gig_client: gig_client)}
+    let(:gig_deliverable) { create(:gig_deliverable, gig_client: system_gig_transaction.gig_clients.first)}
 
     let(:creation_params) {
       {
@@ -84,9 +83,8 @@ RSpec.describe GigDeliverableReviewsController do
     let(:gig) { create :gig, :reviewed, influencer: influencer }
     let(:gig_package) { create :gig_package, gig: gig }
     let(:system_gig_transaction) { create :system_gig_transaction, gig_package: gig_package, client: client }
-    let(:gig_client) { create(:gig_client, gig: gig, client: client, gig_package: gig_package, system_gig_transaction: system_gig_transaction)}
-    let(:gig_deliverable) { create(:gig_deliverable, gig_client: gig_client)}
-    let(:gig_deliverable_review) { create(:gig_deliverable_review, gig_client: gig_client, client: client, gig_deliverable: gig_deliverable) }
+    let(:gig_deliverable) { create(:gig_deliverable, gig_client: system_gig_transaction.gig_clients.first)}
+    let(:gig_deliverable_review) { create(:gig_deliverable_review, gig_client: system_gig_transaction.gig_clients.first, client: client, gig_deliverable: gig_deliverable) }
     let(:updation_params) {
       {
         id: gig_deliverable_review.id,

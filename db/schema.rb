@@ -125,9 +125,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
   end
 
   create_table "gig_disputes", force: :cascade do |t|
-    t.bigint "gig_id"
-    t.bigint "client_id"
-    t.bigint "gig_package_id"
+    t.bigint "gig_client_id"
     t.bigint "reviewer_id"
     t.string "created_by"
     t.string "status", default: "pending_review", null: false
@@ -136,9 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
     t.datetime "resolved_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_gig_disputes_on_client_id"
-    t.index ["gig_id"], name: "index_gig_disputes_on_gig_id"
-    t.index ["gig_package_id"], name: "index_gig_disputes_on_gig_package_id"
+    t.index ["gig_client_id"], name: "index_gig_disputes_on_gig_client_id"
     t.index ["reviewer_id"], name: "index_gig_disputes_on_reviewer_id"
   end
 
@@ -667,9 +663,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
   add_foreign_key "gig_deliverable_reviews", "gig_clients"
   add_foreign_key "gig_deliverable_reviews", "gig_deliverables"
   add_foreign_key "gig_deliverables", "gig_clients"
-  add_foreign_key "gig_disputes", "clients"
-  add_foreign_key "gig_disputes", "gig_packages"
-  add_foreign_key "gig_disputes", "gigs"
+  add_foreign_key "gig_disputes", "gig_clients"
   add_foreign_key "gig_disputes", "reviewers"
   add_foreign_key "gig_faqs", "gigs"
   add_foreign_key "gig_packages", "gigs"
