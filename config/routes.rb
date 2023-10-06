@@ -19,7 +19,14 @@ Rails.application.routes.draw do
   resources :gig_packages, only: [] do
     resources :system_gig_transactions, only: :create
   end
-  resources :gig_clients, only: :update
+  resources :gig_clients, only: :update do
+    resources :gig_deliverables, only: :create
+  end
+  resources :gig_deliverables, only: :show do
+    resources :gig_deliverable_reviews, except: :update
+  end
+  resources :gig_deliverables, only: :update
+  resources :gig_deliverable_reviews, only: :update
   resources :gigs
   # Already made all the associations so changing the name would be very time taking (sorry)
   resources :projects, path: :campaigns do

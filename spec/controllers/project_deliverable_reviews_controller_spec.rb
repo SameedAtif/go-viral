@@ -42,7 +42,7 @@ RSpec.describe ProjectDeliverableReviewsController do
       end
       context "when user is signed in as creator" do
         it "will not create the project deliverable review" do
-          session_params = {user_role: User::USER_ROLES[:creator]}
+          session_params = {user_role: User::USER_ROLES[:influencer]}
           expect(ProjectDeliverableReview.count).to eq(0)
           expect do
             post 'create', params: creation_params, session: session_params

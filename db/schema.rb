@@ -101,6 +101,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
     t.index ["system_gig_transaction_id"], name: "index_gig_clients_on_system_gig_transaction_id"
   end
 
+  create_table "gig_deliverable_reviews", force: :cascade do |t|
+    t.bigint "client_id"
+    t.bigint "gig_client_id"
+    t.bigint "gig_deliverable_id"
+    t.string "remarks", default: "", null: false
+    t.string "status", default: "ready_for_review", null: false
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_gig_deliverable_reviews_on_client_id"
+    t.index ["gig_client_id"], name: "index_gig_deliverable_reviews_on_gig_client_id"
+    t.index ["gig_deliverable_id"], name: "index_gig_deliverable_reviews_on_gig_deliverable_id"
+  end
+
+  create_table "gig_deliverables", force: :cascade do |t|
+    t.bigint "gig_client_id"
+    t.string "title", default: "", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gig_client_id"], name: "index_gig_deliverables_on_gig_client_id"
+  end
+
   create_table "gig_disputes", force: :cascade do |t|
     t.bigint "gig_id"
     t.bigint "client_id"
@@ -640,6 +663,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
   add_foreign_key "gig_clients", "gig_packages"
   add_foreign_key "gig_clients", "gigs"
   add_foreign_key "gig_clients", "system_gig_transactions"
+  add_foreign_key "gig_deliverable_reviews", "clients"
+  add_foreign_key "gig_deliverable_reviews", "gig_clients"
+  add_foreign_key "gig_deliverable_reviews", "gig_deliverables"
+  add_foreign_key "gig_deliverables", "gig_clients"
   add_foreign_key "gig_disputes", "clients"
   add_foreign_key "gig_disputes", "gig_packages"
   add_foreign_key "gig_disputes", "gigs"

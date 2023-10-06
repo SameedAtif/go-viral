@@ -79,5 +79,24 @@ class GigSupportModule < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    create_table :gig_deliverables do |t|
+      t.belongs_to :gig_client, foreign_key: true
+      t.string :title, null: false, default: ""
+      t.string :description, null: false
+
+      t.timestamps
+    end
+
+    create_table :gig_deliverable_reviews do |t|
+      t.belongs_to :client, foreign_key: true
+      t.belongs_to :gig_client, foreign_key: true
+      t.belongs_to :gig_deliverable, foreign_key: true
+      t.string :remarks, null: false, default: ""
+      t.string :status, null: false, default: 'ready_for_review'
+      t.float :rating
+
+      t.timestamps
+    end
   end
 end
