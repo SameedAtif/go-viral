@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
-  root "dotcom#index"
+  root "rooms#index"
 
   get '/dashboard', :to => 'dotcom#dashboard'
   resource :organization
@@ -30,4 +30,9 @@ Rails.application.routes.draw do
   end
 
   resources :notifications, only: [:update, :destroy]
+
+  resources :rooms do
+    resources :messages
+  end
+  get 'user/:id', to: 'users#show', as: 'user'
 end

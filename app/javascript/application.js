@@ -45,3 +45,4 @@ themeToggleBtn.addEventListener('click', function() {
     }
 
 });
+import "./channels"
