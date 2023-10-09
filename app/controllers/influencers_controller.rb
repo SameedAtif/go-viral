@@ -40,7 +40,10 @@ class InfluencersController < ApplicationController
   private
 
   def permitted_params
-    params.require(:influencer).permit(:bio, influencer_platforms_attributes: %i[platform_id followers reach _destroy])
+    params.require(:influencer).permit(:bio,
+      influencer_platforms_attributes: %i[id platform_id followers reach _destroy],
+      influencer_portfolios_attributes: %i[id title description _destroy]
+    )
   end
 
   def find_influencer

@@ -75,14 +75,26 @@ class ProjectDispute < ApplicationRecord
 
     project_application = ProjectApplication.find_by(project: project, influencer: influencer)
     transaction = SystemProjectTransaction.find_by(project_application: project_application)
-    ClientProjectTransaction.create!(
-      system_project_transaction: transaction,
-      project: project,
-      project_application: project_application,
-      client: client,
-      transaction_type: 'credit',
-      gross_price: project_application.budget,
-      fee: 0.00
-    )
+    if resolved_in_favor == RESOURCE_TYPES_MAP[:client]
+      ClientProjectTransaction.create!(
+        system_project_transaction: transaction,
+        project: project,
+        project_application: project_application,
+        client: client,
+        transaction_type: ClientProjectTransaction::TRANSACTION_TYPES_MAP[:credit],
+        gross_price: project_application.budget,
+        fee: 0.00
+      )
+    elsif resolved_in_favor == RESOURCE_TYPES_MAP[:influencer]
+      InfluencerProjectTransaction.create!(
+        system_project_transaction: transaction,
+        project: project,
+        project_application: project_application,
+        influencer: influencer,
+        gross_price: gross_price,
+        fee: 0.00,
+        transaction_type: InfluencerProjectTransaction::TRANSACTION_TYPES_MAP[:credit]
+      )
+    end
   end
 end

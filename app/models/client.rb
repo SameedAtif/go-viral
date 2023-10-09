@@ -12,4 +12,8 @@ class Client < ApplicationRecord
   has_many :system_project_transactions
   has_many :client_project_transactions
   has_many :project_disputes
+  has_many :client_gig_reviews
+  has_many :system_gig_transactions
+  has_many :client_gig_transactions
+  has_many :gig_deliverable_reviews
 end

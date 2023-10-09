@@ -1,7 +1,8 @@
 class ProjectsController < ApplicationController
+  skip_before_action :authenticate_user!, only: :show
+
   before_action :load_project, except: %i[create new]
   before_action :authorize_resource!, except: %i[create new show]
-  skip_before_action :authenticate_user!, only: :show
   before_action :validate_status, only: %i[create update]
 
   def new
