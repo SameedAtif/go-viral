@@ -22,5 +22,9 @@ module GoViral
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # i18n localization configurations
+    config.i18n.available_locales = [:en]
+    config.i18n.default_locale = :en
   end
 end

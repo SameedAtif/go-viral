@@ -638,7 +638,6 @@ RSpec.describe ProjectsController do
           end_time: 1.month.from_now,
           required_number_of_influencers: 6,
           status: 'ready_for_review',
-          payment_type: 'exposure',
           payment_type: Project::PAYMENT_TYPES_MAP[:exposure],
           targeted_demographic_start_age: 5,
           targeted_demographic_end_age: 16,

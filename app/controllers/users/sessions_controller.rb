@@ -1,4 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
+  layout "offline"
+  
   def switch_session
     session[:user_role] = validate_session_type
     redirect_to root_path

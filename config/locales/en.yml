@@ -30,4 +30,26 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  header:
+    navbar:
+      influencers_search: "Search your influencer"
+      create_campaign: "Create a Campaign"
+      order: "Orders"
+      influencers: "Influencers"
+      campaign: "Campaigns"
+      profile_menu:
+        dashboard: "Dashboard"
+        settings: "Settings"
+        earnings: "Earnings"
+        sign_out: "Sign Out"
+  body:
+    view_all: "View all"
+    listing_heading: "Listing you might be interested in"
+    filter_bar:
+      clear_all: "Clear All"
+      all_filters: "All Filters"
+    dotcom:
+      index:
+        find_creator: "Find The Perfect Creator"
+        for_your_business: "for your business"
+        plateforms_heading: "Collab by plateforms"
