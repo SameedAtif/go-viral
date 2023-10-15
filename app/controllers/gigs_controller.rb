@@ -2,7 +2,7 @@ class GigsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[show index]
 
   before_action :load_gig, except: %i[create new index]
-  before_action :authorize_resource!, except: %i[create new show]
+  before_action :authorize_resource!, except: %i[create new show index]
   before_action :validate_status, only: %i[create update]
 
   layout "pages_with_search_bar"

@@ -1,5 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-basic_client_package = SystemPackage.create!(
+require 'factory_bot_rails'
+
+basic_client_package = SystemPackage.find_or_create_by!(
   entity_name: SystemPackage::ENTITY_NAME_TYPES[:client],
   package_name: 'Basic',
   package_description: "Get a feel of the bazaar.",
@@ -7,18 +8,7 @@ basic_client_package = SystemPackage.create!(
   gross_price: 0,
   fee: 0
 )
-
-# Based on a package, a given table is restricted or update
-# In basic client package, a organization can create 1 project with 2 influencers
-# Meaning, there will be two system_package_resources for that organization.
-# Note: resource_name is not the table name, but the functionality name.
-# For example 'client can only have n number_of_projects in x package', it could be 'number_of_projects' and combined with resource_value ('1', '10')
-# this functionality can become dynamic.
-# Another case would be 'influencer can receive payment after 15 days'. resource_name: 'influencer_pay_in_days' and value could be '30'
-# Another case would be 'influencer is pro'. resource_name: 'influencer_pro', value: 'true'
-# The only thing the developer needs to ensure is that the datatype of the string and the functional .
-
-SystemPackageResource.create!(
+SystemPackageResource.find_or_create_by!(
   system_package: basic_client_package,
   category: SystemPackageResource::CATEGORY_TYPES[:free],
   resource_name: SystemPackageResource::RESOURCE_NAME_TYPES[:number_of_projects],
@@ -27,7 +17,7 @@ SystemPackageResource.create!(
   fee: 0,
   discount: 0
 )
-SystemPackageResource.create!(
+SystemPackageResource.find_or_create_by!(
   system_package: basic_client_package,
   category: SystemPackageResource::CATEGORY_TYPES[:free],
   resource_name: SystemPackageResource::RESOURCE_NAME_TYPES[:number_of_influencers],
@@ -37,7 +27,7 @@ SystemPackageResource.create!(
   discount: 0
 )
 
-basic_influencer_package = SystemPackage.create!(
+basic_influencer_package = SystemPackage.find_or_create_by!(
   entity_name: SystemPackage::ENTITY_NAME_TYPES[:influencer],
   package_name: 'Basic',
   package_description: "Get a feel of the bazaar.",
@@ -45,7 +35,7 @@ basic_influencer_package = SystemPackage.create!(
   gross_price: 0,
   fee: 0
 )
-SystemPackageResource.create!(
+SystemPackageResource.find_or_create_by!(
   system_package: basic_influencer_package,
   category: SystemPackageResource::CATEGORY_TYPES[:free],
   resource_name: SystemPackageResource::RESOURCE_NAME_TYPES[:number_of_gigs],
@@ -54,3 +44,63 @@ SystemPackageResource.create!(
   fee: 0,
   discount: 0
 )
+
+reviewers = []
+influencers = []
+clients = []
+# create reviewer
+(0..10).each do |i|
+  user = User.create!(
+    first_name: "John",
+    last_name: "Reviewer #{i}",
+    phone_number: "+92#{Random.new.rand(1_000_000..10_000_000-1)}",
+    email: "reviewer#{i}@example.com",
+    user_roles: [User::USER_ROLES[:reviewer]],
+    password: "password",
+    password_confirmation: "password",
+    confirmed_at: DateTime.current
+  )
+  reviewer = Reviewer.find_or_create_by!(user: user)
+  reviewers << reviewer
+end
+# create influencer
+(0..10).each do |i|
+  user = User.create!(
+    first_name: "John",
+    last_name: "Influencer #{i}",
+    phone_number: "+92#{Random.new.rand(1_000_000..10_000_000-1)}",
+    email: "influencer#{i}@example.com",
+    user_roles: [User::USER_ROLES[:influencer]],
+    password: "password",
+    password_confirmation: "password",
+    confirmed_at: DateTime.current
+  )
+  influencer = FactoryBot.create(:influencer, :reviewed, user: user)
+  # create influencer gig
+  3.times do
+    gig = FactoryBot.create :gig, :reviewed, influencer: influencer
+    2.times { FactoryBot.create(:gig_package, gig: gig) }
+  end
+  influencers << influencer
+end
+# create client
+(0..10).each do |i|
+  user = User.create!(
+    first_name: "John",
+    last_name: "Client #{i}",
+    phone_number: "+92#{Random.new.rand(1_000_000..10_000_000-1)}",
+    email: "client#{i}@example.com",
+    user_roles: [User::USER_ROLES[:client]],
+    password: "password",
+    password_confirmation: "password",
+    confirmed_at: DateTime.current
+  )
+  client = FactoryBot.create :client, user: user
+  organization = FactoryBot.create :organization, :verified
+  FactoryBot.create :organization_detail, :owner, client: client, organization: organization
+  1.times do
+    project = FactoryBot.create :project, :reviewed, :payment_verified, organization: organization, status: Project::STATUSES_MAP[:approved]
+    2.times { FactoryBot.create :project_milestone, project: project }
+  end
+end
+
