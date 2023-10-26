@@ -90,3 +90,6 @@ end
 gem "pundit", "~> 2.3"
 gem "rails-i18n"
 gem "httparty"
+
+gem 'sidekiq'
+gem 'redis-rails'

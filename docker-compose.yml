@@ -1,0 +1,73 @@
+version: '3.7'
+services:
+  postgresql:
+    image: postgres:14.9
+    environment:
+      POSTGRES_DB: go_viral_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    expose:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:7.0.14
+    env_file: .env
+    command: redis-server --appendonly yes  # enable persistent storage
+    volumes:
+      - redisdata:/data
+
+  app:
+    build:
+      context: .
+      dockerfile: .ci/docker/Dockerfile.rails
+    depends_on:
+      - postgresql
+      - redis
+    expose:
+      - 3000:3000
+    environment:
+      POSTGRES_HOST: postgresql
+      POSTGRES_PORT: 5432
+      POSTGRES_POOL: 5
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    entrypoint: .ci/entrypoints/app-server.sh
+    volumes:
+      - .:/var/www/app
+
+  web:
+    build:
+      context: .
+      dockerfile: ./.ci/docker/Dockerfile.web
+    depends_on:
+      - app
+    ports:
+      - 80:80
+    volumes:
+      - .:/var/www/app
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: .ci/docker/Dockerfile.sidekiq
+    depends_on:
+      - app
+      - web
+      - postgresql
+      - redis
+    environment:
+      POSTGRES_HOST: postgresql
+      POSTGRES_PORT: 5432
+      POSTGRES_POOL: 5
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    entrypoint: .ci/entrypoints/sidekiq.sh
+    volumes:
+      - .:/var/www/app
+
+volumes:
+  redisdata:
+  postgres_data:

@@ -20,6 +20,15 @@ module GoViral
     # config.eager_load_paths << Rails.root.join("extras")
 
     # i18n localization configurations
+
+    config.log_level = :debug
+    config.log_tags  = [:subdomain, :uuid]
+    config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
+    config.cache_store = :redis_store, ENV['CACHE_URL'],
+                         { namespace: 'go_viral::cache' }
+
+    config.active_job.queue_adapter = :sidekiq
     config.i18n.available_locales = [:en]
     config.i18n.default_locale = :en
   end
