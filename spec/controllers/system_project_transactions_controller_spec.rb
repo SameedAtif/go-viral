@@ -12,8 +12,8 @@ RSpec.describe SystemProjectTransactionsController do
           client
         end
         let(:influencer) { create(:influencer, :reviewed) }
-        let(:project) { create :project, :reviewed, :payment_verified, organization: client.organization }
-        let(:project_application) { create :project_application, influencer: influencer, project: project, status: 'approved' }
+        let(:project) { create :project, :reviewed, :payment_verified, organization: client.organization, budget: 2200 }
+        let(:project_application) { create :project_application, influencer: influencer, project: project, status: 'approved', budget: 2000 }
         let(:system_project_transaction) {
           {
             system_project_transaction: {
