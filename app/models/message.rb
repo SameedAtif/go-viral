@@ -8,19 +8,12 @@ class Message < ApplicationRecord
   def chat_attachment(index)
     target = attachments[index]
     return unless attachments.attached?
-
-    if target.image?
-      target
-      # target.variant(resize_to_limit: [150, 150]).processed
-    elsif target.video?
-      target
-      # target.variant(resize_to_limit: [150, 150]).processed
-    end
+    target
   end
 
   def confirm_participant
     if self.room.is_private
-      is_participant = Participant.where(user_id: self.user.id, room_id: self.room.id).first
+      is_participant = Participant.find_by(user_id: self.user.id, room_id: self.room.id)
       throw :abort unless is_participant
     end
   end
