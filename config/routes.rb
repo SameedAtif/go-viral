@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
-  root "rooms#index"
+  root "dotcom#index"
 
   get '/dashboard', :to => 'dotcom#dashboard'
   resource :organization do
@@ -56,7 +56,6 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :messages
   end
-  get 'user/:id', to: 'users#show', as: 'user'
   resources :system_packages, only: :create
   resources :system_project_transactions, only: :create
 end
