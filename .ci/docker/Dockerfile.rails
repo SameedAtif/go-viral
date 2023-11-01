@@ -36,6 +36,7 @@ COPY . ./
 COPY .env.example .env
 COPY .git/ ./.git/
 
+RUN RAILS_ENV=production rails assets:precompile
 #Permission 755 allows the execute permission for all users to run the script
 RUN chmod 755 .ci/entrypoints/app-server.sh
 
