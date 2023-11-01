@@ -15,7 +15,9 @@ RUN apt-get --allow-releaseinfo-change-suite update && apt-get install -y \
       openssl \
       python \
       cmake \
-      build-essential
+      build-essential \
+      nodejs \
+      npm
 
 RUN gem install bundler -v 2.4.6
 
