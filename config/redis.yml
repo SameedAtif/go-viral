@@ -1,0 +1,9 @@
+default: &default
+  url: redis://redis:6379/12
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+  url:  <%= ENV['REDIS_URL_SIDEKIQ'] || 'redis://redis:6379/12' %>
