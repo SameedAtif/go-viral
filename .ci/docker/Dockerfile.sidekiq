@@ -15,7 +15,9 @@ RUN apt-get --allow-releaseinfo-change-suite update && apt-get install -y \
       openssl \
       python \
       cmake \
-      build-essential
+      build-essential \
+      nodejs \
+      npm
 
 RUN gem install bundler -v 2.4.6
 
@@ -35,6 +37,9 @@ RUN bundle check || bundle install
 COPY . ./
 COPY .env.example .env
 COPY .git/ ./.git/
+
+RUN npm install
+RUN RAILS_ENV=production rails assets:precompile
 
 #Permission 755 allows the execute permission for all users to run the script
 RUN chmod 755 .ci/entrypoints/sidekiq.sh
