@@ -20,6 +20,7 @@ services:
       context: .
       dockerfile: .ci/docker/Dockerfile.rails
     depends_on:
+      - web
       - postgresql
       - redis
     expose:
@@ -34,7 +35,8 @@ services:
       context: .
       dockerfile: ./.ci/docker/Dockerfile.web
     depends_on:
-      - app
+      - postgresql
+      - redis
     ports:
       - 80:80
     volumes:
@@ -46,7 +48,6 @@ services:
       dockerfile: .ci/docker/Dockerfile.sidekiq
     depends_on:
       - app
-      - web
       - postgresql
       - redis
     env_file: .env
