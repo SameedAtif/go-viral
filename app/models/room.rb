@@ -17,4 +17,12 @@ class Room < ApplicationRecord
   def get_name(user)
     "private_#{user.id}"
   end
+
+  def add_user(user)
+    participants.find_or_create_by!(user_id: user.id)
+  end
+
+  def remove_user(user)
+    participants&.find_by(user_id: user.id).destroy
+  end
 end
