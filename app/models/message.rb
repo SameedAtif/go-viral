@@ -4,7 +4,7 @@ class Message < ApplicationRecord
   has_many_attached :attachments, dependent: :destroy
 
   after_create_commit { broadcast_append_to room }
-  before_create :confirm_participant
+  validate :confirm_participant
 
   def chat_attachment(index)
     target = attachments[index]
