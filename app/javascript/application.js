@@ -27,25 +27,6 @@ $(document).ready(function () {
     });
     // For the Filters sidebar end
 
-
-
-    // Stick Filters bar to the top start
-    var navbar = document.getElementById("filters_nav_bar");
-    var sticky = navbar.offsetTop;
-
-    function myFunction() {
-        if (window.pageYOffset >= sticky) {
-            navbar.classList.add('fixed', 'w-full', 'top-0', 'z-10')
-        } else {
-            navbar.classList.remove('fixed', 'w-full', 'top-0', 'z-10');
-        }
-    }
-
-    window.onscroll = function() { myFunction() };
-    // Stick Filters bar to the top start
-
-    
-
     // script to show dropdowns and hide when clicked outside the scope start
     const dropdownButtons = document.querySelectorAll('.dropdown-button');
     const dropdownMenus = document.querySelectorAll('.dropdown-menu');

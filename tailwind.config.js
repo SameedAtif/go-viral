@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./app/**/*.{html,js,erb}",
-    './node_modules/flowbite/**/*.js',
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {},
@@ -13,6 +13,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
     require('flowbite/plugin'),
   ],
 }

@@ -6,16 +6,28 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/css/flag-icons.min.css"/>
     <%= stylesheet_link_tag 'wind', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "jquery" %>
+    <%= javascript_include_tag "layouts/pages_with_search_bar" %>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.1.0/dist/flowbite.js"></script>
   </head>
 
   <body>
     <main class="">
       <%= render '/shared/navbar/navbar_with_search' %>
       <%= yield %>
+
+
+<!-- drawer init and toggle -->
+
+
+<!-- drawer component -->
+
     </main>
   </body>
 </html>
