@@ -63,21 +63,9 @@
               class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2">
               <!-- Apply absolute positioning -->
               <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                    <%= t("header.navbar.profile_menu.dashboard") %>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                    <%= t("header.navbar.profile_menu.settings") %>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                    <%= t("header.navbar.profile_menu.earnings") %>
-                  </a>
-                </li>
+                <%= render partial: "shared/elements/navbar_li" , locals: { li_content: t("header.navbar.profile_menu.dashboard") } %>
+                <%= render partial: "shared/elements/navbar_li" , locals: { li_content: t("header.navbar.profile_menu.settings") } %>
+                <%= render partial: "shared/elements/navbar_li" , locals: { li_content: t("header.navbar.profile_menu.earnings") } %>
               </ul>
               <div class="py-1">
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
