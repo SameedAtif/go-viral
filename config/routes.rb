@@ -8,14 +8,34 @@ Rails.application.routes.draw do
   root "dotcom#index"
 
   get '/dashboard', :to => 'dotcom#dashboard'
-  resource :organization
+  resource :organization do
+    resources :organization_system_packages, only: :create
+    resources :organization_package_downgrade_requests, only: :create
+  end
+  resources :organization_package_downgrade_requests, only: :update
+
   resources :influencers
 
+  resources :gig_packages, only: [] do
+    resources :system_gig_transactions, only: :create
+  end
+  resources :gig_clients, only: :update do
+    resources :gig_deliverables, only: :create
+    resources :gig_disputes, only: :create
+  end
+  resources :gig_disputes, only: :update
+  resources :gig_deliverables, only: :show do
+    resources :gig_deliverable_reviews, except: :update
+  end
+  resources :gig_deliverables, only: :update
+  resources :gig_deliverable_reviews, only: :update
   resources :gigs
   # Already made all the associations so changing the name would be very time taking (sorry)
   resources :projects, path: :campaigns do
+    resources :project_disputes, only: :create
     resources :project_applications, only: %i[new index create]
   end
+  resources :project_disputes, only: :update
   resources :project_applications, only: %i[update]
   # When you submit a deliverable for a milestone, you can view the milestone
   resources :project_milestones, only: :show do
@@ -32,4 +52,7 @@ Rails.application.routes.draw do
   end
 
   resources :notifications, only: [:update, :destroy]
+
+  resources :system_packages, only: :create
+  resources :system_project_transactions, only: :create
 end

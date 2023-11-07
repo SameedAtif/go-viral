@@ -1,0 +1,32 @@
+class OrganizationSystemPackageTransaction < ApplicationRecord
+  belongs_to :organization_system_package
+  belongs_to :client
+  belongs_to :reviewer, optional: true
+
+  has_many :organization_system_package_resource_transactions
+
+  validates_presence_of :transaction_type, :transaction_token, :package_name, :package_description,
+                        :transaction_token, :gross_price, :fee
+  validates_numericality_of :fee, :gross_price, :discount, only_float: true, greater_than_or_equal_to: 0.00
+  validates :end_time, comparison: { greater_than: :start_time }
+
+  # validate :match_with_system_package
+
+  def readonly?
+    !new_record?
+  end
+
+  # private
+
+  # def match_with_system_package
+  #   [
+  #     :transaction_type, :transaction_token, :package_name, :package_description,
+  #     :gross_price, :fee, :discount, :discount_expires_at, :start_time
+  #     :end_time
+  #   ].each do |col|
+  #     if self.send(col) != organization_system_package.system_package.send(col)
+  #       errors.add(col, "#{col.to_s} value must match organization_system_package.#{col}")
+  #     end
+  #   end
+  # end
+end

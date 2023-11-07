@@ -3,6 +3,10 @@ class ProjectApplication < ApplicationRecord
   belongs_to :project
   belongs_to :influencer
 
+  has_many :system_project_transactions
+  has_many :influencer_project_transactions
+  has_many :client_project_transactions
+
   STATUS_TYPES_MAP = {
     draft: 'draft',
     ready_for_review: 'ready_for_review',
@@ -41,7 +45,7 @@ class ProjectApplication < ApplicationRecord
       resource_type: project.class.name,
       user_id: influencer.user_id,
       user_type: User::USER_ROLES[:influencer],
-      notification_type: Notification::NOTIFICATION_TYPES_MAP[:influencer_rejected_for_project]
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[:creator_rejected_for_project]
     )
   end
 
@@ -51,9 +55,9 @@ class ProjectApplication < ApplicationRecord
     Notification.create!(
       resource_id: project_id,
       resource_type: project.class.name,
-      user_id: influencer.user_id,
+      user_id: project.organization.owner.user_id,
       user_type: User::USER_ROLES[:client],
-      notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_influencer_applied_to_project]
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[:client_creator_applied_to_project]
     )
   end
 

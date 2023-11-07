@@ -18,7 +18,8 @@ RSpec.describe OrganizationsController do
           address_2: 'Street 1, Avenue 1',
           city: 'City 1',
           country: 'Country 1',
-          phone_number: '+111111111'
+          phone_number: '+111111111',
+          payment_plan: 'basic'
         }
       }
     }

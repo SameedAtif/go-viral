@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_130252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,56 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "client_gig_reviews", force: :cascade do |t|
+    t.bigint "gig_id"
+    t.bigint "client_id"
+    t.bigint "gig_package_id"
+    t.string "title", null: false
+    t.string "description"
+    t.float "rating", default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_gig_reviews_on_client_id"
+    t.index ["gig_id"], name: "index_client_gig_reviews_on_gig_id"
+    t.index ["gig_package_id"], name: "index_client_gig_reviews_on_gig_package_id"
+  end
+
+  create_table "client_gig_transactions", force: :cascade do |t|
+    t.bigint "system_gig_transaction_id"
+    t.bigint "gig_client_id"
+    t.bigint "client_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.boolean "credited"
+    t.datetime "credited_at"
+    t.string "transaction_type"
+    t.string "transaction_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_gig_transactions_on_client_id"
+    t.index ["gig_client_id"], name: "index_client_gig_transactions_on_gig_client_id"
+    t.index ["system_gig_transaction_id"], name: "index_clnt_gig_trans_on_sys_gig_trans"
+  end
+
+  create_table "client_project_transactions", force: :cascade do |t|
+    t.bigint "system_project_transaction_id"
+    t.bigint "project_application_id"
+    t.bigint "project_id"
+    t.bigint "client_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.boolean "credited"
+    t.datetime "credited_at"
+    t.string "transaction_type"
+    t.string "transaction_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_project_transactions_on_client_id"
+    t.index ["project_application_id"], name: "index_client_project_transactions_on_project_application_id"
+    t.index ["project_id"], name: "index_client_project_transactions_on_project_id"
+    t.index ["system_project_transaction_id"], name: "index_clnt_proj_trans_on_sys_proj_trans"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -37,25 +87,77 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.index ["project_id"], name: "index_example_works_on_project_id"
   end
 
-  create_table "gig_categories", force: :cascade do |t|
+  create_table "gig_clients", force: :cascade do |t|
+    t.bigint "gig_id"
+    t.bigint "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "gig_package_id"
+    t.string "status", default: "pending_review"
+    t.bigint "system_gig_transaction_id"
+    t.index ["client_id"], name: "index_gig_clients_on_client_id"
+    t.index ["gig_id"], name: "index_gig_clients_on_gig_id"
+    t.index ["gig_package_id"], name: "index_gig_clients_on_gig_package_id"
+    t.index ["system_gig_transaction_id"], name: "index_gig_clients_on_system_gig_transaction_id"
+  end
+
+  create_table "gig_deliverable_reviews", force: :cascade do |t|
+    t.bigint "client_id"
+    t.bigint "gig_client_id"
+    t.bigint "gig_deliverable_id"
+    t.string "remarks", default: "", null: false
+    t.string "status", default: "ready_for_review", null: false
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_gig_deliverable_reviews_on_client_id"
+    t.index ["gig_client_id"], name: "index_gig_deliverable_reviews_on_gig_client_id"
+    t.index ["gig_deliverable_id"], name: "index_gig_deliverable_reviews_on_gig_deliverable_id"
+  end
+
+  create_table "gig_deliverables", force: :cascade do |t|
+    t.bigint "gig_client_id"
+    t.string "title", default: "", null: false
+    t.string "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gig_client_id"], name: "index_gig_deliverables_on_gig_client_id"
+  end
+
+  create_table "gig_disputes", force: :cascade do |t|
+    t.bigint "gig_client_id"
+    t.bigint "reviewer_id"
+    t.string "created_by"
+    t.string "status", default: "pending_review", null: false
+    t.string "resolved_in_favor"
+    t.string "detail"
+    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gig_client_id"], name: "index_gig_disputes_on_gig_client_id"
+    t.index ["reviewer_id"], name: "index_gig_disputes_on_reviewer_id"
+  end
+
+  create_table "gig_faqs", force: :cascade do |t|
+    t.string "question", null: false
+    t.string "answer", null: false
+    t.bigint "gig_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gig_id"], name: "index_gig_faqs_on_gig_id"
+  end
+
+  create_table "gig_packages", force: :cascade do |t|
     t.bigint "gig_id"
     t.string "title", default: "", null: false
     t.string "description", default: "", null: false
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["gig_id"], name: "index_gig_categories_on_gig_id"
-  end
-
-  create_table "gig_clients", force: :cascade do |t|
-    t.bigint "gig_id"
-    t.bigint "client_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "gig_category_id"
-    t.index ["client_id"], name: "index_gig_clients_on_client_id"
-    t.index ["gig_category_id"], name: "index_gig_clients_on_gig_category_id"
-    t.index ["gig_id"], name: "index_gig_clients_on_gig_id"
+    t.integer "delivery_estimation", default: 1, null: false
+    t.integer "review_limit", default: 1, null: false
+    t.string "features", default: [], array: true
+    t.index ["gig_id"], name: "index_gig_packages_on_gig_id"
   end
 
   create_table "gig_platforms", force: :cascade do |t|
@@ -85,8 +187,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.datetime "updated_at", null: false
     t.bigint "reviewer_id"
     t.boolean "reviewed"
+    t.string "status", default: "draft"
+    t.integer "views", default: 0
+    t.string "description"
+    t.integer "targeted_demographic_start_age"
+    t.integer "targeted_demographic_end_age"
+    t.string "targeted_geographic_audience", default: [], array: true
     t.index ["influencer_id"], name: "index_gigs_on_influencer_id"
     t.index ["reviewer_id"], name: "index_gigs_on_reviewer_id"
+  end
+
+  create_table "influencer_gig_transactions", force: :cascade do |t|
+    t.bigint "system_gig_transaction_id"
+    t.bigint "gig_id"
+    t.bigint "gig_client_id"
+    t.bigint "influencer_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.boolean "credited"
+    t.datetime "credited_at"
+    t.string "transaction_type"
+    t.string "transaction_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gig_client_id"], name: "index_influencer_gig_transactions_on_gig_client_id"
+    t.index ["gig_id"], name: "index_influencer_gig_transactions_on_gig_id"
+    t.index ["influencer_id"], name: "index_influencer_gig_transactions_on_influencer_id"
+    t.index ["system_gig_transaction_id"], name: "index_inf_gig_trans_on_sys_gig_trans"
   end
 
   create_table "influencer_platforms", force: :cascade do |t|
@@ -99,6 +226,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.string "url"
     t.index ["influencer_id"], name: "index_influencer_platforms_on_influencer_id"
     t.index ["platform_id"], name: "index_influencer_platforms_on_platform_id"
+  end
+
+  create_table "influencer_portfolios", force: :cascade do |t|
+    t.bigint "influencer_id"
+    t.string "title"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["influencer_id"], name: "index_influencer_portfolios_on_influencer_id"
+  end
+
+  create_table "influencer_project_transactions", force: :cascade do |t|
+    t.bigint "system_project_transaction_id"
+    t.bigint "project_id"
+    t.bigint "project_application_id"
+    t.bigint "influencer_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.boolean "credited"
+    t.datetime "credited_at"
+    t.string "transaction_type"
+    t.string "transaction_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["influencer_id"], name: "index_influencer_project_transactions_on_influencer_id"
+    t.index ["project_application_id"], name: "index_influencer_project_transactions_on_project_application_id"
+    t.index ["project_id"], name: "index_influencer_project_transactions_on_project_id"
+    t.index ["system_project_transaction_id"], name: "index_inf_proj_trans_on_sys_proj_trans"
   end
 
   create_table "influencers", force: :cascade do |t|
@@ -149,6 +304,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.index ["organization_id"], name: "index_organization_feedbacks_on_organization_id"
   end
 
+  create_table "organization_package_downgrade_requests", force: :cascade do |t|
+    t.bigint "current_package_id"
+    t.bigint "requested_package_id"
+    t.float "refundable_amount"
+    t.float "fee"
+    t.string "reason", null: false
+    t.string "status", default: "pending_review", null: false
+    t.boolean "resolved", default: false, null: false
+    t.bigint "reviewer_id"
+    t.bigint "organization_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["current_package_id"], name: "index_curr_sys_pkg_on_sys_pkg"
+    t.index ["organization_id"], name: "index_org_sys_pkg_dgrade_clt"
+    t.index ["requested_package_id"], name: "index_req_sys_pkg_on_sys_pkg"
+    t.index ["reviewer_id"], name: "index_org_sys_pkg_dgrade_rev"
+  end
+
   create_table "organization_reviews", force: :cascade do |t|
     t.bigint "organization_id"
     t.bigint "reviewer_id"
@@ -158,6 +331,64 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_organization_reviews_on_organization_id"
     t.index ["reviewer_id"], name: "index_organization_reviews_on_reviewer_id"
+  end
+
+  create_table "organization_system_package_resource_transactions", force: :cascade do |t|
+    t.bigint "organization_system_package_transaction_id"
+    t.bigint "organization_system_package_resource_id"
+    t.string "resource_name", null: false
+    t.string "resource_value", null: false
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_system_package_resource_id"], name: "index_org_sys_pkg_r_trans_on_org_sys_pkg_r"
+    t.index ["organization_system_package_transaction_id"], name: "index_org_sys_pkg_r_trans_on_org_sys_pkg_trans"
+  end
+
+  create_table "organization_system_package_resources", force: :cascade do |t|
+    t.bigint "organization_system_package_id"
+    t.bigint "system_package_resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_system_package_id"], name: "index_org_sys_pkg_r_on_org_sys_pkg"
+    t.index ["system_package_resource_id"], name: "index_org_sys_pkg_r_on_sys_pkg_r"
+  end
+
+  create_table "organization_system_package_transactions", force: :cascade do |t|
+    t.bigint "organization_system_package_id"
+    t.bigint "client_id"
+    t.bigint "reviewer_id"
+    t.string "transaction_type", null: false
+    t.string "package_name", null: false
+    t.string "package_description", null: false
+    t.string "transaction_token", null: false
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_organization_system_package_transactions_on_client_id"
+    t.index ["organization_system_package_id"], name: "index_org_sys_pkg_on_org_sys_pkg_trans"
+    t.index ["reviewer_id"], name: "index_organization_system_package_transactions_on_reviewer_id"
+  end
+
+  create_table "organization_system_packages", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.bigint "system_package_id"
+    t.boolean "refunded", default: false
+    t.string "payment_plan"
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_organization_system_packages_on_organization_id"
+    t.index ["system_package_id"], name: "index_organization_system_packages_on_system_package_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -177,6 +408,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.string "tiktok_url"
     t.boolean "verified"
     t.bigint "reviewer_id"
+    t.string "payment_plan"
     t.index ["reviewer_id"], name: "index_organizations_on_reviewer_id"
   end
 
@@ -236,6 +468,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.datetime "updated_at", null: false
     t.index ["influencer_id"], name: "index_project_deliverables_on_influencer_id"
     t.index ["project_milestone_id"], name: "index_project_deliverables_on_project_milestone_id"
+  end
+
+  create_table "project_disputes", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "client_id"
+    t.bigint "influencer_id"
+    t.bigint "reviewer_id"
+    t.string "created_by"
+    t.string "status", default: "pending_review", null: false
+    t.string "resolved_in_favor"
+    t.string "detail"
+    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_project_disputes_on_client_id"
+    t.index ["influencer_id"], name: "index_project_disputes_on_influencer_id"
+    t.index ["project_id"], name: "index_project_disputes_on_project_id"
+    t.index ["reviewer_id"], name: "index_project_disputes_on_reviewer_id"
   end
 
   create_table "project_influencers", force: :cascade do |t|
@@ -312,6 +562,66 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.index ["user_id"], name: "index_reviewers_on_user_id"
   end
 
+  create_table "system_gig_transactions", force: :cascade do |t|
+    t.bigint "gig_package_id"
+    t.bigint "client_id"
+    t.bigint "gig_dispute_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.string "transaction_type", null: false
+    t.string "transaction_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_system_gig_transactions_on_client_id"
+    t.index ["gig_dispute_id"], name: "index_system_gig_transactions_on_gig_dispute_id"
+    t.index ["gig_package_id"], name: "index_system_gig_transactions_on_gig_package_id"
+  end
+
+  create_table "system_package_resources", force: :cascade do |t|
+    t.bigint "system_package_id"
+    t.string "category", null: false
+    t.string "resource_name", null: false
+    t.string "resource_value", null: false
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["system_package_id"], name: "index_system_package_resources_on_system_package_id"
+  end
+
+  create_table "system_packages", force: :cascade do |t|
+    t.string "entity_name", null: false
+    t.string "package_name", null: false
+    t.string "package_description", null: false
+    t.string "payment_plan"
+    t.float "gross_price"
+    t.float "fee"
+    t.float "discount"
+    t.datetime "discount_expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "system_project_transactions", force: :cascade do |t|
+    t.bigint "project_application_id"
+    t.bigint "project_id"
+    t.bigint "client_id"
+    t.bigint "project_dispute_id"
+    t.float "gross_price"
+    t.float "fee"
+    t.string "transaction_type", null: false
+    t.string "transaction_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_system_project_transactions_on_client_id"
+    t.index ["project_application_id", "project_id", "transaction_type"], name: "index_sys_pro_trans_on_pro_app_&_pro_&_trans_t", unique: true
+    t.index ["project_application_id"], name: "index_system_project_transactions_on_project_application_id"
+    t.index ["project_dispute_id"], name: "index_system_project_transactions_on_project_dispute_id"
+    t.index ["project_id"], name: "index_system_project_transactions_on_project_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
@@ -342,20 +652,47 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "client_gig_reviews", "clients"
+  add_foreign_key "client_gig_reviews", "gig_packages"
+  add_foreign_key "client_gig_reviews", "gigs"
+  add_foreign_key "client_gig_transactions", "clients"
+  add_foreign_key "client_gig_transactions", "gig_clients"
+  add_foreign_key "client_gig_transactions", "system_gig_transactions"
+  add_foreign_key "client_project_transactions", "clients"
+  add_foreign_key "client_project_transactions", "project_applications"
+  add_foreign_key "client_project_transactions", "projects"
+  add_foreign_key "client_project_transactions", "system_project_transactions"
   add_foreign_key "clients", "users"
   add_foreign_key "example_works", "projects"
-  add_foreign_key "gig_categories", "gigs"
   add_foreign_key "gig_clients", "clients"
-  add_foreign_key "gig_clients", "gig_categories"
+  add_foreign_key "gig_clients", "gig_packages"
   add_foreign_key "gig_clients", "gigs"
+  add_foreign_key "gig_clients", "system_gig_transactions"
+  add_foreign_key "gig_deliverable_reviews", "clients"
+  add_foreign_key "gig_deliverable_reviews", "gig_clients"
+  add_foreign_key "gig_deliverable_reviews", "gig_deliverables"
+  add_foreign_key "gig_deliverables", "gig_clients"
+  add_foreign_key "gig_disputes", "gig_clients"
+  add_foreign_key "gig_disputes", "reviewers"
+  add_foreign_key "gig_faqs", "gigs"
+  add_foreign_key "gig_packages", "gigs"
   add_foreign_key "gig_platforms", "gigs"
   add_foreign_key "gig_platforms", "platforms"
   add_foreign_key "gig_reviews", "gigs"
   add_foreign_key "gig_reviews", "reviewers"
   add_foreign_key "gigs", "influencers"
   add_foreign_key "gigs", "reviewers"
+  add_foreign_key "influencer_gig_transactions", "gig_clients"
+  add_foreign_key "influencer_gig_transactions", "gigs"
+  add_foreign_key "influencer_gig_transactions", "influencers"
+  add_foreign_key "influencer_gig_transactions", "system_gig_transactions"
   add_foreign_key "influencer_platforms", "influencers"
   add_foreign_key "influencer_platforms", "platforms"
+  add_foreign_key "influencer_portfolios", "influencers"
+  add_foreign_key "influencer_project_transactions", "influencers"
+  add_foreign_key "influencer_project_transactions", "project_applications"
+  add_foreign_key "influencer_project_transactions", "projects"
+  add_foreign_key "influencer_project_transactions", "system_project_transactions"
   add_foreign_key "influencers", "reviewers"
   add_foreign_key "influencers", "users"
   add_foreign_key "notifications", "users"
@@ -363,8 +700,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
   add_foreign_key "organization_details", "organizations"
   add_foreign_key "organization_feedbacks", "influencers"
   add_foreign_key "organization_feedbacks", "organizations"
+  add_foreign_key "organization_package_downgrade_requests", "organizations"
+  add_foreign_key "organization_package_downgrade_requests", "reviewers"
+  add_foreign_key "organization_package_downgrade_requests", "system_packages", column: "current_package_id"
+  add_foreign_key "organization_package_downgrade_requests", "system_packages", column: "requested_package_id"
   add_foreign_key "organization_reviews", "organizations"
   add_foreign_key "organization_reviews", "reviewers"
+  add_foreign_key "organization_system_package_resource_transactions", "organization_system_package_resources"
+  add_foreign_key "organization_system_package_resource_transactions", "organization_system_package_transactions"
+  add_foreign_key "organization_system_package_resources", "organization_system_packages"
+  add_foreign_key "organization_system_package_resources", "system_package_resources"
+  add_foreign_key "organization_system_package_transactions", "clients"
+  add_foreign_key "organization_system_package_transactions", "organization_system_packages"
+  add_foreign_key "organization_system_package_transactions", "reviewers"
+  add_foreign_key "organization_system_packages", "organizations"
+  add_foreign_key "organization_system_packages", "system_packages"
   add_foreign_key "organizations", "reviewers"
   add_foreign_key "project_applications", "influencers"
   add_foreign_key "project_applications", "projects"
@@ -375,6 +725,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
   add_foreign_key "project_deliverable_reviews", "projects"
   add_foreign_key "project_deliverables", "influencers"
   add_foreign_key "project_deliverables", "project_milestones"
+  add_foreign_key "project_disputes", "clients"
+  add_foreign_key "project_disputes", "influencers"
+  add_foreign_key "project_disputes", "projects"
+  add_foreign_key "project_disputes", "reviewers"
   add_foreign_key "project_influencers", "influencers"
   add_foreign_key "project_influencers", "projects"
   add_foreign_key "project_milestones", "projects"
@@ -385,4 +739,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_134936) do
   add_foreign_key "projects", "organizations"
   add_foreign_key "projects", "reviewers"
   add_foreign_key "reviewers", "users"
+  add_foreign_key "system_gig_transactions", "clients"
+  add_foreign_key "system_gig_transactions", "gig_disputes"
+  add_foreign_key "system_gig_transactions", "gig_packages"
+  add_foreign_key "system_package_resources", "system_packages"
+  add_foreign_key "system_project_transactions", "clients"
+  add_foreign_key "system_project_transactions", "project_applications"
+  add_foreign_key "system_project_transactions", "project_disputes"
+  add_foreign_key "system_project_transactions", "projects"
 end
