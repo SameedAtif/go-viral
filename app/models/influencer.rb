@@ -22,4 +22,6 @@ class Influencer < ApplicationRecord
   has_many :influencer_portfolios, dependent: :destroy
   accepts_nested_attributes_for :influencer_portfolios,
                                 allow_destroy: true
+
+  scope :all_except, ->(user) { where.not(id: user) }
 end
