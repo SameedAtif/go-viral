@@ -31,7 +31,7 @@ WORKDIR $RAILS_ROOT
 COPY Gemfile Gemfile.lock ./
 
 RUN bundle config build.nokogiri --use-system-libraries
-RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java
+RUN bundle lock --add-platform x86_64-linux x86-mingw32 x86-mswin32 x64-mingw32 java
 RUN bundle check || bundle install
 
 COPY . ./
