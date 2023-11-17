@@ -1,0 +1,7 @@
+:concurrency: 5
+:max_retries: 10
+:queues:
+  - [critical, 5]
+  - [notification, 3]
+  - [pusher, 2]
+  - [default, 1]

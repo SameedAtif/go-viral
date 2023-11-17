@@ -38,3 +38,7 @@
 !/app/assets/builds/.keep
 /node_modules
 /coverage
+.env
+
+/.ci/certs/*
+!/.ci/certs/.keep
