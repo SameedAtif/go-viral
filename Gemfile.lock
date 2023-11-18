@@ -295,11 +295,14 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
+    ruby_http_client (3.5.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sendgrid-ruby (6.6.2)
+      ruby_http_client (~> 3.4)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
     sidekiq (7.2.0)
@@ -393,8 +396,8 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
-  image_processing (~> 1.2)
   httparty
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   jquery-rails
@@ -407,6 +410,7 @@ DEPENDENCIES
   redis-rails
   rspec-rails
   selenium-webdriver
+  sendgrid-ruby
   shoulda-matchers
   sidekiq
   simplecov
