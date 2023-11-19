@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "dotcom#index"
 
+  get '/robots.txt' => 'robots#robots'
   get '/dashboard', :to => 'dotcom#dashboard'
   resource :organization do
     resources :organization_system_packages, only: :create
@@ -53,6 +54,9 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:update, :destroy]
 
+  resources :rooms do
+    resources :messages
+  end
   resources :system_packages, only: :create
   resources :system_project_transactions, only: :create
 end

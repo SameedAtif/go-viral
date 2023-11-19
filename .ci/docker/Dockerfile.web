@@ -1,0 +1,25 @@
+FROM nginx
+
+#Install dependencies
+RUN apt-get update -qq && apt-get -y install apache2-utils
+
+#Set an environment variable for the Rails app root folder
+ENV RAILS_ROOT /var/www/go_viral
+
+#Create the working directory
+RUN mkdir -p $RAILS_ROOT
+
+WORKDIR $RAILS_ROOT
+
+RUN mkdir log
+
+COPY public public/
+
+COPY .ci/docker/web/nginx/nginx.conf /tmp/app.conf
+COPY .ci/entrypoints/nginx-entrypoint.sh ./nginx-entrypoint.sh
+
+#Permission 755 allows the execute permission for all users to run the script
+RUN chmod 755 ./nginx-entrypoint.sh
+
+EXPOSE 80
+ENTRYPOINT ["./nginx-entrypoint.sh"]

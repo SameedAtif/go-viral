@@ -2350,6 +2350,16 @@ input:checked + .toggle-bg {
   margin-top: auto;
 }
 
+.me-auto {
+  -webkit-margin-end: auto;
+          margin-inline-end: auto;
+}
+
+.ms-2 {
+  -webkit-margin-start: 0.5rem;
+          margin-inline-start: 0.5rem;
+}
+
 .box-content {
   box-sizing: content-box;
 }
