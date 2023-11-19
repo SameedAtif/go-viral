@@ -10,4 +10,19 @@ module NavigationHelper
     def render_navigation
         render partial: "shared/navigation", locals: { nav: ensure_navigation }
     end
+
+    def navbar_items
+        [
+            { content: t("header.navbar.order"), path: "#" },
+            { content: t("header.navbar.influencers"), path: gigs_path },
+            { content: t("header.navbar.campaign"), path: "#" }
+        ]
+    end
+    def navbar_with_search_items
+        [
+            { content: t("header.navbar.order"), path: "#" },
+            { content: t("header.navbar.influencers"), path: gigs_path },
+            { content: t("header.navbar.campaign"), path: "#" }
+        ]
+    end
 end
