@@ -1,0 +1,11 @@
+<div class="bg-white py-4">
+    <div class="py-4">
+        <h2 class="sr-only">Customer Reviews</h2>
+
+        <div class="-my-10">
+            <% 2.times do |index| %>
+                <%= render partial: "gigs/show/review" , locals: { index: index } %>
+            <% end %>
+        </div>
+    </div>
+</div>

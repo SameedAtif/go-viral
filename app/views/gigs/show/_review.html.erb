@@ -1,0 +1,43 @@
+<div class="flex space-x-4 text-sm text-gray-500">
+    <div class="flex-none py-10">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+            alt="" class="h-10 w-10 rounded-full bg-gray-100">
+    </div>
+    <div class="flex-1 py-10 <%= 'border-t border-gray-200' if (index > 2) %>">
+        <h3 class="font-medium text-gray-900">Hector Gibbons</h3>
+        <p><time datetime="2021-07-12">July 12, 2021</time></p>
+
+        <div class="mt-4 flex items-center">
+            <!-- Active: "text-yellow-400", Default: "text-gray-300" -->
+            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                    <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                        <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+        </div>
+        <p class="sr-only">5 out of 5 stars</p>
+
+        <div class="prose prose-sm mt-4 max-w-none text-gray-500">
+            <p>Blown away by how polished this icon pack is. Everything looks so consistent and each SVG is
+                optimized out of the box so I can use it directly with confidence. It would take me several
+                hours to create a single icon this good, so it's a steal at this price.</p>
+            <div class="flex space-x-4 text-sm text-gray-500">
+                <div class="flex-none py-2">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                        alt="" class="h-10 w-10 rounded-full bg-gray-100">
+                </div>
+                <div class="flex-1 py-2">
+                    <h3 class="font-medium text-gray-900">Hector Gibbons</h3>
+                    <p><time datetime="2021-07-12">July 12, 2021</time></p>
+
+                    <div class="prose prose-sm mt-4 max-w-none text-gray-500">
+                        <p>Blown away by how polished this icon pack is. Everything looks so consistent and each SVG is
+                            optimized out of the box so I can use it directly with confidence. It would take me several
+                            hours to create a single icon this good, so it's a steal at this price.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

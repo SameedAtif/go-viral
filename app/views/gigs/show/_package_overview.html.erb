@@ -1,0 +1,470 @@
+<div class="my-6">
+    <nav class="flex justify-end" aria-label="Breadcrumb">
+        <ol role="list" class="flex items-center space-x-4 md:px-8">
+            <li>
+                <button class="px-4 py-2 rounded-md border border-zinc-300">
+                    <svg class="w-4 h-4 text-zinc-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 18">
+                        <path
+                            d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z" />
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button class="px-4 py-2 rounded-md border border-zinc-300">
+                    <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 18 18">
+                        <path
+                            d="M14.419 10.581a3.564 3.564 0 0 0-2.574 1.1l-4.756-2.49a3.54 3.54 0 0 0 .072-.71 3.55 3.55 0 0 0-.043-.428L11.67 6.1a3.56 3.56 0 1 0-.831-2.265c.006.143.02.286.043.428L6.33 6.218a3.573 3.573 0 1 0-.175 4.743l4.756 2.491a3.58 3.58 0 1 0 3.508-2.871Z" />
+                    </svg>
+                </button>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="py-4 md:px-8">
+        <div class="border-b border-gray-200">
+            <ul class="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow flex"
+                id="myTab" data-tabs-toggle="#<%= locals[:responsive_layout_id] %>" role="tablist">
+                <li class="w-full" role="presentation">
+                    <button class="inline-block w-full p-4 border-b-2 rounded-t-lg" id="profile-tab"
+                        data-tabs-target="#profile" type="button" role="tab" aria-controls="profile"
+                        aria-selected="false">Basic</button>
+                </li>
+                <li class="w-full" role="presentation">
+                    <button
+                        class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 "
+                        id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab"
+                        aria-controls="dashboard" aria-selected="false">Standard</button>
+                </li>
+                <li class="w-full" role="presentation">
+                    <button
+                        class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 "
+                        id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings"
+                        aria-selected="false">Premium</button>
+                </li>
+            </ul>
+        </div>
+        <div id="<%= locals[:responsive_layout_id] %>">
+            <div class="hidden py-4 px-6 rounded-lg bg-gray-50" id="profile" role="tabpanel"
+                aria-labelledby="profile-tab">
+                <div class="flex justify-between py-4 px-2">
+                    <p class="font-medium">Basic Information Website</p>
+                    <p class="text-xl">PKR 15,188</p>
+                </div>
+                <p class="py-2">
+                    I will design a upto 5 pages custom made website. Fully responsive website.
+                </p>
+                <div class=" flex py-2">
+                    <p class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="pl-2">
+                            2 Days Delivery
+                        </span>
+                    </p>
+                    <p class="flex items-center mx-4">
+                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3" />
+                        </svg>
+                        <span class="pl-2">
+                            3 Revisions
+                        </span>
+                    </p>
+                </div>
+
+                <div class="flex py-2">
+                    <ol>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                5 pages/screens
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                1 custom asset
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Responsive design
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Prototype
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Source file
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Content upload
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Convert to HTML/CSS
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+                <div class="flex py-4">
+                    <div class="text-center">
+                        <button
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                            type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
+                            aria-controls="drawer-example">
+                            Show drawer
+                        </button>
+                    </div>
+                    <button
+                        class="w-full text-white bg-black py-2 px-4 rounded-md hover:opacity-80 flex justify-between items-center font-semibold group"
+                        data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
+                        data-drawer-placement="right" aria-controls="drawer-right-example">
+                        <span class="mx-auto">Continue</span>
+                        <svg class="w-4 h-4 text-white transition-transform transform scale-100 group-hover:scale-125"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </button>
+
+                    <div id="drawer-right-example"
+                        class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
+                        tabindex="-1" aria-labelledby="drawer-right-label">
+                        <h5 id="drawer-right-label"
+                            class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
+                            <svg class="w-4 h-4 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                            </svg>Right drawer</h5>
+                        <button type="button" data-drawer-hide="drawer-right-example"
+                            aria-controls="drawer-right-example"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Close menu</span>
+                        </button>
+                        <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">Supercharge your hiring by taking
+                            advantage of our <a href="#"
+                                class="text-blue-600 underline font-medium dark:text-blue-500 hover:no-underline">limited-time
+                                sale</a> for Flowbite Docs + Job Board. Unlimited access to over 190K top-ranked
+                            candidates and the #1
+                            design job board.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="#"
+                                class="px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Learn
+                                more</a>
+                            <a href="#"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Get
+                                access <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 " id="dashboard" role="tabpanel"
+                aria-labelledby="dashboard-tab">
+                <div class="flex justify-between py-4 px-2">
+                    <p class="font-medium">Basic Information Website</p>
+                    <p class="text-xl">PKR 15,188</p>
+                </div>
+                <p class="py-2">
+                    I will design a upto 5 pages custom made website. Fully responsive website.
+                </p>
+                <div class=" flex py-2">
+                    <p class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="pl-2">
+                            2 Days Delivery
+                        </span>
+                    </p>
+                    <p class="flex items-center mx-4">
+                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3" />
+                        </svg>
+                        <span class="pl-2">
+                            3 Revisions
+                        </span>
+                    </p>
+                </div>
+
+                <div class="flex py-2">
+                    <ol>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                5 pages/screens
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                1 custom asset
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Responsive design
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Prototype
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Source file
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Content upload
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Convert to HTML/CSS
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+                <div class="flex py-4">
+                    <button
+                        class="w-full text-white bg-black py-2 px-4 rounded-md hover:opacity-80 flex justify-between items-center font-semibold group">
+                        <span class="mx-auto">Continue</span>
+                        <svg class="w-4 h-4 text-white transition-transform transform scale-100 group-hover:scale-125"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 " id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                <div class="flex justify-between py-4 px-2">
+                    <p class="font-medium">Basic Information Website</p>
+                    <p class="text-xl">PKR 15,188</p>
+                </div>
+                <p class="py-2">
+                    I will design a upto 5 pages custom made website. Fully responsive website.
+                </p>
+                <div class=" flex py-2">
+                    <p class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="pl-2">
+                            2 Days Delivery
+                        </span>
+                    </p>
+                    <p class="flex items-center mx-4">
+                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3" />
+                        </svg>
+                        <span class="pl-2">
+                            3 Revisions
+                        </span>
+                    </p>
+                </div>
+
+                <div class="flex py-2">
+                    <ol>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                5 pages/screens
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                1 custom asset
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Responsive design
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Prototype
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Source file
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Content upload
+                            </span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 16 12">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                            </svg>
+                            <span class="pl-2">
+                                Convert to HTML/CSS
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+                <div class="flex py-4">
+                    <button
+                        class="w-full text-white bg-black py-2 px-4 rounded-md hover:opacity-80 flex justify-between items-center font-semibold group">
+                        <span class="mx-auto">Continue</span>
+                        <svg class="w-4 h-4 text-white transition-transform transform scale-100 group-hover:scale-125"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-4 md:px-8">
+        <div class="p-4 bg-zinc-50">
+            <div class="flex py-4">
+                <button
+                    class="w-full text-zinc-700 py-2 px-4 rounded-md flex justify-center items-center font-semibold group border border-zinc-700 hover:bg-zinc-700 hover:text-white">
+                    <span class="">Contact Me</span>
+                    <svg class="w-4 h-4 ml-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 8">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="flow-root px-4 py-4 border border-zinc-300 rounded-md mt-4">
+    <div class="-my-12 divide-y divide-gray-200">
+        <div class="py-12">
+            <div class="flex items-center">
+                <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                    alt="Emily Selman." class="h-12 w-12 rounded-full">
+                <div class="ml-4">
+                    <h4 class="text-sm font-bold text-gray-900">Emily Selman</h4>
+                    <div class="mt-1 flex items-center">
+                        <span class="pr-2">
+                            <span class="fi fi-de fis"></span>
+                            <span class="pl-2 ">
+                                Germany
+                            </span>
+                        </span>
+                        <span class="flex pl-2 border-l border-zinc-300">
+                            <span class="pr-2 font-medium">5</span>
+                            <!-- Active: "text-yellow-400", Default: "text-gray-300" -->
+                            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                        </span>
+
+                    </div>
+                    <p class="sr-only">5 out of 5 stars</p>
+                </div>
+            </div>
+
+            <div class="mt-8 space-y-6 text-base italic text-gray-600">
+                <p>This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of
+                    snacks for the many long and hungry flights.</p>
+            </div>
+        </div>
+
+        <!-- More reviews... -->
+    </div>
+</div>

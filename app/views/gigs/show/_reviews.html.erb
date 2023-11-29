@@ -1,0 +1,177 @@
+<div class="bg-white py-4">
+  <div
+    class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 border-b border-gray-300">
+    <div class="lg:col-span-6">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Reviews</h2>
+
+      <div class="mt-3 flex items-center">
+        <div>
+          <div class="flex items-center">
+            <!-- Active: "text-gray-800", Default: "text-gray-300" -->
+            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+              <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                  <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                    <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+          </div>
+          <p class="sr-only">4 out of 5 stars</p>
+        </div>
+        <p class="ml-2 text-sm text-gray-900">Based on 1624 reviews</p>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="sr-only">Review data</h3>
+
+        <dl class="space-y-3">
+          <div class="flex items-center text-sm">
+            <dt class="flex flex-1 items-center">
+              <p class="w-3 font-medium text-gray-900">5<span class="sr-only"> star reviews</span></p>
+              <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                  <div class="relative ml-3 flex-1">
+                    <div class="h-3 rounded-full border border-gray-200 bg-gray-100"></div>
+                    <div style="width: calc(1019 / 1624 * 100%)"
+                      class="absolute inset-y-0 rounded-full border border-gray-800 bg-gray-800"></div>
+                  </div>
+              </div>
+            </dt>
+            <dd class="ml-3 w-10 text-right text-sm tabular-nums text-gray-900">(145)</dd>
+          </div>
+          <div class="flex items-center text-sm">
+            <dt class="flex flex-1 items-center">
+              <p class="w-3 font-medium text-gray-900">4<span class="sr-only"> star reviews</span></p>
+              <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+
+                  <div class="relative ml-3 flex-1">
+                    <div class="h-3 rounded-full border border-gray-200 bg-gray-100"></div>
+                    <div style="width: calc(162 / 1624 * 100%)"
+                      class="absolute inset-y-0 rounded-full border border-gray-800 bg-gray-800"></div>
+                  </div>
+              </div>
+            </dt>
+            <dd class="ml-3 w-10 text-right text-sm tabular-nums text-gray-900">(8)</dd>
+          </div>
+          <div class="flex items-center text-sm">
+            <dt class="flex flex-1 items-center">
+              <p class="w-3 font-medium text-gray-900">3<span class="sr-only"> star reviews</span></p>
+              <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+
+                  <div class="relative ml-3 flex-1">
+                    <div class="h-3 rounded-full border border-gray-200 bg-gray-100"></div>
+                    <div style="width: calc(97 / 1624 * 100%)"
+                      class="absolute inset-y-0 rounded-full border border-gray-800 bg-gray-800"></div>
+                  </div>
+              </div>
+            </dt>
+            <dd class="ml-3 w-10 text-right text-sm tabular-nums text-gray-900">(2)</dd>
+          </div>
+          <div class="flex items-center text-sm">
+            <dt class="flex flex-1 items-center">
+              <p class="w-3 font-medium text-gray-900">2<span class="sr-only"> star reviews</span></p>
+              <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+
+                  <div class="relative ml-3 flex-1">
+                    <div class="h-3 rounded-full border border-gray-200 bg-gray-100"></div>
+                    <div style="width: calc(199 / 1624 * 100%)"
+                      class="absolute inset-y-0 rounded-full border border-gray-800 bg-gray-800"></div>
+                  </div>
+              </div>
+            </dt>
+            <dd class="ml-3 w-10 text-right text-sm tabular-nums text-gray-900">(1)</dd>
+          </div>
+          <div class="flex items-center text-sm">
+            <dt class="flex flex-1 items-center">
+              <p class="w-3 font-medium text-gray-900">1<span class="sr-only"> star reviews</span></p>
+              <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+
+                  <div class="relative ml-3 flex-1">
+                    <div class="h-3 rounded-full border border-gray-200 bg-gray-100"></div>
+                    <div style="width: calc(147 / 1624 * 100%)"
+                      class="absolute inset-y-0 rounded-full border border-gray-800 bg-gray-800"></div>
+                  </div>
+              </div>
+            </dt>
+            <dd class="ml-3 w-10 text-right text-sm tabular-nums text-gray-900">(2)</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="mt-10">
+        <div aria-hidden="true" class="ml-1 flex items-center">
+          <label for="underline_select" class="text-base font-medium text-gray-900 w-1/3">Sort By</label>
+
+          <label for="underline_select" class="sr-only">Underline select</label>
+          <select id="underline_select"
+            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+            <option class="px-5" value="relevant" selected>Most relevant</option>
+            <option value="recent">Most Recent</option>
+          </select>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 lg:col-span-5 lg:col-start-7 lg:mt-10">
+      <h2 class="text-xl font-medium tracking-tight text-gray-900">Rating Breakdown</h2>
+      <h3 class="sr-only">Rating Breakdown</h3>
+      <div class="flow-root mt-4">
+        <div class="-my-12 divide-y divide-gray-200">
+          <div class="py-12">
+            <dl class="space-y-3">
+              <div class="flex items-center text-sm">
+                <dt class="flex flex-1 items-center">
+                  <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                    <div class="relative flex-1">
+                      <p class="font-medium text-base text-gray-400">
+                        Seller communication level
+                      </p>
+                    </div>
+                    <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                      <p class="w-3 font-medium text-gray-900 ml-1">4.9<span class="sr-only"> star reviews</span></p>
+
+                  </div>
+                </dt>
+              </div>
+
+              <div class="flex items-center text-sm">
+                <dt class="flex flex-1 items-center">
+                  <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                    <div class="relative flex-1">
+                      <p class="font-medium text-base text-gray-400">
+                        Recommend to a friend
+                      </p>
+                    </div>
+                    <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                      <p class="w-3 font-medium text-gray-900 ml-1">4.9<span class="sr-only"> star reviews</span></p>
+
+                  </div>
+                </dt>
+              </div>
+
+              <div class="flex items-center text-sm">
+                <dt class="flex flex-1 items-center">
+                  <div aria-hidden="true" class="ml-1 flex flex-1 items-center">
+                    <div class="relative flex-1">
+                      <p class="font-medium text-base text-gray-400">
+                        Service as described
+                      </p>
+                    </div>
+                    <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                      <p class="w-3 font-medium text-gray-900 ml-1">4.9<span class="sr-only"> star reviews</span></p>
+
+                  </div>
+                </dt>
+              </div>
+            </dl>
+          </div>
+
+          <!-- More reviews... -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

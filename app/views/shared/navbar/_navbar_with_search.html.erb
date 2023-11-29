@@ -1,8 +1,8 @@
 <nav class="bg-white border-b border- ">
   <div class="max-w-screen-2xl flex flex-wrap items-center md:justify-between mx-auto py-2 px-4">
-    <a href="#" class="order-2 lg:order-1 flex items-center py-4 mx-auto md:mx-0">
+    <%= link_to root_path, class: "order-2 lg:order-1 flex items-center py-4 mx-auto md:mx-0" do %>
       <span class="self-center text-2xl font-semibold whitespace-nowrap">TheCreatorBazaar</span>
-    </a>
+    <% end %>
 
     <div class="order-3 lg:order-2 flex flex-1 items-center px-2 ml-6 justify-end lg:justify-start">
       <div class="w-full md:w-96 min-w-max max-w-lg lg:max-w-md">
@@ -10,52 +10,55 @@
         <div class="relative">
           <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+              <path fill-rule="evenodd"
+                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                clip-rule="evenodd" />
             </svg>
           </div>
-          <input id="search" name="search" class="h-10 block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-500 sm:text-sm sm:leading-6" placeholder='<%= t("header.navbar.influencers_search") %>' type="search">
+          <input id="search" name="search"
+            class="h-10 block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-zinc-500 sm:text-sm sm:leading-6"
+            placeholder='<%= t("header.navbar.influencers_search") %>' type="search">
         </div>
       </div>
     </div>
-    
-    <button data-dropdownToggle="navbar-dropdown" type="button" class="order-1 dropdownNavbarLink inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+
+    <button data-collapse-toggle="navbar-dropdown" type="button"
+      class="order-1 inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+      aria-expanded="false" aria-haspopup="true">
       <span class="sr-only">Open main menu</span>
       <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M1 1h15M1 7h15M1 13h15" />
       </svg>
     </button>
     <div class="order-3 hidden w-full lg:block md:w-auto" id="navbar-dropdown">
-      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 sm:border sm:border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
-        <li class="py-4">
-          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.order") %></a>
-        </li>
-        <li class="py-4">
-          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.influencers") %></a>
-        </li>
-        <li class="py-4">
-          <a href="#" class="block py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"><%= t("header.navbar.campaign") %></a>
-        </li>
+      <ul
+        class="flex flex-col font-medium p-4 md:p-0 mt-4 sm:border sm:border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
+
+        <% navbar_with_search_items.map do |navbar_item| %>
+          <%= render partial: "shared/elements/navbar_li_content", locals: { content: navbar_item[:content], path: navbar_item[:path] } %>
+        <% end %>
+        
         <li class="py-2.5">
-          <button data-dropdownToggle="profiledropdown" class="dropdownNavbarLink flex items-center justify-between w-full py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto">
+          <button id="user_profile_icon" data-dropdown-toggle="profiledropdown"
+            class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto">
             <span class="sr-only">Open user menu</span>
             <img class="w-10 h-10 rounded-full" src="https://picsum.photos/200" alt="user photo">
           </button>
 
           <div class="relative"> <!-- Add a relative positioning container -->
-            <div id="profiledropdown" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2"> <!-- Apply absolute positioning -->
+            <div id="profiledropdown"
+              class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2">
+              <!-- Apply absolute positioning -->
               <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"><%= t("header.navbar.profile_menu.dashboard") %></a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"><%= t("header.navbar.profile_menu.settings") %></a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"><%= t("header.navbar.profile_menu.earnings") %></a>
-                </li>
+                <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.dashboard") } %>
+                <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.settings") } %>
+                <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.earnings") } %>
               </ul>
               <div class="py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><%= t("header.navbar.profile_menu.sign_out") %></a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <%= t("header.navbar.profile_menu.sign_out") %>
+                </a>
               </div>
             </div>
           </div>
