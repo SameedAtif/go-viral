@@ -30,7 +30,11 @@ Rails.application.routes.draw do
   end
   resources :gig_deliverables, only: :update
   resources :gig_deliverable_reviews, only: :update
-  resources :gigs
+  resources :gigs do
+    collection do
+      get :manage_gigs
+    end
+  end
   # Already made all the associations so changing the name would be very time taking (sorry)
   resources :projects, path: :campaigns do
     resources :project_disputes, only: :create

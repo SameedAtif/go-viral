@@ -18,7 +18,7 @@ class Gig < ApplicationRecord
 
   STATUSES_MAP = {
     draft: 'draft',
-    pending: 'pending_review',
+    pending_review: 'pending_review',
     in_review: 'in_review',
     approved: 'approved',
     rejected: 'rejected',
@@ -31,9 +31,12 @@ class Gig < ApplicationRecord
   validates :targeted_demographic_end_age, comparison: { greater_than: :targeted_demographic_start_age }
   validates :status, inclusion: { in: STATUSES }
 
-  scope :approved, -> { where(status: Gig::STATUSES[:approved]) }
-  scope :in_review, -> { where(status: Gig::STATUSES[:in_review]) }
-  scope :pending, -> { where(status: Gig::STATUSES[:pending]) }
+  scope :draft, -> { where(status: Gig::STATUSES_MAP[:draft]) }
+  scope :pending_review, -> { where(status: Gig::STATUSES_MAP[:pending_review]) }
+  scope :in_review, -> { where(status: Gig::STATUSES_MAP[:in_review]) }
+  scope :approved, -> { where(status: Gig::STATUSES_MAP[:approved]) }
+  scope :rejected, -> { where(status: Gig::STATUSES_MAP[:rejected]) }
+  scope :published, -> { where(status: Gig::STATUSES_MAP[:published]) }
 
   after_save_commit :notify_reviewer, :notify_creator, if: -> { saved_change_to_attribute?('status') }
 

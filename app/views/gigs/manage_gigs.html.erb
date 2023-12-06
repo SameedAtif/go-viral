@@ -1,0 +1,30 @@
+<div class="px-8">
+  <h1 class="text-3xl py-4 font-thin">Gigs</h1>
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+      <% Gig::STATUSES.each do |status| %>
+          <li class="me-2" role="presentation">
+              <button
+                class="inline-block p-4 border-b-2 rounded-t-lg"
+                id="<%=status%>-tab"
+                data-tabs-target="#<%=status%>"
+                type="button"
+                role="tab"
+                aria-controls="<%=status%>"
+                aria-selected="false"
+              >
+                <%= status.humanize.upcase %>
+              </button>
+          </li>
+        <% end %>
+      </ul>
+  </div>
+  <!--Tabs content-->
+  <div id="default-tab-content">
+    <% Gig::STATUSES.each do |status| %>
+      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="<%= status %>" role="tabpanel" aria-labelledby="<%= status %>-tab">
+        <%= render partial: 'gigs/manage_gigs/table', locals: { status: status } %>
+      </div>
+    <% end %>
+  </div>
+</div>
