@@ -10,11 +10,11 @@ class Gig < ApplicationRecord
   has_many :platforms, through: :gig_platforms
 
   #One Gig can have multiple categories
-  has_many :gig_packages
-  has_many :gig_reviews
-  has_many :gig_faqs
-  has_many :client_gig_reviews
-  has_many :influencer_gig_transactions
+  has_many :gig_packages, dependent: :destroy
+  has_many :gig_reviews, dependent: :nullify
+  has_many :gig_faqs, dependent: :destroy
+  has_many :client_gig_reviews, dependent: :nullify
+  has_many :influencer_gig_transactions, dependent: :nullify
 
   STATUSES_MAP = {
     draft: 'draft',

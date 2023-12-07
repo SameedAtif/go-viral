@@ -21,10 +21,26 @@
   </div>
   <!--Tabs content-->
   <div id="default-tab-content">
-    <% Gig::STATUSES.each do |status| %>
-      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="<%= status %>" role="tabpanel" aria-labelledby="<%= status %>-tab">
-        <%= render partial: 'gigs/manage_gigs/table', locals: { status: status } %>
-      </div>
+    <%= form_with(url: bulk_gig_path, method: :delete) do |form| %>
+      <% Gig::STATUSES.each do |status| %>
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="<%= status %>" role="tabpanel" aria-labelledby="<%= status %>-tab">
+          <div class="py-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-gray-50 dark:bg-gray-800 dark:text-white">
+            <div class="flex justify-between align-middle">
+              <div>
+                <%= status.humanize.upcase %>
+              </div>
+              <div class="flex gap-4">
+                <div>
+                   <%= form.submit "Delete", class: "py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="relative overflow-x-auto ">
+            <%= render partial: 'gigs/manage_gigs/table', locals: { status: status, form: form } %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
