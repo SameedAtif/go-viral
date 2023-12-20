@@ -1,10 +1,11 @@
 class GigsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[show index]
+  skip_before_action :authenticate_user!, only: %i[show index manage_gigs]
 
-  before_action :load_gig, except: %i[create new index]
-  before_action :authorize_resource!, except: %i[create new show index]
+  before_action :load_gig, only: %i[show edit update]
+  before_action :authorize_resource!, only: %i[edit update]
   before_action :validate_status, only: %i[create update]
 
+  # TODO: Move it to application controller for session
   layout "pages_with_search_bar"
 
   # TODO: Rename gig_categories to gig_packages [D]
@@ -17,12 +18,17 @@ class GigsController < ApplicationController
   # TODO: Add model validations [D]
   # TODO: Add column 'status [pending-review/accepted/rejected/payment-approved/influencer-credited/order-closed]' to gig_clients [D]
   # TODO: notifications [D]
-  # TODO: Gig Order (will be handled through Gig Client)
-  # TODO: RSpec
-  # TODO: Create seed data
+  # TODO: Gig Order (will be handled through Gig Client) [D]
+  # TODO: RSpec [D]
+  # TODO: Create seed data [D]
 
   def index
     @gigs = Gig.all
+  end
+
+  def manage_gigs
+    # TODO: Change it
+    @gigs = Influencer.last.gigs.left_outer_joins(:gig_clients)
   end
 
   def new

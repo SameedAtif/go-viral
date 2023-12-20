@@ -1,6 +1,10 @@
 class Notification < ApplicationRecord
+  include EmailHandler
+
   belongs_to :source, polymorphic: true, optional: true
   belongs_to :user
+
+  self.inheritance_column = :_type_disabled
 
   NOTIFICATION_TYPES_MAP = {
     new_project_request: 'new_project_request',

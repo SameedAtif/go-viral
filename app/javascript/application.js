@@ -4,10 +4,9 @@ import "controllers"
 import "@nathanvda/cocoon"
 import 'flowbite';
 import 'flowbite-datepicker';
+import "./channels/index"
 
 $(document).ready(function () {
-
-    // For the Filters sidebar start    
     var divs = document.querySelectorAll('.dropdownNavbarLink');
 
     function handleDivClick(event) {
@@ -50,4 +49,3 @@ $(document).ready(function () {
     // script to show dropdowns and hide when clicked outside the scope end
 
 });
-import "./channels"

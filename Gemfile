@@ -94,3 +94,5 @@ gem "httparty"
 
 gem 'sidekiq'
 gem 'redis-rails'
+
+gem 'sendgrid-ruby'

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // Stick Filters bar to the top start
     var navbar = document.getElementById("filters_nav_bar");
     var sticky = navbar?.offsetTop;

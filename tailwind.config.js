@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./app/**/*.{html,js,erb}",
     "./node_modules/flowbite/**/*.js",
+    './app/views/**/*',
   ],
   theme: {
     extend: {},

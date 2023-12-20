@@ -10,15 +10,15 @@ class Gig < ApplicationRecord
   has_many :platforms, through: :gig_platforms
 
   #One Gig can have multiple categories
-  has_many :gig_packages
-  has_many :gig_reviews
-  has_many :gig_faqs
-  has_many :client_gig_reviews
-  has_many :influencer_gig_transactions
+  has_many :gig_packages, dependent: :destroy
+  has_many :gig_reviews, dependent: :nullify
+  has_many :gig_faqs, dependent: :destroy
+  has_many :client_gig_reviews, dependent: :nullify
+  has_many :influencer_gig_transactions, dependent: :nullify
 
   STATUSES_MAP = {
     draft: 'draft',
-    pending: 'pending_review',
+    pending_review: 'pending_review',
     in_review: 'in_review',
     approved: 'approved',
     rejected: 'rejected',
@@ -31,9 +31,12 @@ class Gig < ApplicationRecord
   validates :targeted_demographic_end_age, comparison: { greater_than: :targeted_demographic_start_age }
   validates :status, inclusion: { in: STATUSES }
 
-  scope :approved, -> { where(status: Gig::STATUSES[:approved]) }
-  scope :in_review, -> { where(status: Gig::STATUSES[:in_review]) }
-  scope :pending, -> { where(status: Gig::STATUSES[:pending]) }
+  scope :draft, -> { where(status: Gig::STATUSES_MAP[:draft]) }
+  scope :pending_review, -> { where(status: Gig::STATUSES_MAP[:pending_review]) }
+  scope :in_review, -> { where(status: Gig::STATUSES_MAP[:in_review]) }
+  scope :approved, -> { where(status: Gig::STATUSES_MAP[:approved]) }
+  scope :rejected, -> { where(status: Gig::STATUSES_MAP[:rejected]) }
+  scope :published, -> { where(status: Gig::STATUSES_MAP[:published]) }
 
   after_save_commit :notify_reviewer, :notify_creator, if: -> { saved_change_to_attribute?('status') }
 
