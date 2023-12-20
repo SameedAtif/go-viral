@@ -5,7 +5,7 @@ class EmailSendingService
 
   def initialize(notification)
     @notification = notification
-    @notification_type = @notification.type
+    @notification_type = @notification.notification_type
   end
 
   def generate

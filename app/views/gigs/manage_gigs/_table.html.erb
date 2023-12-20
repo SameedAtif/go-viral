@@ -2,8 +2,8 @@
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class="p-4">
-        <div class="flex items-center">
-          <input id="checkbox-all-gigs" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <div class="all-gigs flex items-center">
+          <input id="checkbox-all-gigs" data-status="<%= status %>" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
           <label for="checkbox-all-gigs" class="sr-only">checkbox</label>
         </div>
       </th>
@@ -25,6 +25,6 @@
     </tr>
   </thead>
   <tbody>
-    <%= render partial: 'gigs/manage_gigs/table_row', collection: @gigs.send(status), as: :gig, locals: { form: form } %>
+    <%= render partial: 'gigs/manage_gigs/table_row', collection: @gigs.send(status), as: :gig, locals: { form: form, status: status } %>
   </tbody>
 </table>
