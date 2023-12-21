@@ -13,16 +13,21 @@ module NavigationHelper
 
     def navbar_items
         [
-            { content: t("header.navbar.order"), path: "#" },
-            { content: t("header.navbar.influencers"), path: gigs_path },
-            { content: t("header.navbar.campaign"), path: "#" }
+            { content: t("header.navbar.find_gigs"), path: gigs_path }
         ]
     end
+
     def navbar_with_search_items
         [
-            { content: t("header.navbar.order"), path: "#" },
-            { content: t("header.navbar.influencers"), path: gigs_path },
-            { content: t("header.navbar.campaign"), path: "#" }
+            { content: t("header.navbar.order"), path: "#" }
+        ]
+    end
+
+    def seller_navbar_items
+        [
+            { content: t("header.navbar.manage_gigs"), path: manage_gigs_gigs_path },
+            { content: t("header.navbar.manage_orders"), path: "#" },
+            { content: t("header.navbar.my_earnings"), path: "#" }
         ]
     end
 end

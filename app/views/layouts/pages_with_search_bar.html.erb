@@ -18,15 +18,8 @@
 
   <body>
     <main class="">
-      <%= render '/shared/navbar/navbar_with_search' %>
+      <%= render (@navbar ||'/shared/navbar/navbar_with_search') %>
       <%= yield %>
-
-
-<!-- drawer init and toggle -->
-
-
-<!-- drawer component -->
-
     </main>
   </body>
 </html>

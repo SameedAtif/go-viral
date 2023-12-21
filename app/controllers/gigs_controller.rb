@@ -1,6 +1,7 @@
 class GigsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[show index manage_gigs]
 
+  before_action :seller_navbar, except: %i[show index]
   before_action :load_gig, only: %i[show edit update]
   before_action :authorize_resource!, only: %i[edit update]
   before_action :validate_status, only: %i[create update]
@@ -108,5 +109,9 @@ class GigsController < ApplicationController
     return if (verified_role(:client) && valid_client_status?) || (verified_role(:reviewer) && valid_reviewer_status?)
 
     raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
+  end
+
+  def seller_navbar
+    @navbar = 'shared/navbar/seller_navbar'
   end
 end

@@ -34,11 +34,27 @@
     <div class="order-3 hidden w-full lg:block md:w-auto" id="navbar-dropdown">
       <ul
         class="flex flex-col font-medium p-4 md:p-0 mt-4 sm:border sm:border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
-
         <% navbar_with_search_items.map do |navbar_item| %>
           <%= render partial: "shared/elements/navbar_li_content", locals: { content: navbar_item[:content], path: navbar_item[:path] } %>
         <% end %>
-        
+        <li class="py-2.5">
+          <% if current_user.present? %>
+            <%= button_to(
+              t("header.navbar.switch_to_selling"),
+              switch_session_path(type: '1'),
+              class: "text-neutral-600 bg-white border border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0",
+              method: :put
+            ) %>
+          <% else %>
+            <%= button_to(
+              t("header.navbar.become_seller"),
+              new_user_session_path,
+              class: "text-neutral-600 bg-white border border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0",
+              method: :get
+            ) %>
+          <% end %>
+        </li>
+
         <li class="py-2.5">
           <button id="user_profile_icon" data-dropdown-toggle="profiledropdown"
             class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-neutral-600 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto">
@@ -46,22 +62,7 @@
             <img class="w-10 h-10 rounded-full" src="https://picsum.photos/200" alt="user photo">
           </button>
 
-          <div class="relative"> <!-- Add a relative positioning container -->
-            <div id="profiledropdown"
-              class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2">
-              <!-- Apply absolute positioning -->
-              <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
-                <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.dashboard") } %>
-                <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.settings") } %>
-                <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.earnings") } %>
-              </ul>
-              <div class="py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  <%= t("header.navbar.profile_menu.sign_out") %>
-                </a>
-              </div>
-            </div>
-          </div>
+          <%= render partial: "shared/navbar/buyer_menu" %>
         </li>
       </ul>
     </div>
