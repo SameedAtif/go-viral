@@ -33,14 +33,21 @@ en:
   header:
     navbar:
       influencers_search: "Search your influencer"
-      create_campaign: "Create a Campaign"
+      become_seller: "Become a Seller"
+      switch_to_selling: "Switch to Selling"
+      switch_to_buying: "Switch to Buying"
+      find_gigs: "Find Gigs"
       order: "Orders"
       influencers: "Influencers"
       campaign: "Campaigns"
+      manage_gigs: "Manage Gigs"
+      manage_orders: "Manage Orders"
+      my_earnings: "My Earnings"
       profile_menu:
+        profile: "Profile"
         dashboard: "Dashboard"
         settings: "Settings"
-        earnings: "Earnings"
+        billing_and_payments: "Billing and Payments"
         sign_out: "Sign Out"
   body:
     view_all: "View all"

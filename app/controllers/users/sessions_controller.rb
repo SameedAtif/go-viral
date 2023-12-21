@@ -1,14 +1,15 @@
 class Users::SessionsController < Devise::SessionsController
   layout "offline"
-  
+
   def switch_session
     session[:user_role] = validate_session_type
-    redirect_to root_path
+    redirect_to redirect_path
   end
 
   def destroy
     ActionCable.server.remote_connections.where(current_user: current_user).disconnect
     current_user.update(status: User.statuses[:offline])
+    reset_session
     super
   end
 
@@ -16,5 +17,13 @@ class Users::SessionsController < Devise::SessionsController
 
   def validate_session_type
     params[:type] == "1" ? User::USER_ROLES[:influencer] : User::USER_ROLES[:client]
+  end
+
+  def redirect_path
+    if params[:type] == "1"
+      manage_gigs_gigs_path
+    else
+      root_path
+    end
   end
 end
