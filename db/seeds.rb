@@ -45,6 +45,23 @@ SystemPackageResource.find_or_create_by!(
   discount: 0
 )
 
+Platform.create!(
+  name: "Youtube",
+  url: "https://www.youtube.com/"
+)
+Platform.create!(
+  name: "Facebook",
+  url: "https://www.facebook.com/"
+)
+Platform.create!(
+  name: "Instagram",
+  url: "https://www.instagram.com/"
+)
+Platform.create!(
+  name: "LinkedIn",
+  url: "https://www.linkedin.com/"
+)
+
 reviewers = []
 influencers = []
 clients = []

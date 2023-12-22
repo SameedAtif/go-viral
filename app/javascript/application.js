@@ -5,6 +5,8 @@ import "@nathanvda/cocoon"
 import 'flowbite';
 import 'flowbite-datepicker';
 import "./channels/index"
+import "jquery";
+import "select2";
 
 $(document).ready(function () {
     var divs = document.querySelectorAll('.dropdownNavbarLink');

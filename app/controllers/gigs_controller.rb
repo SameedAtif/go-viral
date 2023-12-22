@@ -36,6 +36,8 @@ class GigsController < ApplicationController
     @gig = Gig.new
     authorize @gig
     @gig.gig_platforms.build
+    @gig.gig_packages.build
+    @gig.gig_faqs.build
   end
 
   def create
@@ -106,7 +108,7 @@ class GigsController < ApplicationController
   end
 
   def validate_status
-    return if (verified_role(:client) && valid_client_status?) || (verified_role(:reviewer) && valid_reviewer_status?)
+    return if (verified_role(:client) && valid_client_status?) || (verified_role(:reviewer) && valid_reviewer_status?) || params.dig(:gig, :status).blank?
 
     raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
   end
