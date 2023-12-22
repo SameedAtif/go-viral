@@ -28,8 +28,7 @@ class GigsController < ApplicationController
   end
 
   def manage_gigs
-    # TODO: Change it
-    @gigs = Influencer.last.gigs.left_outer_joins(:gig_clients)
+    @gigs = current_user.influencer.gigs.left_outer_joins(:gig_clients)
   end
 
   def new
@@ -66,9 +65,9 @@ class GigsController < ApplicationController
   def creation_params
     params.require(:gig).permit(
       :id, :title, :description, :targeted_demographic_start_age, :targeted_demographic_end_age,
-      gig_packages_attributes: %i[id gig_id title description price delivery_estimation review_limit features _destroy],
-      gig_platforms_attributes: %i[id gig_id _destroy],
-      gig_faqs_attributes: %i[id gig_id question answer],
+      gig_packages_attributes: [:id, :title, :description, :price, :delivery_estimation, :review_limit, :_destroy, features: []],
+      gig_platforms_attributes: %i[id platform_id _destroy],
+      gig_faqs_attributes: %i[id question answer _destroy],
       targeted_geographic_audience: []
     )
   end
