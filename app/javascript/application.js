@@ -53,5 +53,3 @@ $(document).ready(function () {
     // script to show dropdowns and hide when clicked outside the scope end
 
 });
-import "trix"
-import "@rails/actiontext"
