@@ -7,6 +7,8 @@ import 'flowbite-datepicker';
 import "./channels/index"
 import "jquery";
 import "select2";
+import "trix"
+import "@rails/actiontext"
 
 $(document).ready(function () {
     var divs = document.querySelectorAll('.dropdownNavbarLink');
@@ -51,3 +53,5 @@ $(document).ready(function () {
     // script to show dropdowns and hide when clicked outside the scope end
 
 });
+import "trix"
+import "@rails/actiontext"

@@ -6,7 +6,6 @@ class GigsController < ApplicationController
   before_action :authorize_resource!, only: %i[edit update]
   before_action :validate_status, only: %i[create update]
 
-  # TODO: Move it to application controller for session
   layout "pages_with_search_bar"
 
   # TODO: Rename gig_categories to gig_packages [D]
@@ -28,7 +27,7 @@ class GigsController < ApplicationController
   end
 
   def manage_gigs
-    @gigs = current_user.influencer.gigs.left_outer_joins(:gig_clients)
+    @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients) || []
   end
 
   def new
@@ -52,6 +51,9 @@ class GigsController < ApplicationController
   end
 
   def edit
+    @gig.gig_platforms.build
+    @gig.gig_packages.build
+    @gig.gig_faqs.build
   end
 
   def update

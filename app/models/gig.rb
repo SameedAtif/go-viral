@@ -45,6 +45,8 @@ class Gig < ApplicationRecord
   scope :rejected, -> { where(status: Gig::STATUSES_MAP[:rejected]) }
   scope :published, -> { where(status: Gig::STATUSES_MAP[:published]) }
 
+  has_rich_text :description
+
   after_save_commit :notify_reviewer, :notify_creator, if: -> { saved_change_to_attribute?('status') }
 
   private
