@@ -41,10 +41,11 @@ class GigsController < ApplicationController
   def create
     @gig = Gig.new(creation_params)
     @gig.influencer = current_user.influencer
+    @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
     authorize @gig
     @gig.save!
     flash[:success] = 'Gig successfully created'
-    redirect_to root_path
+    redirect_to manage_gigs_gigs_path
   end
 
   def show

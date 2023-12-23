@@ -6,7 +6,7 @@ function validateForm() {
   let isValid = true;
 
   for (let i = 0; i < tabs.length; i++) {
-    let inputs = tabs[i].querySelectorAll('input[required]');
+    let inputs = tabs[i].querySelectorAll('input[required][id]');
 
     for (let j = 0; j < inputs.length; j++) {
       if (!inputs[j].value) {
