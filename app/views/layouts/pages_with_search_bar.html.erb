@@ -14,6 +14,8 @@
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "jquery" %>
     <%= javascript_include_tag "layouts/pages_with_search_bar" %>
+
+    <%= yield :js_for_sticky_navbar %>
   </head>
 
   <body>
