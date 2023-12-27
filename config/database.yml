@@ -10,8 +10,8 @@ default: &default
   port:     <%= ENV['POSTGRES_PORT'] || 5432 %>
   pool:     <%= ENV['POSTGRES_POOL'] || 5 %>
   encoding: unicode
-  username: <%= ENV['POSTGRES_USERNAME'] || 'simtiaz' %>
-  password: <%= ENV['POSTGRES_PASSWORD'] || 'password' %>
+  username: <%= ENV['POSTGRES_USERNAME'] || 'postgres' %>
+  password: <%= ENV['POSTGRES_PASSWORD'] || 'postgres' %>
   timeout: 5000
 
 development:
