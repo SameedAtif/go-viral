@@ -1,86 +1,62 @@
-<div class="bg-white">
-  <div class="mx-auto max-w-screen-2xl mt-4 px-4 sm:pb-24">
+<% content_for :title, t("body.influencers.show.title") %>
+  <div class="bg-white">
+    <div class="mx-auto max-w-screen-2xl mt-4 px-4 sm:pb-24">
 
-    <div class="grid grid-cols-4 gap-4">
-      <div class="col-span-1 flex flex-col">
-        <div class="relative flex items-center space-x-3 py-5">
+      <div class="grid grid-cols-3 gap-4">
+        <%= render 'influencers/show/about_me_left_section' %>
+        <%= render 'influencers/show/contact_me' %>
+      </div>
+
+      <div class="relative items-center py-5">
+        <%= render 'influencers/show/heading' , heading: t("body.influencers.show.my_gigs") %>
+          <%= render "shared/partials/card_list" %>
+      </div>
+
+      <div class="max-w-4xl pb-24 lg:pb-0">
+        <%= render partial: "gigs/show/reviews" %>
+          <%= render partial: "gigs/show/gig_reviews" %>
+      </div>
+
+      <div
+        class="fixed bottom-0 left-0 z-50 w-full h-24 px-8 bg-white border-t border-gray-200 flex justify-center md:justify-between lg:hidden">
+        <div class="hidden md:flex items-center">
           <div class="flex-shrink-0">
-            <img class="mx-auto h-40 w-40 rounded-full"
-              src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
-              alt="">
+            <img class="w-12 h-12 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image">
           </div>
-          <div class="min-w-0 flex-1 px-2">
-            <a href="#" class="focus:outline-none">
-              <p class="flex">
-                <span class="text-2xl font-medium text-gray-900">The Web Hulk</span>
-                <span class="mx-2 text-lg text-zinc-500">@thewebhulk</span>
-              </p>
-              <p class="flex pt-1 items-center ">
-                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
-                  <span class="px-2 text-md font-medium text-gray-900">4.9</span>
-                  <span class="pr-2 text-md text-zinc-500 underline border-r border-zinc-300">(137)</span>
-                  <span class="px-2 text-md text-zinc-500">7 orders in queue</span>
-              </p>
-              <div class="flex pt-6 items-center">
-                <p class="text-md font-medium text-gray-900 flex">
-                  <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 17 21">
-                    <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                      <path d="M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                      <path
-                        d="M13.8 12.938h-.01a7 7 0 1 0-11.465.144h-.016l.141.17c.1.128.2.252.3.372L8 20l5.13-6.248c.193-.209.373-.429.54-.66l.13-.154Z" />
-                    </g>
-                  </svg>
-                  <span class="px-2">India</span>
-                </p>
-                <p class="px-2 text-md text-zinc-500 flex">
-                  <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 20 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
-                  </svg>
-                  <span class="pl-2">Speaks English, Hindi, Punjabi</span>
-                </p>
-              </div>
-            </a>
+          <div class="flex-1 min-w-0 ms-4 px-2">
+            <p class="text-lg font-semibold text-gray-900 truncate dark:text-white">
+              Neil Sims
+            </p>
+            <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+              <span>
+                Offline
+              </span>
+              <span>
+                01:50 PM local time
+              </span>
+            </p>
           </div>
         </div>
-
-        <div class="relative items-center py-5">
-          <%= render 'influencers/show/heading' , heading: "About Me" %>
-            <p>
-              The Web Hulk provides expert website design, content writing, social media promotion, and Google Ad
-              Campaign Management services. Our dedication to excellence has earned us recognition and features
-              in media outlets such as Midday and The Startup Story.
-            </p>
-        </div>
-
-        <div class="relative items-center py-5">
-          <%= render 'influencers/show/heading' , heading: "Skills" %>
-            <p>
-              <span style="text-wrap: nowrap;">Website development</span>
-              <span class="text-bold text-2xl text-gray-400">.</span>
-              <span style="text-wrap: nowrap;">WordPress customization</span>
-              <span class="text-bold text-2xl text-gray-400">.</span>
-              <span style="text-wrap: nowrap;">Social media management</span>
-              <span class="text-bold text-2xl text-gray-400">.</span>
-              <span style="text-wrap: nowrap;">Social media marketing</span>
-              <span class="text-bold text-2xl text-gray-400">.</span>
-              <span style="text-wrap: nowrap;">Social media ads management</span>
-              <span class="text-bold text-2xl text-gray-400">.</span>
-              <span style="text-wrap: nowrap;">YouTube marketing</span>
-              <span class="text-bold text-2xl text-gray-400">.</span>
-              <span style="text-wrap: nowrap;">Google AdWords</span>
-            </p>
+        <div class="flex items-center gap-1 flex-col md:flex-row">
+          <div class="flex justify-center text-gray-500 order-2 md:order-1">
+            Average response time: 1 hour
+          </div>
+          <div class="flex items-center my-2 order-1 md:order-2">
+            <!-- Modal toggle -->
+            <button data-modal-target="default-modal" data-modal-toggle="default-modal"
+              class="text-white bg-[#222325] hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md  px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full flex justify-center gap-2"
+              type="button">
+              <svg class="w-4 h-4 text-white rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 18 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m9 17 8 2L9 1 1 19l8-2Zm0 0V9" />
+              </svg>
+              <span>
+                <%= t("body.influencers.show.contact_me") %>
+              </span>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="">Hello</div>
     </div>
-
-    <div class="relative items-center py-5">
-      <%= render 'influencers/show/heading' , heading: "My Gigs" %>
-        <%= render "shared/partials/card_list" %>
-    </div>
-
   </div>
-</div>
