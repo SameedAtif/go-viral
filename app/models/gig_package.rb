@@ -8,4 +8,6 @@ class GigPackage < ApplicationRecord
   validates_length_of :title, :description, minimum: 3
   validates :price, numericality: { only_float: true }
   validates :delivery_estimation, :review_limit, numericality: { greater_than_or_equal_to: 1 }
+
+  has_rich_text :description
 end
