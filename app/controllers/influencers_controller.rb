@@ -31,7 +31,7 @@ class InfluencersController < ApplicationController
     @rooms = Room.public_rooms
     @room = Room.new
     @message = Message.new
-    # @room_name =  Room.get_name(@influencer)
+    @room_name =  Room.get_name(@influencer)
     @single_room = Room.find_or_create_by!(name: @room_name)
     @messages = @single_room.messages
   end
