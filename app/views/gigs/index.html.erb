@@ -1,4 +1,8 @@
 <% content_for :title, t("body.gigs.index.title") %>
+<% content_for :js_for_sticky_navbar do %>
+    <%= javascript_include_tag "layouts/pages_with_search_bar" %>
+<% end %>
+
 <%= render 'gigs/index/gigs_filter_bar'%>
 
 <div class="bg-white">
@@ -19,4 +23,3 @@
     </div>
   </div>
 </div>
-

@@ -1,4 +1,6 @@
 class InfluencersController < ApplicationController
+  layout "pages_with_search_bar"
+
   before_action :find_influencer, only: %i[show edit update]
   def index
     @influencers = Influencer.all
