@@ -1,11 +1,18 @@
 class Bulk::GigsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[destroy]
-
-  # before_action :authorize_resources!, only: %i[update]
-  # before_action :validate_status, only: %i[update]
-
   def destroy
-    Gig.where(id: params[:gigs]).destroy_all
+    permitted_gigs.where(id: params[:gigs]).destroy_all
     redirect_back fallback_location: root_path
+  end
+
+  private
+
+  def permitted_gigs
+    raise Pundit::NotAuthorizedError.new("Unauthorized value for column status") unless current_user.admin? || current_user.influencer?
+
+    @permitted_gigs ||= if current_user.admin?
+                          Gig.all
+                        else
+                          current_user.influencer.gigs
+                        end
   end
 end

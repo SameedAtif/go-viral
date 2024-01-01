@@ -1,5 +1,5 @@
 class GigsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[show index manage_gigs]
+  skip_before_action :authenticate_user!, only: %i[show index]
 
   before_action :seller_navbar, except: %i[show index]
   before_action :load_gig, only: %i[show edit update]
