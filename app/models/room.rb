@@ -14,7 +14,7 @@ class Room < ApplicationRecord
     room.participants.where(user: user).any?
   end
 
-  def get_name(user)
+  def self.get_name(user)
     "private_#{user.id}"
   end
 
