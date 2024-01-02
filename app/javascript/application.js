@@ -8,7 +8,7 @@ import "jquery";
 import "select2";
 import "trix"
 import "@rails/actiontext"
-// import "./channels/index"
+import "./channels/index"
 
 $(document).ready(function () {
     var divs = document.querySelectorAll('.dropdownNavbarLink');
