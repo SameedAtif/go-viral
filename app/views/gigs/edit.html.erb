@@ -1,1 +1,7 @@
-<%= render partial: 'form' %>
+<% content_for :title, t("body.influencers.show.title") %>
+
+    <div class="bg-white">
+        <div class="mx-auto max-w-screen-2xl mt-4 px-4 sm:pb-24">
+            <%= render partial: 'form' %>
+        </div>
+    </div>

@@ -1,70 +1,58 @@
 <%= javascript_include_tag "views/gigs/form.js" %>
 
-<div class="flex flex-row p-4">
-    <ul class="flex-column space-y space-y-4 text-sm font-medium md:me-4 mb-4 md:mb-0 min-w-80" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+<div class="md:flex md:flex-row p-4">
+    <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0" id="default-tab"
+        data-tabs-toggle="#default-tab-content" role="tablist">
         <li role="presentation">
-            <button
-                id="basic-tab"
-                data-tabs-target="#basic"
-                type="button"
-                role="tab"
-                aria-controls="basic"
-                aria-selected="false"
-                class="inline-flex items-center px-4 py-3 rounded-lg w-full">
+            <button id="basic-tab" data-tabs-target="#basic" type="button" role="tab" aria-controls="basic"
+                aria-selected="false" class="inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full">
                 Basic Information
-            </a>
+            </button>
         </li>
         <li role="presentation">
-            <button
-                id="package-tab"
-                data-tabs-target="#package"
-                type="button"
-                role="tab"
-                aria-controls="package"
-                aria-selected="false"
-                class="inline-flex items-center px-4 py-3 rounded-lg w-full">
+            <button id="package-tab" data-tabs-target="#package" type="button" role="tab" aria-controls="package"
+                aria-selected="false" class="inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full">
                 Gig Packages
-            </a>
+            </button>
         </li>
         <li role="presentation">
-            <button
-                id="faq-tab"
-                data-tabs-target="#faq"
-                type="button"
-                role="tab"
-                aria-controls="faq"
-                aria-selected="false"
-                class="inline-flex items-center px-4 py-3 rounded-lg w-full"
-            >
+            <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab" aria-controls="faq"
+                aria-selected="false" class="inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full">
                 Gig FAQs
             </button>
         </li>
     </ul>
-    <div class="p-6 text-medium rounded-lg w-full">
+    <div class="p-6 bg-gray-50 text-medium text-gray-500 rounded-lg w-full">
         <%= form_with model: @gig, local: true do |f| %>
             <div id="basic" role="tabpanel" aria-labelledby="basic-tab" class="tab-content">
-                <%= render partial: 'gigs/form/basic_information_form', locals: {f: f} %>
+                <%= render partial: 'gigs/form/basic_information_form' , locals: {f: f} %>
             </div>
             <div id="package" role="tabpanel" aria-labelledby="package-tab" class="tab-content">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Package Tab</h3>
                 <div class="gig_packages">
                     <%= f.fields_for :gig_packages do |package| %>
-                        <%= render 'gigs/form/gig_package_fields', f: package %>
-                    <% end %>
-                    <%= link_to_add_association "Add FAQ", f, :gig_packages, partial: 'gigs/form/gig_package_fields', data: { association_insertion_node: '.gig_packages', association_insertion_method: :append } %>
+                        <%= render 'gigs/form/gig_package_fields' , f: package %>
+                            <% end %>
+                                <%= link_to_add_association "Add FAQ" , f, :gig_packages,
+                                    partial: 'gigs/form/gig_package_fields' , data: {
+                                    association_insertion_node: '.gig_packages' , association_insertion_method:
+                                    :append } %>
                 </div>
             </div>
             <div id="faq" role="tabpanel" aria-labelledby="faq-tab" class="tab-content">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">FAQ Tab</h3>
                 <div class="gig_faqs">
                     <%= f.fields_for :gig_faqs do |faq| %>
-                        <%= render 'gigs/form/gig_faq_fields', f: faq %>
-                    <% end %>
-                    <%= link_to_add_association "Add FAQ", f, :gig_faqs, partial: 'gigs/form/gig_faq_fields', data: { association_insertion_node: '.gig_faqs', association_insertion_method: :append } %>
+                        <%= render 'gigs/form/gig_faq_fields' , f: faq %>
+                            <% end %>
+                                <%= link_to_add_association "Add FAQ" , f, :gig_faqs,
+                                    partial: 'gigs/form/gig_faq_fields' , data: {
+                                    association_insertion_node: '.gig_faqs' , association_insertion_method: :append
+                                    } %>
                 </div>
             </div>
-            <%= f.submit "Save as Draft", name: "draft", onclick: "validateForm()" %>
-            <%= f.submit "Publish", name: "publish", onclick: "validateForm()" %>
-        <% end %>
+            <%= f.submit "Save as Draft" , name: "draft" , onclick: "validateForm()" %>
+                <%= f.submit "Publish" , name: "publish" , onclick: "validateForm()" %>
+                    <% end %>
     </div>
 </div>
