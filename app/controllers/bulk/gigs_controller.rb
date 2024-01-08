@@ -7,7 +7,7 @@ class Bulk::GigsController < ApplicationController
   private
 
   def permitted_gigs
-    raise Pundit::NotAuthorizedError.new("Unauthorized value for column status") unless current_user.admin? || current_user.influencer?
+    raise Pundit::NotAuthorizedError.new("Unauthorized operation") unless current_user.admin? || current_user.influencer?
 
     @permitted_gigs ||= if current_user.admin?
                           Gig.all
