@@ -1,13 +1,23 @@
-<%= form_for @influencer do |f| %>
-  <div>
-    <%= f.label :bio %><br>
-    <%= f.text_area :bio %>
+<%= form_for (@influencer || Influencer.new) do |f| %>
+  <div class="p-4 md:p-5 space-y-4">
+    <div class="mb-5">
+      <%= f.label 'Tell the world about yourself', class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= f.rich_text_area :bio, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+    </div>
   </div>
   <div class="influencer_platforms">
     <%= f.fields_for :influencer_platforms do |platform| %>
-      <%= render 'influencer_platform_fields', f: platform %>
+      <%= render 'influencers/form/influencer_platform_fields', f: platform %>
     <% end %>
-    <%= link_to_add_association "Add Platform", f, :influencer_platforms, data: {association_insertion_node: '.influencer_platforms', association_insertion_method: :append} %>
+    <%= link_to_add_association "Add Platform", f, :influencer_platforms, partial: 'influencers/form/influencer_platform_fields', data: {association_insertion_node: '.influencer_platforms', association_insertion_method: :append} %>
   </div>
-  <%= f.submit "submit" %>
+  <div class="influencer_portfolios">
+    <%= f.fields_for :influencer_portfolios do |portfolio| %>
+      <%= render 'influencers/form/influencer_portfolio_fields', f: portfolio %>
+    <% end %>
+    <%= link_to_add_association "Add Portfolio", f, :influencer_portfolios, partial: 'influencers/form/influencer_portfolio_fields', data: {association_insertion_node: '.influencer_portfolios', association_insertion_method: :append} %>
+  </div>
+  <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+    <%= f.submit "Continue", class:"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+  </div>
 <% end %>

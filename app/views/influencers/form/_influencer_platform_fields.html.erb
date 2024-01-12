@@ -1,0 +1,31 @@
+<div class="nested-fields">
+  <div class="mb-5">
+    <%= f.label :platform_id %><br>
+    <%= f.select :platform_id, options_for_select(Platform.pluck(:name,:id)), :class => 'genForm_dropBox' %>
+  </div>
+  <div class="mb-5">
+    <%= f.label 'Page link' %><br>
+    <%= f.text_field :url, step: 0.5%>
+  </div>
+  <div class="mb-5">
+    <%= f.label :followers %><br>
+    <%= f.number_field :followers, step: :any%>
+  </div>
+  <div class="mb-5">
+    <%= f.label :reach %><br>
+    <%= f.number_field :reach, step: 0.5%>
+  </div>
+  <div class="mb-5">
+    <%= f.label :targeted_demographic_start_age, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= f.number_field :targeted_demographic_start_age, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", in: 5..100, required: true %>
+  </div>
+  <div class="mb-5">
+      <%= f.label :targeted_demographic_end_age, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= f.number_field :targeted_demographic_end_age, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", in: 5..100, required: true %>
+  </div>
+  <div class="mb-5">
+      <%= f.label :targeted_geographic_audience, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= f.select :targeted_geographic_audience, country_list, {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience' %>
+  </div>
+  <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
+</div>
