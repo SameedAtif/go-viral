@@ -1,54 +1,87 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name" %>
+<div class="px-8">
+  <div class="flex justify-between align-middle py-4">
+    <h1 class="text-3xl font-thin">Edit Profile</h1>
   </div>
-
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name" %>
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+      <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 rounded-t-lg"
+            id="user-tab"
+            data-tabs-target="#user"
+            type="button"
+            role="tab"
+            aria-controls="user"
+            aria-selected="false"
+          >
+            USER
+          </button>
+      </li>
+      <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 rounded-t-lg"
+            id="influencer-tab"
+            data-tabs-target="#influencer"
+            type="button"
+            role="tab"
+            aria-controls="influencer"
+            aria-selected="false"
+          >
+            INFLUENCER
+          </button>
+      </li>
+      <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 rounded-t-lg"
+            id="organization-tab"
+            data-tabs-target="#organization"
+            type="button"
+            role="tab"
+            aria-controls="organization"
+            aria-selected="false"
+          >
+            ORGANIZATION
+          </button>
+      </li>
+    </ul>
   </div>
-
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number" %>
+  <!--Tabs content-->
+  <div id="default-tab-content">
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="user" role="tabpanel" aria-labelledby="user-tab">
+      <div class="py-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-gray-50 dark:bg-gray-800 dark:text-white">
+        <div class="flex justify-between align-middle">
+          <div>
+            USER
+          </div>
+        </div>
+      </div>
+      <div class="relative overflow-x-auto ">
+        <%= render partial: 'devise/registrations/form' %>
+      </div>
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="influencer" role="tabpanel" aria-labelledby="influencer-tab">
+      <div class="py-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-gray-50 dark:bg-gray-800 dark:text-white">
+        <div class="flex justify-between align-middle">
+          <div>
+            INFLUENCER
+          </div>
+        </div>
+      </div>
+      <div class="relative overflow-x-auto ">
+        <%= render partial: 'influencers/form' %>
+      </div>
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="organization" role="tabpanel" aria-labelledby="organization-tab">
+      <div class="py-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-gray-50 dark:bg-gray-800 dark:text-white">
+        <div class="flex justify-between align-middle">
+          <div>
+            ORGANIZATION
+          </div>
+        </div>
+      </div>
+      <div class="relative overflow-x-auto ">
+        <%= render partial: 'organizations/form' %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<%= link_to "Back", :back %>
+</div>
