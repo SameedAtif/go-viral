@@ -11,6 +11,7 @@ class InfluencersController < ApplicationController
   def new
     @influencer = Influencer.new
     @influencer.influencer_platforms.build
+    @influencer.influencer_portfolios.build
   end
 
   def create
