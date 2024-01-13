@@ -12,9 +12,11 @@ Rails.application.routes.draw do
   namespace :bulk do
     resource :gig, only: %i[update destroy]
   end
-  resource :organization do
-    resources :organization_system_packages, only: :create
-    resources :organization_package_downgrade_requests, only: :create
+  resources :organizations do
+    collection do
+      resources :organization_system_packages, only: :create
+      resources :organization_package_downgrade_requests, only: :create
+    end
   end
   resources :organization_package_downgrade_requests, only: :update
 
@@ -61,6 +63,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:update, :destroy]
 
+  resources :messages
   resources :rooms do
     resources :messages
   end

@@ -23,7 +23,7 @@
                 aria-controls="platform"
                 aria-selected="false"
                 class="inline-flex items-center px-4 py-3 rounded-lg w-full">
-                Influencer Portfolio
+                Influencer Platform
             </button>
         </li>
         <li role="presentation">
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div id="platform" role="tabpanel" aria-labelledby="platform-tab" class="tab-content">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Portfolio Tab</h3>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Platform Tab</h3>
                 <div class="influencer_platforms">
                   <%= f.fields_for :influencer_platforms do |platform| %>
                     <%= render 'influencers/form/influencer_platform_fields', f: platform %>
