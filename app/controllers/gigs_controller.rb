@@ -1,12 +1,11 @@
 class GigsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[show index manage_gigs]
+  skip_before_action :authenticate_user!, only: %i[show index]
 
   before_action :seller_navbar, except: %i[show index]
   before_action :load_gig, only: %i[show edit update]
   before_action :authorize_resource!, only: %i[edit update]
   before_action :validate_status, only: %i[create update]
 
-  # TODO: Move it to application controller for session
   layout "pages_with_search_bar"
 
   # TODO: Rename gig_categories to gig_packages [D]
@@ -28,29 +27,34 @@ class GigsController < ApplicationController
   end
 
   def manage_gigs
-    # TODO: Change it
-    @gigs = Influencer.last.gigs.left_outer_joins(:gig_clients)
+    @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients) || []
   end
 
   def new
     @gig = Gig.new
     authorize @gig
     @gig.gig_platforms.build
+    @gig.gig_packages.build
+    @gig.gig_faqs.build
   end
 
   def create
     @gig = Gig.new(creation_params)
     @gig.influencer = current_user.influencer
+    @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
     authorize @gig
     @gig.save!
     flash[:success] = 'Gig successfully created'
-    redirect_to root_path
+    redirect_to manage_gigs_gigs_path
   end
 
   def show
   end
 
   def edit
+    @gig.gig_platforms.build
+    @gig.gig_packages.build
+    @gig.gig_faqs.build
   end
 
   def update
@@ -64,9 +68,9 @@ class GigsController < ApplicationController
   def creation_params
     params.require(:gig).permit(
       :id, :title, :description, :targeted_demographic_start_age, :targeted_demographic_end_age,
-      gig_packages_attributes: %i[id gig_id title description price delivery_estimation review_limit features _destroy],
-      gig_platforms_attributes: %i[id gig_id _destroy],
-      gig_faqs_attributes: %i[id gig_id question answer],
+      gig_packages_attributes: [:id, :title, :description, :price, :delivery_estimation, :review_limit, :_destroy, features: []],
+      gig_platforms_attributes: %i[id platform_id _destroy],
+      gig_faqs_attributes: %i[id question answer _destroy],
       targeted_geographic_audience: []
     )
   end
@@ -106,7 +110,7 @@ class GigsController < ApplicationController
   end
 
   def validate_status
-    return if (verified_role(:client) && valid_client_status?) || (verified_role(:reviewer) && valid_reviewer_status?)
+    return if (verified_role(:client) && valid_client_status?) || (verified_role(:reviewer) && valid_reviewer_status?) || params.dig(:gig, :status).blank?
 
     raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
   end

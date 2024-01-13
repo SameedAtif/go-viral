@@ -8,11 +8,18 @@ class Gig < ApplicationRecord
   # One Gig can have multiple platforms
   has_many :gig_platforms, dependent: :destroy
   has_many :platforms, through: :gig_platforms
+  accepts_nested_attributes_for :gig_platforms,
+                                allow_destroy: true
 
   #One Gig can have multiple categories
   has_many :gig_packages, dependent: :destroy
+  accepts_nested_attributes_for :gig_packages,
+                                allow_destroy: true
   has_many :gig_reviews, dependent: :nullify
   has_many :gig_faqs, dependent: :destroy
+  accepts_nested_attributes_for :gig_faqs,
+                                allow_destroy: true,
+                                reject_if: proc { |attributes| attributes['question'].blank? }
   has_many :client_gig_reviews, dependent: :nullify
   has_many :influencer_gig_transactions, dependent: :nullify
 
@@ -37,6 +44,8 @@ class Gig < ApplicationRecord
   scope :approved, -> { where(status: Gig::STATUSES_MAP[:approved]) }
   scope :rejected, -> { where(status: Gig::STATUSES_MAP[:rejected]) }
   scope :published, -> { where(status: Gig::STATUSES_MAP[:published]) }
+
+  has_rich_text :description
 
   after_save_commit :notify_reviewer, :notify_creator, if: -> { saved_change_to_attribute?('status') }
 

@@ -1,0 +1,22 @@
+<% if current_user.influencer.present? %>
+  <%= button_to(
+    t("header.navbar.switch_to_selling"),
+    switch_session_path(type: '1'),
+    class: "text-neutral-600 bg-white hover:border hover:border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0",
+    method: :put
+  ) %>
+<% elsif current_user.present? %>
+  <%= button_to(
+    t("header.navbar.switch_to_selling"),
+    edit_user_registration_path,
+    class: "text-neutral-600 bg-white hover:border hover:border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0",
+    method: :get
+  ) %>
+<% else %>
+  <%= button_to(
+    t("header.navbar.become_seller"),
+    new_user_session_path,
+    class: "text-neutral-600 bg-white hover:border hover:border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0",
+    method: :get
+  ) %>
+<% end %>

@@ -1,0 +1,23 @@
+<div class="nested-fields">
+  <div class="mb-5">
+      <%= f.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= f.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Title", required: true %>
+  </div>
+  <div class="mb-5">
+      <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Description", required: true %>
+  </div>
+  <div class="mb-5">
+      <%= f.label :content_link, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= f.text_field :content_link, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Description", required: true %>
+  </div>
+  <div class="mb-5">
+    <%= f.label :start_time %><br>
+    <%= f.datetime_local_field :start_time %>
+  </div>
+  <div class="mb-5">
+    <%= f.label :end_time %><br>
+    <%= f.datetime_local_field :end_time %>
+  </div>
+  <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
+</div>

@@ -4,7 +4,11 @@ import "controllers"
 import "@nathanvda/cocoon"
 import 'flowbite';
 import 'flowbite-datepicker';
-import "./channels/index"
+import "jquery";
+import "select2";
+import "trix"
+import "@rails/actiontext"
+import "channels"
 
 $(document).ready(function () {
     var divs = document.querySelectorAll('.dropdownNavbarLink');

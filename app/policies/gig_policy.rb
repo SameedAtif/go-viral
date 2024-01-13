@@ -1,11 +1,11 @@
 class GigPolicy < ApplicationPolicy
   def edit?
-    user == (record.influencer && current_role == User::USER_ROLES[:influencer]) ||
+    (user.influencer == record.influencer && current_role == User::USER_ROLES[:influencer]) ||
     (user.reviewer? && current_role == User::USER_ROLES[:reviewer])
   end
 
   def update?
-    (user == record.influencer && current_role == User::USER_ROLES[:influencer]) ||
+    (user.influencer == record.influencer && current_role == User::USER_ROLES[:influencer]) ||
     (user.reviewer? && current_role == User::USER_ROLES[:reviewer])
   end
 

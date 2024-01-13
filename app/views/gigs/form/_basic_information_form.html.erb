@@ -1,0 +1,27 @@
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Basic Information</h3>
+<div class="mb-5">
+    <%= f.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= f.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+</div>
+<div class="mb-5">
+    <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+</div>
+<div class="mb-5">
+    <%= f.label :targeted_demographic_start_age, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= f.number_field :targeted_demographic_start_age, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", in: 5..100, required: true %>
+</div>
+<div class="mb-5">
+    <%= f.label :targeted_demographic_end_age, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= f.number_field :targeted_demographic_end_age, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", in: 5..100, required: true %>
+</div>
+<div class="mb-5">
+    <%= f.label :targeted_geographic_audience, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= f.select :targeted_geographic_audience, country_list, {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience' %>
+</div>
+<div class="gig_platforms">
+    <%= f.fields_for :gig_platforms do |platform| %>
+        <%= render 'gigs/form/gig_platform_fields', f: platform %>
+    <% end %>
+    <%= link_to_add_association "Add Platform", f, :gig_platforms, partial: 'gigs/form/gig_platform_fields', data: { association_insertion_node: '.gig_platforms', association_insertion_method: :append } %>
+</div>

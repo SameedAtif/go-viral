@@ -2,9 +2,9 @@
   <div id="profiledropdown" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2"> <!-- Apply absolute positioning -->
     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
       <%= button_to t("header.navbar.switch_to_buying"), switch_session_path(type: '2'), class:"block px-4 py-2 hover:bg-gray-100", method: :put %>
-      <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.profile") } %>
-      <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.dashboard") } %>
-      <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.settings") } %>
+      <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.profile"), link: edit_user_registration_path } %>
+      <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.dashboard"), link: '#' } %>
+      <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.settings"), link: '#' } %>
     </ul>
     <div class="py-1">
       <%= button_to t("header.navbar.profile_menu.sign_out"), destroy_user_session_path, class:"block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", method: :delete %>

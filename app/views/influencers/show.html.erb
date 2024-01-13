@@ -1,12 +1,62 @@
-<h1>
-  <%= @influencer.user.first_name %>
-</h1>
-<h3>
-  <%= @influencer&.bio %>
-  <br>
-  <br>
-  <% @influencer&.influencer_platforms&.each do |influencer_platform| %>
-    <%=  influencer_platform.platform.name %>
-    FOllowers: <%=   influencer_platform.followers %>
-  <% end %>
-</h3>
+<% content_for :title, t("body.influencers.show.title") %>
+  <div class="bg-white">
+    <div class="mx-auto max-w-screen-2xl mt-4 px-4 sm:pb-24">
+
+      <div class="grid grid-cols-3 gap-4">
+        <%= render 'influencers/show/about_me_left_section' %>
+        <%= render 'influencers/show/contact_me' %>
+      </div>
+
+      <div class="relative items-center py-5">
+        <%= render 'influencers/show/heading' , heading: t("body.influencers.show.my_gigs") %>
+          <%= render "shared/partials/card_list" %>
+      </div>
+
+      <div class="max-w-4xl pb-24 lg:pb-0">
+        <%= render partial: "gigs/show/reviews" %>
+          <%= render partial: "gigs/show/gig_reviews" %>
+      </div>
+
+      <div
+        class="fixed bottom-0 left-0 z-50 w-full h-24 px-8 bg-white border-t border-gray-200 flex justify-center md:justify-between lg:hidden">
+        <div class="hidden md:flex items-center">
+          <div class="flex-shrink-0">
+            <img class="w-12 h-12 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image">
+          </div>
+          <div class="flex-1 min-w-0 ms-4 px-2">
+            <p class="text-lg font-semibold text-gray-900 truncate dark:text-white">
+              Neil Sims
+            </p>
+            <p class="text-lg text-gray-500 truncate dark:text-gray-400">
+              <span>
+                Offline
+              </span>
+              <span>
+                01:50 PM local time
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1 flex-col md:flex-row">
+          <div class="flex justify-center text-gray-500 order-2 md:order-1">
+            Average response time: 1 hour
+          </div>
+          <div class="flex items-center my-2 order-1 md:order-2">
+            <!-- Modal toggle -->
+            <button data-modal-target="default-modal" data-modal-toggle="default-modal"
+              class="text-white bg-[#222325] hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md  px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full flex justify-center gap-2"
+              type="button">
+              <svg class="w-4 h-4 text-white rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 18 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m9 17 8 2L9 1 1 19l8-2Zm0 0V9" />
+              </svg>
+              <span>
+                <%= t("body.influencers.show.contact_me") %>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

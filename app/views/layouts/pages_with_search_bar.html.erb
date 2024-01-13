@@ -9,11 +9,14 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/css/flag-icons.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <%= stylesheet_link_tag 'wind', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "jquery" %>
-    <%= javascript_include_tag "layouts/pages_with_search_bar" %>
+
+    <%= yield :js_for_sticky_navbar %>
   </head>
 
   <body>

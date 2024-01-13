@@ -65,3 +65,12 @@ en:
     gigs:
       index:
         title: "Gigs"
+
+    influencers:
+      show:
+        title: "Influencers Show Page"
+        about_me: "About Me"
+        skills: "Skills"
+        my_gigs: "My Gigs"
+        contact_me: "Contact Me"
+        average_response_time: "Average Response Time"

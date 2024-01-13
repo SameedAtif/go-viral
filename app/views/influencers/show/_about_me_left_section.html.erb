@@ -1,0 +1,72 @@
+<div class="col-span-3 lg:col-span-2 flex flex-col">
+    <div class="relative flex flex-col md:flex-row items-center space-x-3 py-5 gap-2">
+        <div class="flex-shrink-0">
+            <img class="mx-auto h-40 w-40 rounded-full"
+                src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
+                alt="">
+        </div>
+        <div class="min-w-0 flex flex-1">
+            <a href="#" class="focus:outline-none">
+                <p class="flex">
+                    <span class="text-2xl font-medium text-gray-900">The Web Hulk</span>
+                    <span class="mx-2 text-lg text-zinc-500">@thewebhulk</span>
+                </p>
+                <p class="flex pt-1 items-center ">
+                    <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+                        <span class="px-2 text-md font-medium text-gray-900">4.9</span>
+                        <span class="pr-2 text-md text-zinc-500 underline border-r border-zinc-300">(137)</span>
+                        <span class="px-2 text-md text-zinc-500">7 orders in queue</span>
+                </p>
+                <div class="flex pt-6 items-center">
+                    <p class="text-md font-medium text-gray-900 flex">
+                        <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 17 21">
+                            <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <path d="M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                <path
+                                    d="M13.8 12.938h-.01a7 7 0 1 0-11.465.144h-.016l.141.17c.1.128.2.252.3.372L8 20l5.13-6.248c.193-.209.373-.429.54-.66l.13-.154Z" />
+                            </g>
+                        </svg>
+                        <span class="px-2">India</span>
+                    </p>
+                    <p class="px-2 text-md text-zinc-500 flex">
+                        <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
+                        </svg>
+                        <span class="pl-2">Speaks English, Hindi, Punjabi</span>
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="relative items-center py-5 max-w-full lg:max-w-4xl">
+        <%= render 'influencers/show/heading' , heading: t("body.influencers.show.about_me") %>
+            <p>
+                The Web Hulk provides expert website design, content writing, social media promotion, and Google Ad
+                Campaign Management services. Our dedication to excellence has earned us recognition and features
+                in media outlets such as Midday and The Startup Story.
+            </p>
+    </div>
+
+    <div class="relative items-center py-5 max-w-full lg:max-w-4xl">
+        <%= render 'influencers/show/heading' , heading: t("body.influencers.show.skills") %>
+            <p>
+                <span style="text-wrap: nowrap;">Website development</span>
+                <span class="text-bold text-2xl text-gray-400">.</span>
+                <span style="text-wrap: nowrap;">WordPress customization</span>
+                <span class="text-bold text-2xl text-gray-400">.</span>
+                <span style="text-wrap: nowrap;">Social media management</span>
+                <span class="text-bold text-2xl text-gray-400">.</span>
+                <span style="text-wrap: nowrap;">Social media marketing</span>
+                <span class="text-bold text-2xl text-gray-400">.</span>
+                <span style="text-wrap: nowrap;">Social media ads management</span>
+                <span class="text-bold text-2xl text-gray-400">.</span>
+                <span style="text-wrap: nowrap;">YouTube marketing</span>
+                <span class="text-bold text-2xl text-gray-400">.</span>
+                <span style="text-wrap: nowrap;">Google AdWords</span>
+            </p>
+    </div>
+</div>
