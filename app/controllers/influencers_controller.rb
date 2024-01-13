@@ -19,7 +19,7 @@ class InfluencersController < ApplicationController
     if @influencer.save
       flash[:success] = 'influencer successfully created'
       session[:user_role] = User::USER_ROLES[:influencer]
-      redirect_to root_path
+      redirect_to manage_gigs_gigs_path
     else
       flash[:error] = 'Something went wrong'
       render 'new'
@@ -51,8 +51,8 @@ class InfluencersController < ApplicationController
 
   def permitted_params
     params.require(:influencer).permit(:bio,
-      influencer_platforms_attributes: %i[id platform_id followers reach _destroy],
-      influencer_portfolios_attributes: %i[id title description _destroy]
+      influencer_platforms_attributes: %i[id platform_id followers reach url targeted_demographic_start_age targeted_demographic_end_age _destroy targeted_geographic_audience: []],
+      influencer_portfolios_attributes: %i[id title description start_time end_time content_link _destroy]
     )
   end
 
