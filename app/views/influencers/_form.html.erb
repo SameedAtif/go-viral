@@ -44,6 +44,12 @@
             <div id="basic" role="tabpanel" aria-labelledby="basic-tab" class="tab-content">
                 <div class="p-4 md:p-5 space-y-4">
                   <div class="mb-5">
+                    <%= f.label 'Profile picture', class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= f.file_field :avatar, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+                  </div>
+                </div>
+                <div class="p-4 md:p-5 space-y-4">
+                  <div class="mb-5">
                     <%= f.label 'Tell the world about yourself', class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
                     <%= f.rich_text_area :bio, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
                   </div>
