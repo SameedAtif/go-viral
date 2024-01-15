@@ -1,4 +1,6 @@
 class Influencer < ApplicationRecord
+  has_one_attached :avatar
+
   belongs_to :user
 
   has_many :gigs
@@ -21,6 +23,9 @@ class Influencer < ApplicationRecord
   has_many :influencer_portfolios, dependent: :destroy
   accepts_nested_attributes_for :influencer_portfolios,
                                 allow_destroy: true
+
+  validates_length_of :bio, minimum: 3
+  validates :avatar, size: { less_than: 10.megabytes , message: 'is too large' }, content_type: 'image/png'
 
   scope :all_except, ->(user) { where.not(id: user) }
 end

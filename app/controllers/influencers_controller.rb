@@ -51,7 +51,7 @@ class InfluencersController < ApplicationController
   private
 
   def permitted_params
-    params.require(:influencer).permit(:bio,
+    params.require(:influencer).permit(:avatar, :bio,
       influencer_platforms_attributes: %i[id platform_id followers reach url targeted_demographic_start_age targeted_demographic_end_age _destroy targeted_geographic_audience: []],
       influencer_portfolios_attributes: %i[id title description start_time end_time content_link _destroy]
     )

@@ -96,3 +96,6 @@ gem 'sidekiq'
 gem 'redis-rails'
 
 gem 'sendgrid-ruby'
+
+gem 'active_storage_validations'
+gem 'aws-sdk-s3'
