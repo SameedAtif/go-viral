@@ -24,5 +24,6 @@
       <%= render (@navbar ||'/shared/navbar/navbar_with_search') %>
       <%= yield %>
     </main>
+    <%= yield :include_js_files %>
   </body>
 </html>

@@ -1,7 +1,6 @@
 class InfluencersController < ApplicationController
   layout "pages_with_search_bar"
 
-  skip_before_action :authenticate_user!, only: %i[show index]
   before_action :find_influencer, only: %i[show edit update]
 
   def index
