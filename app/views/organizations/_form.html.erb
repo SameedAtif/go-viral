@@ -1,0 +1,53 @@
+<%= form_with model: @organization, local: true do |f| %>
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :website_url %><br>
+    <%= f.text_field :website_url %>
+  </div>
+  <div>
+    <%= f.label :facebook_url %><br>
+    <%= f.text_field :facebook_url %>
+  </div>
+  <div>
+    <%= f.label :instagram_url %><br>
+    <%= f.text_field :instagram_url %>
+  </div>
+  <div>
+    <%= f.label :linkedin_url %><br>
+    <%= f.text_field :linkedin_url %>
+  </div>
+  <div>
+    <%= f.label :youtube_url %><br>
+    <%= f.text_field :youtube_url %>
+  </div>
+  <div>
+    <%= f.label :tiktok_url %><br>
+    <%= f.text_field :tiktok_url %>
+  </div>
+  <div>
+    <%= f.label :address_1 %><br>
+    <%= f.text_field :address_1 %>
+  </div>
+  <div>
+    <%= f.label :address_2 %><br>
+    <%= f.text_field :address_2 %>
+  </div>
+  <div>
+    <%= f.label :city %><br>
+    <%= f.text_field :city %>
+  </div>
+  <div>
+    <%= f.label :country %><br>
+    <%= f.text_field :country %>
+  </div>
+  <div>
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

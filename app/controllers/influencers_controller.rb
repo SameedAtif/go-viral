@@ -2,6 +2,7 @@ class InfluencersController < ApplicationController
   layout "pages_with_search_bar"
 
   before_action :find_influencer, only: %i[show edit update]
+
   def index
     @influencers = Influencer.all
   end
@@ -9,6 +10,7 @@ class InfluencersController < ApplicationController
   def new
     @influencer = Influencer.new
     @influencer.influencer_platforms.build
+    @influencer.influencer_portfolios.build
   end
 
   def create
@@ -17,7 +19,7 @@ class InfluencersController < ApplicationController
     if @influencer.save
       flash[:success] = 'influencer successfully created'
       session[:user_role] = User::USER_ROLES[:influencer]
-      redirect_to root_path
+      redirect_to manage_gigs_gigs_path
     else
       flash[:error] = 'Something went wrong'
       render 'new'
@@ -48,9 +50,9 @@ class InfluencersController < ApplicationController
   private
 
   def permitted_params
-    params.require(:influencer).permit(:bio,
-      influencer_platforms_attributes: %i[id platform_id followers reach _destroy],
-      influencer_portfolios_attributes: %i[id title description _destroy]
+    params.require(:influencer).permit(:avatar, :bio,
+      influencer_platforms_attributes: %i[id platform_id followers reach url targeted_demographic_start_age targeted_demographic_end_age _destroy targeted_geographic_audience: []],
+      influencer_portfolios_attributes: %i[id title description start_time end_time content_link _destroy]
     )
   end
 
