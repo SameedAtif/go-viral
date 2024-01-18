@@ -2,7 +2,7 @@
   <main class="mx-auto max-w-2xl pb-24 pt-8 sm:px-6 sm:pt-16 lg:max-w-7xl lg:px-8">
     <div class="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
       <div class="flex sm:items-baseline sm:space-x-4">
-        <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #54879</h1>
+        <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #<%= @gig_client.id %></h1>
       </div>
       <p class="text-sm text-gray-600">Order placed <time datetime="2021-03-22" class="font-medium text-gray-900">March 22, 2021</time></p>
     </div>
@@ -66,33 +66,34 @@
         </div>
       </div>
     </section>
+    <% if verified_role.is_a? Client%>
+      <!-- Billing -->
+      <section aria-labelledby="summary-heading" class="mt-16">
+        <h2 id="summary-heading" class="sr-only">Billing Summary</h2>
 
-    <!-- Billing -->
-    <section aria-labelledby="summary-heading" class="mt-16">
-      <h2 id="summary-heading" class="sr-only">Billing Summary</h2>
+        <div class="bg-gray-100 px-4 py-6 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
+          <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
+            <div>
+            </div>
+            <div></div>
+          </dl>
 
-      <div class="bg-gray-100 px-4 py-6 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
-        <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
-          <div>
-          </div>
-          <div></div>
-        </dl>
-
-        <dl class="mt-8 divide-y divide-gray-200 text-sm lg:col-span-5 lg:mt-0">
-          <div class="flex items-center justify-between pb-4">
-            <dt class="text-gray-600">Subtotal</dt>
-            <dd class="font-medium text-gray-900"><%= number_to_currency(@gig_package.price) %></dd>
-          </div>
-          <div class="flex items-center justify-between py-4">
-            <dt class="text-gray-600">Fee</dt>
-            <dd class="font-medium text-gray-900"><%= number_to_currency(@transaction_detail.fee) %></dd>
-          </div>
-          <div class="flex items-center justify-between pt-4">
-            <dt class="font-medium text-gray-900">Order total</dt>
-            <dd class="font-medium text-indigo-600"><%= number_to_currency(@transaction_detail.fee + @gig_package.price) %></dd>
-          </div>
-        </dl>
-      </div>
-    </section>
+          <dl class="mt-8 divide-y divide-gray-200 text-sm lg:col-span-5 lg:mt-0">
+            <div class="flex items-center justify-between pb-4">
+              <dt class="text-gray-600">Subtotal</dt>
+              <dd class="font-medium text-gray-900"><%= number_to_currency(@gig_package.price) %></dd>
+            </div>
+            <div class="flex items-center justify-between py-4">
+              <dt class="text-gray-600">Fee</dt>
+              <dd class="font-medium text-gray-900"><%= number_to_currency(@transaction_detail.fee) %></dd>
+            </div>
+            <div class="flex items-center justify-between pt-4">
+              <dt class="font-medium text-gray-900">Order total</dt>
+              <dd class="font-medium text-indigo-600"><%= number_to_currency(@transaction_detail.fee + @gig_package.price) %></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    <% end %>
   </main>
 </div>
