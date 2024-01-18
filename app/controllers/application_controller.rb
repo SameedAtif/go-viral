@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
   def verified_role
     role = current_user.send(session[:user_role])
 
-    role if role.present? && session[:user_role] == User::USER_ROLES[session[:user_role]]
+    role if role.present? && session[:user_role] == User::USER_ROLES[session[:user_role].to_sym]
   end
 end
