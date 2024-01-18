@@ -6,6 +6,7 @@ class SystemGigTransactionsController < ApplicationController
     # create payment transaction data
     resource = SystemGigTransaction.new(gig_package: @gig_package)
     resource.client = current_user.client
+    # TODO: Handle quantity
     resource.gross_price = resource.gig_package.price
     resource.fee = 0.00
     resource.transaction_token = "ABC"

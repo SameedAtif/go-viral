@@ -1,5 +1,21 @@
 class GigClientsController < ApplicationController
-  before_action :set_gig_client, :validate_status, only: :update
+  before_action :set_gig_client, :validate_status, only: [:show, :update]
+  before_action :seller_navbar, only: %i[show manage_orders]
+
+  layout "pages_with_search_bar"
+
+  def show
+    @gig = @gig_client.gig
+    @client = @gig_client.client
+    @gig_package = @gig_client.gig_package
+    @transaction_detail = @gig_client.system_gig_transaction
+  end
+
+  def manage_orders
+    @gig_clients = GigClient.joins(:gig, :client).where(
+      gigs: {influencer_id: current_user.influencer.id}).includes(:gig, :client, :gig_package
+    ) || []
+  end
 
   def update
     @gig_client.assign_attributes(permitted_params)
@@ -43,5 +59,9 @@ class GigClientsController < ApplicationController
     return if (verified_role(:client) && valid_client_status?) || (verified_role(:influencer) && valid_influencer_status?)
 
     raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
+  end
+
+  def seller_navbar
+    @navbar = 'shared/navbar/seller_navbar'
   end
 end

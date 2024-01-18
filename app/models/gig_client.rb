@@ -19,6 +19,7 @@ class GigClient < ApplicationRecord
     order_closed: 'order_closed'
   }
   STATUSES = STATUSES_MAP.values
+  INFLUENCER_ORDER_STATUSES = STATUSES.select{ |s| s != STATUSES_MAP[:request_rolled_back] }
 
   validates_inclusion_of :status, in: STATUSES
 
