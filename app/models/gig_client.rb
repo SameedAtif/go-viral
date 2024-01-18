@@ -26,11 +26,11 @@ class GigClient < ApplicationRecord
   after_create_commit :schedule_client_refund_transaction
   after_save_commit :notify_client, :notify_creator, if: -> { saved_change_to_attribute?('status') }
 
-  scope :pending_review, -> { where(status: Gig::STATUSES_MAP[:pending_review]) }
-  scope :accepted, -> { where(status: Gig::STATUSES_MAP[:accepted]) }
-  scope :rejected, -> { where(status: Gig::STATUSES_MAP[:rejected]) }
-  scope :creator_credited, -> { where(status: Gig::STATUSES_MAP[:creator_credited]) }
-  scope :order_closed, -> { where(status: Gig::STATUSES_MAP[:order_closed]) }
+  scope :pending_review, -> { where(status: STATUSES_MAP[:pending_review]) }
+  scope :accepted, -> { where(status: STATUSES_MAP[:accepted]) }
+  scope :rejected, -> { where(status: STATUSES_MAP[:rejected]) }
+  scope :creator_credited, -> { where(status: STATUSES_MAP[:creator_credited]) }
+  scope :order_closed, -> { where(status: STATUSES_MAP[:order_closed]) }
 
   private
 

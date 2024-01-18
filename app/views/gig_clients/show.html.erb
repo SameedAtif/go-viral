@@ -1,1 +1,78 @@
-<%= render partial: 'gig_clients/show/order_info' %>
+<div class="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
+  <div class="flex justify-between w-full">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #<%= @gig_client.id %></h1>
+    </div>
+    <% if verified_role.is_a?(Influencer) && @gig_client.status.blank? %>
+      <div class="flex space-x-4">
+        <%=
+          button_to "Accept", gig_client_path(@gig_client),
+          class: "text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800",
+          method: :put,
+          params: { gig_client: { status: ::GigClient::STATUSES_MAP[:accepted] } }
+        %>
+        <%=
+          button_to "Decline", gig_client_path(@gig_client),
+          class: "text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800",
+          method: :put,
+          params: { gig_client: { status: ::GigClient::STATUSES_MAP[:rejected] } }
+        %>
+      </div>
+    <% end %>
+  </div>
+  <% if @gig_client.status.present? %>
+    <p class="text-sm text-gray-600">Order <%= @gig_client.status == ::GigClient::STATUSES_MAP[:accepted] ? 'placed' : 'declined'%></p>
+  <% end %>
+</div>
+
+<div class="flex flex-row p-4">
+    <ul class="flex-column space-y space-y-4 text-sm font-medium md:me-4 mb-4 md:mb-0 min-w-80" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+        <li role="presentation">
+            <button
+                id="basic-tab"
+                data-tabs-target="#basic"
+                type="button"
+                role="tab"
+                aria-controls="basic"
+                aria-selected="false"
+                class="inline-flex items-center px-4 py-3 rounded-lg w-full">
+                Order Detail
+            </button>
+        </li>
+        <li role="presentation">
+            <button
+                id="platform-tab"
+                data-tabs-target="#platform"
+                type="button"
+                role="tab"
+                aria-controls="platform"
+                aria-selected="false"
+                class="inline-flex items-center px-4 py-3 rounded-lg w-full">
+                Manage Order Deliverables
+            </button>
+        </li>
+        <li role="presentation">
+            <button
+                id="portfolio-tab"
+                data-tabs-target="#portfolio"
+                type="button"
+                role="tab"
+                aria-controls="portfolio"
+                aria-selected="false"
+                class="inline-flex items-center px-4 py-3 rounded-lg w-full">
+                Request help
+            </button>
+        </li>
+    </ul>
+    <div class="p-6 text-medium rounded-lg w-full">
+      <div id="basic" role="tabpanel" aria-labelledby="basic-tab" class="tab-content">
+          <%= render partial: 'gig_clients/show/order_info' %>
+      </div>
+      <div id="platform" role="tabpanel" aria-labelledby="platform-tab" class="tab-content">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Platform Tab</h3>
+      </div>
+      <div id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab" class="tab-content">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Portfolio Tab</h3>
+      </div>
+    </div>
+</div>
