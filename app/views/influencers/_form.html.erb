@@ -40,7 +40,7 @@
         </li>
     </ul>
     <div class="p-6 text-medium rounded-lg w-full">
-        <%= form_with model: @influencer, local: true do |f| %>
+        <%= form_with model: @influencer, local: true, id: 'myForm' do |f| %>
             <div id="basic" role="tabpanel" aria-labelledby="basic-tab" class="tab-content">
                 <div class="p-4 md:p-5 space-y-4">
                   <div class="mb-5">

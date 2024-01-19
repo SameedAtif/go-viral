@@ -66,13 +66,44 @@
     </ul>
     <div class="p-6 text-medium rounded-lg w-full">
       <div id="basic" role="tabpanel" aria-labelledby="basic-tab" class="tab-content">
-          <%= render partial: 'gig_clients/show/order_info' %>
+        <%= render partial: 'gig_clients/show/order_info' %>
       </div>
       <div id="platform" role="tabpanel" aria-labelledby="platform-tab" class="tab-content">
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Platform Tab</h3>
+        <div class="block p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Submit work</h5>
+          <div class="flex justify-between w-full">
+            <div>
+              <p class="font-normal text-gray-700 dark:text-gray-400">Submit work for client to review</p>
+            </div>
+            <div class="flex space-x-4">
+              <%= @gig_client.gig_deliverables.count %> / <%= @gig_package.review_limit %> revisions used
+            </div>
+          </div>
+          <div>
+            <%= form_with model: GigDeliverable.new, url: gig_client_gig_deliverables_path(@gig_client), local: true do |f| %>
+              <div class="mb-5">
+                <%= f.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                <%= f.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+              </div>
+              <div class="mb-5">
+                <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+              </div>
+              <div class="mb-5">
+                <%= f.label 'Upload work', class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                <%= f.file_field :work_files, multiple: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+              </div>
+              <%= f.submit %>
+            <% end %>
+          </div>
+        </div>
+        <div class="block mt-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Past Submissions</h5>
+
+        </div>
       </div>
       <div id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab" class="tab-content">
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Portfolio Tab</h3>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Portfolio Tab</h3>
       </div>
     </div>
 </div>
