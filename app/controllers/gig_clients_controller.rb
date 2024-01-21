@@ -12,9 +12,7 @@ class GigClientsController < ApplicationController
   end
 
   def manage_orders
-    @gig_clients = GigClient.joins(:gig, :client).where(
-      gigs: {influencer_id: current_user.influencer.id}).includes(:gig, :client, :gig_package
-    ) || []
+    @gig_clients = scoped_orders
   end
 
   def update
@@ -63,6 +61,18 @@ class GigClientsController < ApplicationController
   end
 
   def seller_navbar
+    return if verified_role.is_a? Client
+
     @navbar = 'shared/navbar/seller_navbar'
+  end
+
+  def scoped_orders
+    if verified_role.is_a? Influencer
+      GigClient.joins(:gig, :client).where(
+        gigs: {influencer_id: current_user.influencer.id}).includes(:gig, :client, :gig_package
+      ) || []
+    elsif verified_role.is_a? Client
+      current_user.client.gig_clients
+    end
   end
 end

@@ -15,7 +15,7 @@
           <%= render partial: "shared/elements/navbar_li_content", locals: { content: navbar_item[:content], path: navbar_item[:path] } %>
         <% end %>
         <li class="py-2.5">
-          <%= render partial: 'shared/navbar/influencer_button' %>
+          <%= render partial: "shared/navbar/#{verified_role.is_a?(Client) ? 'client_button': 'influencer_button'}" %>
         </li>
         <% if current_user.present? %>
           <li class="py-2.5">
@@ -23,7 +23,7 @@
               <span class="sr-only">Open user menu</span>
               <img class="w-10 h-10 rounded-full" src="https://picsum.photos/200" alt="user photo">
             </button>
-            <%= render partial: "shared/navbar/buyer_menu" %>
+            <%= render partial: "shared/navbar/#{verified_role.is_a?(Client) ? 'buyer_menu': 'seller_menu'}" %>
           </li>
         <% end %>
       </ul>

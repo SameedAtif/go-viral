@@ -17,12 +17,6 @@ module NavigationHelper
         ]
     end
 
-    def navbar_with_search_items
-        [
-            { content: t("header.navbar.order"), path: "#" }
-        ]
-    end
-
     def seller_navbar_items
         [
             { content: t("header.navbar.manage_gigs"), path: manage_gigs_gigs_path },
