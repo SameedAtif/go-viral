@@ -8,6 +8,7 @@ class GigDisputesController < ApplicationController
     resource.created_by = session[:user_role]
     authorize resource
     resource.save!
+    redirect_to @gig_client
   end
 
   def update
@@ -24,7 +25,7 @@ class GigDisputesController < ApplicationController
   end
 
   def creation_params
-    params.require(:gig_dispute).permit(:detail, :influencer_id)
+    params.require(:gig_dispute).permit(:detail)
   end
 
   def set_dispute

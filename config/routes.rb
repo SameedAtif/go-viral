@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get '/robots.txt' => 'robots#robots'
   get '/dashboard', :to => 'dotcom#dashboard'
+  resources :contacts, only: [:create]
+
   namespace :bulk do
     resource :gig, only: %i[update destroy]
   end
