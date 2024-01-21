@@ -21,7 +21,7 @@
     <% end %>
   </div>
   <% if @gig_client.status.present? %>
-    <p class="text-sm text-gray-600">Order <%= @gig_client.status == ::GigClient::STATUSES_MAP[:accepted] ? 'placed' : 'declined'%></p>
+    <p class="text-sm text-gray-600">Order <%= @gig_client.status.humanize %></p>
   <% end %>
 </div>
 
@@ -39,18 +39,20 @@
                 Order Detail
             </button>
         </li>
-        <li role="presentation">
-            <button
-                id="platform-tab"
-                data-tabs-target="#platform"
-                type="button"
-                role="tab"
-                aria-controls="platform"
-                aria-selected="false"
-                class="inline-flex items-center px-4 py-3 rounded-lg w-full">
-                Manage Order Deliverables
-            </button>
-        </li>
+        <% if @gig_client.status == ::GigClient::STATUSES_MAP[:accepted]%>
+          <li role="presentation">
+              <button
+                  id="platform-tab"
+                  data-tabs-target="#platform"
+                  type="button"
+                  role="tab"
+                  aria-controls="platform"
+                  aria-selected="false"
+                  class="inline-flex items-center px-4 py-3 rounded-lg w-full">
+                  Manage Order Deliverables
+              </button>
+          </li>
+        <% end %>
         <li role="presentation">
             <button
                 id="portfolio-tab"
@@ -69,7 +71,7 @@
         <%= render partial: 'gig_clients/show/order_info' %>
       </div>
       <div id="platform" role="tabpanel" aria-labelledby="platform-tab" class="tab-content">
-        <%= render partial: 'gig_clients/show/deliverable_tab'%>
+        <%= render partial: 'gig_clients/show/deliverable_tab' if @gig_client.status == ::GigClient::STATUSES_MAP[:accepted] %>
       </div>
       <div id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab" class="tab-content">
         <div class="block p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -86,13 +88,7 @@
             <div id="accordion-collapse-body-1" class="hidden" aria-labelledby="accordion-collapse-heading-1">
               <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                 <!-- End: Nested accordion -->
-                <%= form_with model: GigDispute.new, url: gig_client_gig_disputes_path(@gig_client), local: true do |f| %>
-                  <div class="mb-5">
-                    <%= f.label :detail, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-                    <%= f.rich_text_area :detail, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
-                  </div>
-                  <%= f.submit %>
-                <% end %>
+                <%= render partial: 'gig_disputes/form' %>
               </div>
             </div>
             <h2 id="accordion-collapse-heading-2">
@@ -105,29 +101,7 @@
             </h2>
             <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
               <div class="p-5 border border-gray-200 dark:border-gray-700">
-                <%= form_with model: Contact.new do |f| %>
-                  <div>
-                    <div class="mb-5">
-                      <%= f.label :name %></br>
-                      <%= f.text_field  :name, required: true, class: "contact-form-text-area" %></br>
-                    </div>
-                    <div class="mb-5">
-                      <%= f.label :email %></br>
-                      <%= f.text_field :email, required: true, class: "contact-form-text-area" %></br>
-                    </div>
-                    <div class="mb-5">
-                      <%= f.label :message %></br>
-                      <%= f.text_area :message, rows: 8, cols: 40, required: true, class: "contact-form-text-area",
-                            placeholder: "Send me a message"%></br>
-                    </div>
-                    <div class="mb-5">
-                      <%= f.label :nickname %>
-                      <%= f.text_field :nickname, :hint => 'Leave this field blank!' %>
-                    </div>
-
-                    <%= f.submit 'Send Message', class: 'btn btn-primary' %>
-                  </div>
-                <% end %>
+                <%= render partial: 'contacts/form' %>
               </div>
             </div>
           </div>

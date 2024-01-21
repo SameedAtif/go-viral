@@ -30,7 +30,7 @@ class User < ApplicationRecord
 
   User::USER_ROLES_VALUES.each do |role|
     User.define_method("#{role}?".to_sym) do
-      user_roles.include?(role)
+      user_roles.include?(role) || public_send(role.to_sym).present?
     end
   end
 

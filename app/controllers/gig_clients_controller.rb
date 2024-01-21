@@ -9,6 +9,8 @@ class GigClientsController < ApplicationController
     @client = @gig_client.client
     @gig_package = @gig_client.gig_package
     @transaction_detail = @gig_client.system_gig_transaction
+    @gig_deliverable = GigDeliverable.new
+    @gig_dispute = @gig_client.gig_disputes.first || GigDispute.new
   end
 
   def manage_orders
