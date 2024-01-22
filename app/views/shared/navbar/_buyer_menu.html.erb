@@ -2,7 +2,6 @@
   <div id="profiledropdown" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-0 right-0 mt-2"> <!-- Apply absolute positioning -->
     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
       <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.profile"), link: edit_user_registration_path } %>
-      <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.settings"), link: '#' } %>
       <%= render partial: "shared/elements/navbar_user_icon_li" , locals: { li_content: t("header.navbar.profile_menu.billing_and_payments"), link: '#' } %>
     </ul>
     <div class="py-1">
