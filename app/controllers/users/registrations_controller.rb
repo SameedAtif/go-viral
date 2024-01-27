@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  layout "offline"
   before_action :configure_sign_up_params, only: [:create]
   before_action :set_influencer, only: %i[edit update]
   before_action :set_organization, only: %i[edit update]
@@ -15,7 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_sign_up_params
-    params.require(:sign_up).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
   end
 
   private
