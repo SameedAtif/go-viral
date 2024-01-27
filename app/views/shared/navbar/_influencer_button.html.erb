@@ -1,6 +1,6 @@
 <% if current_user&.influencer.present? %>
   <%= button_to(
-    t("header.navbar.switch_to_selling"),
+    t("header.navbar.manage_gigs"),
     switch_session_path(type: '1'),
     class: "text-neutral-600 bg-white hover:border hover:border-neutral-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm px-4 py-2 text-center mr-3 md:mr-0",
     method: :put

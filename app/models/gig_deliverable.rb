@@ -14,7 +14,7 @@ class GigDeliverable < ApplicationRecord
                           size: { less_than: 5.megabytes, message: 'should be less than 5MB per file' },
                           limit: { min: 1, max: 3, message: 'should be between 1 and 3 files' }
 
-  after_save_commit :notify_client, on: %i[create update]
+  after_save_commit :notify_client, on: %i[create]
 
   private
 

@@ -34,11 +34,8 @@
     <div class="order-3 hidden w-full lg:block md:w-auto" id="navbar-dropdown">
       <ul
         class="flex flex-col font-medium p-4 md:p-0 mt-4 sm:border sm:border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
-        <% navbar_with_search_items.map do |navbar_item| %>
-          <%= render partial: "shared/elements/navbar_li_content", locals: { content: navbar_item[:content], path: navbar_item[:path] } %>
-        <% end %>
         <li class="py-2.5">
-          <%= render partial: 'shared/navbar/influencer_button' %>
+          <%= render partial: "shared/navbar/#{verified_role.is_a?(Client) ? 'client_button': 'influencer_button'}" %>
         </li>
 
         <li class="py-2.5">
@@ -47,8 +44,7 @@
             <span class="sr-only">Open user menu</span>
             <img class="w-10 h-10 rounded-full" src="https://picsum.photos/200" alt="user photo">
           </button>
-
-          <%= render partial: "shared/navbar/buyer_menu" %>
+          <%= render partial: "shared/navbar/#{verified_role.is_a?(Client) ? 'buyer_menu': 'seller_menu'}" %>
         </li>
       </ul>
     </div>

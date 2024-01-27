@@ -7,6 +7,8 @@ class GigDeliverablesController < ApplicationController
     @gig_deliverable.gig_client = @gig_client
     authorize @gig_deliverable
     @gig_deliverable.save!
+    @gig_client.gig_deliverables.update(active: false)
+    @gig_deliverable.update(active: true)
     redirect_to @gig_client
   end
 

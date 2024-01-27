@@ -16,6 +16,6 @@
     </tr>
   </thead>
   <tbody>
-    <%= render partial: 'gig_clients/manage_orders/table_row', collection: @gig_clients.send(status), as: :gig_order, locals: { status: status } %>
+    <%= render partial: 'gig_clients/manage_orders/table_row', collection: @gig_clients.send(status), as: :gig_order, locals: { status: status } if @gig_clients %>
   </tbody>
 </table>
