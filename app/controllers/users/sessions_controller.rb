@@ -1,6 +1,8 @@
 class Users::SessionsController < Devise::SessionsController
   layout "offline"
 
+  after_action :set_user_type, only: :create
+
   def switch_session
     session[:user_role] = validate_session_type
     redirect_to redirect_path
@@ -22,8 +24,12 @@ class Users::SessionsController < Devise::SessionsController
   def redirect_path
     if params[:type] == "1"
       manage_gigs_gigs_path
-    else
-      root_path
+    elsif params[:type] == "2"
+      manage_orders_gig_clients_path
     end
+  end
+
+  def set_user_type
+    session[:user_role] = current_user.influencer.present? ? User::USER_ROLES[:influencer] : User::USER_ROLES[:client]
   end
 end

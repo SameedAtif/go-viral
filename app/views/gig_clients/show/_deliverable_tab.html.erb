@@ -9,21 +9,7 @@
     </div>
   </div>
   <div>
-    <%= form_with model: GigDeliverable.new, url: gig_client_gig_deliverables_path(@gig_client), local: true do |f| %>
-      <div class="mb-5">
-        <%= f.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
-      </div>
-      <div class="mb-5">
-        <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
-      </div>
-      <div class="mb-5">
-        <%= f.label 'Upload work', class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-        <%= f.file_field :work_files, multiple: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
-      </div>
-      <%= f.submit %>
-    <% end %>
+    <%= render partial: 'gig_deliverables/form' %>
   </div>
 </div>
 <div class="block mt-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">

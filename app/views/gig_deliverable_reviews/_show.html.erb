@@ -1,0 +1,62 @@
+<div class="block p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+  <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Review work</h5>
+  <div class="flex justify-between w-full">
+    <div>
+      <p class="font-normal text-gray-700 dark:text-gray-400">Review creators submited work</p>
+    </div>
+    <div class="flex space-x-4">
+      <%= @gig_client.gig_deliverables.count %> / <%= @gig_package.review_limit %> revisions used
+    </div>
+  </div>
+  <div>
+    <div>
+      <h3 class="mt-3 text-base font-medium text-gray-900"><%= @gig_deliverable.title %></h3>
+      <p class="text-sm"><%= @gig_deliverable.description.html_safe %></p>
+    </div>
+    <div class="mt-3">
+      <h3 class="text-base font-medium text-gray-900">Give feedback</h3>
+      <%= render partial: 'gig_deliverable_reviews/form' %>
+    </div>
+  </div>
+</div>
+<div class="block mt-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+  <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Past Submissions</h5>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                  Title
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Description
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Submission Time
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @gig_client.gig_deliverables.each do |deliverable| %>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <%= deliverable.title %>
+                </th>
+                <td class="px-6 py-4">
+                  <%= deliverable.description.html_safe %>
+                </td>
+                <td class="px-6 py-4">
+                  <%= time_ago_in_words(deliverable.created_at) %>
+                </td>
+                <td class="px-6 py-4">
+                  <%= deliverable.gig_deliverable_reviews.first.present? ? deliverable.gig_deliverable_reviews.first.status : 'Not responded yet' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+      </table>
+  </div>
+</div>
