@@ -10,6 +10,7 @@ class GigDeliverableReviewsController < ApplicationController
 
     authorize @gig_deliverable_review
     @gig_deliverable_review.save!
+    @gig_deliverable.update(active: false)
     redirect_to @gig_deliverable_review
   end
 
