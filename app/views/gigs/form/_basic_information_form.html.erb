@@ -1,27 +1,82 @@
-<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Basic Information</h3>
-<div class="mb-5">
-    <%= f.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-    <%= f.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
+<!-- Include the nouislider CSS -->
+<link rel="stylesheet" href="https://unpkg.com/nouislider@14.6.4/distribute/nouislider.min.css">
+
+<!-- Include the nouislider JavaScript -->
+<script src="https://unpkg.com/nouislider@14.6.4/distribute/nouislider.min.js"></script>
+
+
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-5">Basic Information</h3>
+
+<div class="relative z-0 mb-5">
+    <%= f.label :title, class: "absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto" %>
+    <%= f.text_field :title, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: " ", required: true %>
 </div>
-<div class="mb-5">
+
+<div class="mb-10">
     <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
     <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", required: true %>
 </div>
-<div class="mb-5">
-    <%= f.label :targeted_demographic_start_age, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-    <%= f.number_field :targeted_demographic_start_age, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", in: 5..100, required: true %>
+
+<div class="grid grid-cols-2 gap-x-4 mb-10">
+  <div class="mb-5">
+      <%= f.label :targeted_demographic_start_age, class: "absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto" %>
+      <%= f.number_field :targeted_demographic_start_age, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer", in: 5..100, required: true %>
+  </div>
+
+  <div class="mb-5">
+      <%= f.label :targeted_demographic_end_age, class: "absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto" %>
+      <%= f.number_field :targeted_demographic_end_age, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer", in: 5..100, required: true %>
+  </div>
 </div>
-<div class="mb-5">
-    <%= f.label :targeted_demographic_end_age, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-    <%= f.number_field :targeted_demographic_end_age, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", in: 5..100, required: true %>
-</div>
+<div id="rangeSlider" class="mb-5"></div>
+
 <div class="mb-5">
     <%= f.label :targeted_geographic_audience, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
     <%= f.select :targeted_geographic_audience, country_list, {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience' %>
 </div>
+
 <div class="gig_platforms">
     <%= f.fields_for :gig_platforms do |platform| %>
         <%= render 'gigs/form/gig_platform_fields', f: platform %>
     <% end %>
     <%= link_to_add_association "Add Platform", f, :gig_platforms, partial: 'gigs/form/gig_platform_fields', data: { association_insertion_node: '.gig_platforms', association_insertion_method: :append } %>
 </div>
+
+<script>
+  var slider = document.getElementById('rangeSlider');
+  var valuesDiv = document.getElementById('sliderValues');
+
+  var gig_targeted_demographic_start_age = document.getElementById("gig_targeted_demographic_start_age");
+  var gig_targeted_demographic_end_age = document.getElementById("gig_targeted_demographic_end_age")
+
+
+  noUiSlider.create(slider, {
+    start: [20, 80],
+    connect: true,
+    step: 1,
+    range: {
+      'min': 0,
+      'max': 100
+    },
+    tooltips: [true, true]
+  });
+
+  // Function to update the displayed values
+  function updateValues() {
+    var values = slider.noUiSlider.get();
+    
+    gig_targeted_demographic_start_age.value = values[0]
+    gig_targeted_demographic_end_age.value = values[1]
+
+  }
+
+  // Listen for changes and update the values
+  slider.noUiSlider.on('update', function () {
+    updateValues();
+  });
+
+  // Initial update
+  updateValues();
+</script>
+
+

@@ -17,3 +17,10 @@
  *= require_tree .
  *= require_self
  */
+
+.vertical-tabs [aria-selected="true"] {
+    background-color: white !important;
+    color: #333;
+    font-weight: bold;
+    border-left-color: black !important;
+}
