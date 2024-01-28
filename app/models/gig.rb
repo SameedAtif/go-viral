@@ -49,6 +49,10 @@ class Gig < ApplicationRecord
 
   after_save_commit :notify_reviewer, :notify_creator, if: -> { saved_change_to_attribute?('status') }
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "description", "id", "influencer_id", "reviewed", "reviewer_id", "status", "targeted_demographic_end_age", "targeted_demographic_start_age", "targeted_geographic_audience", "title", "updated_at", "views"]
+  end
+
   private
 
   def notify_reviewer

@@ -58,6 +58,7 @@ class GigsController < ApplicationController
   end
 
   def update
+    @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
     @gig.update!(permitted_params)
     flash[:success] = "Gig was successfully updated"
     redirect_to @gig
