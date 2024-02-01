@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get '/robots.txt' => 'robots#robots'
   get '/dashboard', :to => 'dotcom#dashboard'
+  get '/search', :to => 'dotcom#search'
   resources :contacts, only: [:create]
 
   namespace :bulk do

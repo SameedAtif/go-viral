@@ -9,15 +9,17 @@
   <div class="mx-auto max-w-screen-2xl mt-4 px-4 sm:px-6 sm:pb-24 lg:px-8">
     <div class="px-4 py-2 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
       <h2 class="text-neutral-600 text-xl font-medium tracking-tight"><%= t("body.listing_heading") %></h2>
-      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+      <a href="<%= gigs_path %>" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
         <%= t("body.view_all") %>
       </a>
     </div>
 
     <%= render "shared/partials/card_list" %>
 
+    <%= paginate @gigs %>
+
     <div class="mt-6 px-4 sm:hidden">
-      <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+      <a href=<%= gigs_path %> class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
         <%= t("body.view_all") %>
       </a>
     </div>
