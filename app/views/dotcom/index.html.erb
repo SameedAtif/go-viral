@@ -32,7 +32,8 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" placeholder='<%= t("header.navbar.influencers_search") %>' required>
+                <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" placeholder='<%= t("header.navbar.influencers_search") %>' required onkeyup="searchInfluencer()">
+                <div id="search-results" class="search-results-container"></div>
             </div>
         </form>
 
@@ -61,7 +62,7 @@
             ] %>
             <div class="absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0">
                 <% social_media_icons.each do |icon| %>
-                    <a href="#" class="relative flex h-[8.75rem] w-[18.875rem] flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
+                    <a href="<%=gigs_path(platform: icon[:title])%>" class="relative flex h-[8.75rem] w-[18.875rem] flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
                         <span aria-hidden="true" class="absolute inset-0">
                             <%= image_tag(asset_url("category_slidebar/#{icon[:image]}"), alt: icon[:alt]) %>
                         </span>
@@ -75,7 +76,7 @@
     </div>
 
     <div class="mt-6 px-4 sm:hidden">
-      <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+      <a href="<%= gigs_path %>" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
         <%= t("body.view_all") %>
       </a>
     </div>
@@ -86,12 +87,12 @@
   <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 sm:pb-24 lg:px-8">
     <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
       <h2 class="text-center text-2xl font-medium tracking-tight text-neutral-600"><%= t("body.listing_heading") %></h2>
-      <a href="#" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+      <a href="<%= gigs_path %>" class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
         <%= t("body.view_all") %>
       </a>
     </div>
 
-    <%= render "shared/partials/card_list" %>
+  <%= render "shared/partials/card_list" %>
 
     <div class="mt-6 px-4 sm:hidden">
       <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
@@ -100,3 +101,28 @@
     </div>
   </div>
 </div>
+
+<script>
+function searchInfluencer() {
+  var query = document.getElementById('search').value;
+  fetch(`/search?query=${encodeURIComponent(query)}`)
+    .then(response => response.json())
+    .then(data => {
+      updateSearchResults(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data: ', error);
+    });
+}
+function updateSearchResults(influencers) {
+  const searchResultsContainer = document.getElementById('search-results');
+  searchResultsContainer.innerHTML = '';
+  
+  influencers.forEach(influencer => {
+    const influencerElement = document.createElement('div');
+    influencerElement.className = 'influencer-result-item';
+    influencerElement.textContent = influencer.first_name;
+    searchResultsContainer.appendChild(influencerElement);
+  });
+}
+</script>
