@@ -23,7 +23,13 @@ class GigsController < ApplicationController
   # TODO: Create seed data [D]
 
   def index
-    @gigs = Gig.all
+    @gigs = Gig.includes(:gig_platforms).all
+
+    if params[:platform].present?
+      @gigs = @gigs.joins(:gig_platforms).where(gig_platforms: { platform_id: Platform.where(name: params[:platform]) })
+    end
+
+    @gigs = @gigs.page(params[:page]).per(20)
   end
 
   def manage_gigs
