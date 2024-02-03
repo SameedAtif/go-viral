@@ -15,7 +15,6 @@ class GigClient < ApplicationRecord
     accepted: 'accepted',
     rejected: 'rejected',
     request_rolled_back: 'request_rolled_back',
-    creator_credited: 'creator_credited',
     order_closed: 'order_closed'
   }
   STATUSES = STATUSES_MAP.values
@@ -29,7 +28,6 @@ class GigClient < ApplicationRecord
   scope :pending_review, -> { where(status: STATUSES_MAP[:pending_review]) }
   scope :accepted, -> { where(status: STATUSES_MAP[:accepted]) }
   scope :rejected, -> { where(status: STATUSES_MAP[:rejected]) }
-  scope :creator_credited, -> { where(status: STATUSES_MAP[:creator_credited]) }
   scope :order_closed, -> { where(status: STATUSES_MAP[:order_closed]) }
 
   private
@@ -47,7 +45,7 @@ class GigClient < ApplicationRecord
   end
 
   def notify_creator
-    return unless [STATUSES_MAP[:creator_credited], STATUSES_MAP[:pending_review]].include?(status)
+    return unless [STATUSES_MAP[:pending_review]].include?(status)
 
     Notification.create!(
       resource_id: gig.id,
@@ -69,14 +67,12 @@ class GigClient < ApplicationRecord
   def creator_notification_type
     if status == STATUSES_MAP[:pending_review]
       Notification::NOTIFICATION_TYPES_MAP[:creator_gig_pending_review]
-    elsif status == STATUSES_MAP[:creator_credited]
-      Notification::NOTIFICATION_TYPES_MAP[:creator_gig_creator_credited]
     end
   end
 
 
   def schedule_client_refund_transaction
     # TODO: Move to background job
-    CreditGigClient.perform_async(id)
+    CreditGigClient.perform_async(1.day.from_now, id)
   end
 end

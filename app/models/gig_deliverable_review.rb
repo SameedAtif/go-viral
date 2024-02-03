@@ -39,7 +39,8 @@ class GigDeliverableReview < ApplicationRecord
   end
 
   def schedule_influencer_payment
+    return if deliverable.status != ::GigDeliverableReview::STATUS_TYPES_MAP[:approved]
     # TODO: Schedule payment
-    CreditGigInfluencer.perform_async(id)
+    CreditGigInfluencer.perform_at(15.days.from_now, id)
   end
 end

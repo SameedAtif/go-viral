@@ -25,3 +25,9 @@
     <% end %>
     <%= link_to_add_association "Add Platform", f, :gig_platforms, partial: 'gigs/form/gig_platform_fields', data: { association_insertion_node: '.gig_platforms', association_insertion_method: :append } %>
 </div>
+<div class="gig_categories">
+    <%= f.fields_for :gig_categories do |category| %>
+        <%= render 'gigs/form/gig_category_fields', f: category %>
+    <% end %>
+    <%= link_to_add_association "Add Category", f, :gig_categories, partial: 'gigs/form/gig_category_fields', data: { association_insertion_node: '.gig_platforms', association_insertion_method: :append } %>
+</div>

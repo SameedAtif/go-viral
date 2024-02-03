@@ -51,7 +51,7 @@
                     <%= f.fields_for :gig_packages do |package| %>
                         <%= render 'gigs/form/gig_package_fields', f: package %>
                     <% end %>
-                    <%= link_to_add_association "Add FAQ", f, :gig_packages, partial: 'gigs/form/gig_package_fields', data: { association_insertion_node: '.gig_packages', association_insertion_method: :append } %>
+                    <%= link_to_add_association "Add Package", f, :gig_packages, partial: 'gigs/form/gig_package_fields', data: { association_insertion_node: '.gig_packages', association_insertion_method: :append } %>
                 </div>
             </div>
             <div id="faq" role="tabpanel" aria-labelledby="faq-tab" class="tab-content">

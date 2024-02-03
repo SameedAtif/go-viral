@@ -12,6 +12,11 @@ class Gig < ApplicationRecord
                                 allow_destroy: true
 
   #One Gig can have multiple categories
+  has_many :gig_categories, dependent: :destroy
+  has_many :categories, through: :gig_categories
+  accepts_nested_attributes_for :gig_categories,
+                                allow_destroy: true
+  #One Gig can have multiple packages
   has_many :gig_packages, dependent: :destroy
   accepts_nested_attributes_for :gig_packages,
                                 allow_destroy: true

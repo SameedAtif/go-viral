@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_28_102927) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_03_115407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -149,6 +149,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_28_102927) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_example_works_on_project_id"
+  end
+
+  create_table "gig_categories", force: :cascade do |t|
+    t.bigint "gig_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_gig_categories_on_category_id"
+    t.index ["gig_id"], name: "index_gig_categories_on_gig_id"
   end
 
   create_table "gig_clients", force: :cascade do |t|
@@ -334,6 +343,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_28_102927) do
     t.string "bio"
     t.bigint "reviewer_id"
     t.boolean "reviewed"
+    t.string "stage_name"
     t.index ["reviewer_id"], name: "index_influencers_on_reviewer_id"
     t.index ["user_id"], name: "index_influencers_on_user_id", unique: true
   end
@@ -764,6 +774,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_28_102927) do
   add_foreign_key "client_project_transactions", "system_project_transactions"
   add_foreign_key "clients", "users"
   add_foreign_key "example_works", "projects"
+  add_foreign_key "gig_categories", "categories"
+  add_foreign_key "gig_categories", "gigs"
   add_foreign_key "gig_clients", "clients"
   add_foreign_key "gig_clients", "gig_packages"
   add_foreign_key "gig_clients", "gigs"

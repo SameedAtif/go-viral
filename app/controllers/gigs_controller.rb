@@ -42,9 +42,11 @@ class GigsController < ApplicationController
     @gig.gig_platforms.build
     @gig.gig_packages.build
     @gig.gig_faqs.build
+    @gig.gig_categories.build
   end
 
   def create
+    # TODO: Bug -> User should be able to see validation failures and contineu from that point.
     @gig = Gig.new(creation_params)
     @gig.influencer = current_user.influencer
     @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
@@ -55,15 +57,23 @@ class GigsController < ApplicationController
   end
 
   def show
+    @influencer = @gig.influencer
+    @influencer_rating = @influencer.gigs.joins(:client_gig_reviews).average(:rating) || 'Just started'
+    @influencer_ongoing_orders = @influencer.gigs.joins(:gig_clients).where(gig_clients: {status: GigClient::STATUSES_MAP[:accepted] }).count
+    @influencer_completed_orders = @influencer.gigs.joins(:influencer_gig_transactions).count
+    @gig_last_delivery = @gig.influencer_gig_transactions.last&.created_at
+    @total_gig_reviews = @gig.client_gig_reviews.count
   end
 
   def edit
     @gig.gig_platforms.build
     @gig.gig_packages.build
     @gig.gig_faqs.build
+    @gig.gig_categories.build
   end
 
   def update
+    # TODO: Bug -> Cannot updated feature: Unpermitted param
     @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
     @gig.update!(permitted_params)
     flash[:success] = "Gig was successfully updated"
@@ -77,6 +87,7 @@ class GigsController < ApplicationController
       :id, :title, :description, :targeted_demographic_start_age, :targeted_demographic_end_age,
       gig_packages_attributes: [:id, :title, :description, :price, :delivery_estimation, :review_limit, :_destroy, features: []],
       gig_platforms_attributes: %i[id platform_id _destroy],
+      gig_categories_attributes: %i[id category_id _destroy],
       gig_faqs_attributes: %i[id question answer _destroy],
       targeted_geographic_audience: []
     )
