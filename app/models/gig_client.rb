@@ -77,16 +77,6 @@ class GigClient < ApplicationRecord
 
   def schedule_client_refund_transaction
     # TODO: Move to background job
-    return unless [GigClient::STATUSES_MAP[:pending_review], GigClient::STATUSES_MAP[:accepted]].include?(status)
-
-
-    ClientGigTransaction.create!(
-      system_gig_transaction: system_gig_transaction,
-      gig_client: self,
-      client: client,
-      transaction_type: ClientGigTransaction::TRANSACTION_TYPES_MAP[:credit],
-      gross_price: gig_package.price,
-      fee: 0.00
-    )
+    CreditGigClient.perform_async(id)
   end
 end

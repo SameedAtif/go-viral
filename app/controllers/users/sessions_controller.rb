@@ -30,6 +30,10 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def set_user_type
-    session[:user_role] = current_user.influencer.present? ? User::USER_ROLES[:influencer] : User::USER_ROLES[:client]
+    session[:user_role] = if current_user.influencer.present?
+                            User::USER_ROLES[:influencer]
+                          elsif current_user.client.present?
+                            User::USER_ROLES[:client]
+                          end
   end
 end

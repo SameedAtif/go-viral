@@ -15,7 +15,7 @@ ActiveAdmin.register GigDispute do
   form do |f|
     f.inputs do
       f.input :status, as: :select, collection: GigDispute::STATUS_TYPES
-      f.input :resolved_in_favor
+      f.input :resolved_in_favor, as: :select, collection: GigDispute::RESOURCE_TYPES
     end
     f.actions
   end
