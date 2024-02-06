@@ -1,4 +1,4 @@
-<% content_for :title, t("body.gigs.index.title") %>
+<% content_for :title, @gig.title %>
 <% navigation_add 'Gigs' , gigs_path %>
 <% content_for :include_js_files do %>
     <%= javascript_include_tag "gigs/counter" %>
@@ -42,13 +42,13 @@
 
 
                 <%= render partial: "gigs/show/image_slider_carousel/image_slider_carousel" %>
-                <%= render partial: "gigs/show/preview_reviews" %>
+                <%# render partial: "gigs/show/preview_reviews" %>
                 <%= render partial: "gigs/show/gig_long_description" %>
                 <%= render partial: "gigs/show/gig_category_details" %>
                 <%= render partial: "gigs/show/about_seller" %>
-                <%= render partial: "gigs/show/compare_packages" %>
-                <%= render partial: "gigs/show/reviews" %>
-                <%= render partial: "gigs/show/gig_reviews" %>
+                <%# render partial: "gigs/show/compare_packages" %>
+                <%# render partial: "gigs/show/reviews" %>
+                <%# render partial: "gigs/show/gig_reviews" %>
             </div>
             <div
                 class="w-full lg:block lg:w-2/5 lg:flex-1 bg-white p-4 overflow-y-auto lg:sticky lg:top-0 lg:self-start">
@@ -80,15 +80,14 @@
                     <div>
                         <h1 id="selected-gig-tab-title">Basic</h1>
                         <p class="mb-6 text-sm text-gray-500">
-                            <strong id="selected-gig-title">Basic Information Website</strong> I will professional website design with in 24
-                            hours
+                            <strong id="selected-gig-title"><%= @gig.gig_packages.first.title %>
                         </p>
 
                         <h1 class="px-2 py-4">How often do you need this order</h1>
                         <div class="border-2 border-gray-900 rounded-xl p-2">
                             <div class="flex w-full justify-between p-2 border-b border-gray-300">
                                 <p>Single order</p>
-                                <p>$<span id="gig-price">75</span></p>
+                                <p>$<span id="gig-price"><%= @gig.gig_packages.first.title %></span></p>
                             </div>
                             <div class="flex w-full justify-between p-2">
                                 <p>Gigs Quantity</p>
@@ -100,8 +99,7 @@
                             </div>
                         </div>
                         <p class="py-4 text-sm text-gray-500">
-                            Basic Information Website I will professional website design with in 24
-                            hours
+                            <%= @gig.gig_packages.first.description %>
                         </p>
                     </div>
                     <% if current_user.influencer != @gig.influencer %>
@@ -112,7 +110,7 @@
                                 class: "flex w-full items-center px-4 py-4 text-sm font-medium justify-center text-white bg-black rounded-lg hover:bg-gray-700",
                                 method: :post do %>
                                 Continue
-                                ($<span id="total-gigs-price">75</span>)
+                                ($<span id="total-gigs-price"><%= @gig.gig_packages.first.price %></span>)
                             <% end %>
                         </div>
                     <% end %>

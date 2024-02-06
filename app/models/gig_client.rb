@@ -73,6 +73,6 @@ class GigClient < ApplicationRecord
 
   def schedule_client_refund_transaction
     # TODO: Move to background job
-    CreditGigClient.perform_async(1.day.from_now, id)
+    CreditGigClient.perform_at(1.day.from_now, id)
   end
 end

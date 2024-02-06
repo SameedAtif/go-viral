@@ -31,13 +31,13 @@
 
     <div class="rounded-md border border-zinc-200 my-5 p-5">
         <div class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 pb-4 border-b border-zinc-200">
-            <div
+            <%# <div
                 class="flex w-full items-center justify-start rounded-md border border-transparent text-base font-medium">
                 <div class="relative block cursor-pointer rounded-lg focus:outline-none">
                     <p id="size-choice-0-description" class="mt-1 text-base font-medium text-gray-500">From</p>
                     <p id="size-choice-0-label" class="text-base font-medium text-gray-900">India</p>
                 </div>
-            </div>
+            </div> %>
             <div
                 class="flex w-full items-center justify-start rounded-md border border-transparent text-base font-medium">
                 <div class="relative block cursor-pointer rounded-lg focus:outline-none">
@@ -45,14 +45,14 @@
                     <p id="size-choice-0-label" class="text-base font-medium text-gray-900"><%= @influencer.created_at.strftime('%b %Y')%></p>
                 </div>
             </div>
-            <div
+            <%# <div
                 class="flex w-full items-center justify-start rounded-md border border-transparent text-base font-medium">
                 <div class="relative block cursor-pointer rounded-lg focus:outline-none">
                     <p id="size-choice-0-description" class="mt-1 text-base font-medium text-gray-500">Avg. response
                         time</p>
                     <p id="size-choice-0-label" class="text-base font-medium text-gray-900">1 hour</p>
                 </div>
-            </div>
+            </div> %>
             <% if @gig_last_delivery.present? %>
                 <div
                     class="flex w-full items-center justify-start rounded-md border border-transparent text-base font-medium">
@@ -62,13 +62,13 @@
                     </div>
                 </div>
             <% end %>
-            <div
+            <%# <div
                 class="flex w-full items-center justify-start rounded-md border border-transparent text-base font-medium">
                 <div class="relative block cursor-pointer rounded-lg focus:outline-none">
                     <p id="size-choice-0-description" class="mt-1 text-base font-medium text-gray-500">Languages</p>
                     <p id="size-choice-0-label" class="text-base font-medium text-gray-900">English, Hindi, Punjabi</p>
                 </div>
-            </div>
+            </div> %>
         </div>
         <div class="grid grid-cols-1 gap-x-6 gap-y-4 pt-4">
             <div
