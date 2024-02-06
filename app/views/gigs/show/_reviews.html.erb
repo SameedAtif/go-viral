@@ -9,14 +9,14 @@
           <div class="flex items-center">
             <!-- Active: "text-gray-800", Default: "text-gray-300" -->
             <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
-              <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
-                <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
-                  <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
-                    <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
+            <%= render partial: "shared/elements/filled_rating_star" , locals: { blank_star: false } %>
           </div>
           <p class="sr-only">4 out of 5 stars</p>
         </div>
-        <p class="ml-2 text-sm text-gray-900">Based on 1624 reviews</p>
+        <p class="ml-2 text-sm text-gray-900">Based on <%= @total_gig_reviews %> reviews</p>
       </div>
 
       <div class="mt-6">

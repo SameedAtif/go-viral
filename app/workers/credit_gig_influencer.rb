@@ -4,7 +4,9 @@ class CreditGigInfluencer
 
   def perform(deliverable_id)
     deliverable = GigDeliverableReview.find(deliverable_id)
-    return if deliverable.status != STATUS_TYPES_MAP[:approved]
+    on_going_dispute = deliverable.gig_client.gig_disputes.where(status: ['pending_review', 'review_in_progress']).any?
+
+    return if deliverable.status != ::GigDeliverableReview::STATUS_TYPES_MAP[:approved] || on_going_dispute
 
     InfluencerGigTransaction.create!(
       system_gig_transaction: deliverable.gig_client.system_gig_transaction,

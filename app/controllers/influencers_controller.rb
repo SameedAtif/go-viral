@@ -14,6 +14,7 @@ class InfluencersController < ApplicationController
   end
 
   def create
+    # TODO: Bug -> Two requests were sent to this.
     @influencer = Influencer.new(permitted_params)
     @influencer.user_id = current_user.id
     if @influencer.save
@@ -30,6 +31,7 @@ class InfluencersController < ApplicationController
 
   def show
     @influencer = Influencer.find_by(id: params[:id])
+    @gigs = @influencer.gigs
     @rooms = Room.public_rooms
     @room = Room.new
     @message = Message.new
@@ -50,7 +52,7 @@ class InfluencersController < ApplicationController
   private
 
   def permitted_params
-    params.require(:influencer).permit(:avatar, :bio,
+    params.require(:influencer).permit(:avatar, :bio, :stage_name,
       influencer_platforms_attributes: %i[id platform_id followers reach url targeted_demographic_start_age targeted_demographic_end_age _destroy targeted_geographic_audience: []],
       influencer_portfolios_attributes: %i[id title description start_time end_time content_link _destroy]
     )
