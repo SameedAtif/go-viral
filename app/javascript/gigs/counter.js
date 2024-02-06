@@ -1,40 +1,15 @@
 // JavaScript logic to handle the counter
 document.addEventListener('DOMContentLoaded', function () {
     const counterElement = document.getElementById('counter');
-    const decrementButton = document.getElementById('decrement');
-    const incrementButton = document.getElementById('increment');
     let gigPrice = document.getElementById('gig-price').textContent;
     const totalGigsPrice = document.getElementById('total-gigs-price');
 
     let counterValue = 1;
 
-    // Function to update the counter value and display
-    const updateCounter = () => {
-        counterElement.textContent = counterValue;
-    };
-
     const updateTotalPrice = () => {
         let totalPrice = gigPrice * counterValue
         totalGigsPrice.textContent = totalPrice;
     }
-
-    // Event listener for the decrement button
-    decrementButton.addEventListener('click', () => {
-        if (counterValue > 1) {
-            counterValue -= 1;
-            updateCounter();
-            updateTotalPrice();
-        }
-    });
-
-    // Event listener for the increment button
-    incrementButton.addEventListener('click', () => {
-        if (counterValue < 10) {
-            counterValue += 1;
-            updateCounter();
-            updateTotalPrice();
-        }
-    });
 
     const project_overview_drawer_buttons = document.querySelectorAll(".package-overview-selector")
     project_overview_drawer_buttons.forEach(project_overview_drawer_button => {
@@ -44,11 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const price = document.getElementById(`${selected_package}-price`).textContent;
             const title = document.getElementById(`${selected_package}-title`).textContent;
             const tab_title = document.getElementById(`${selected_package}`).textContent;
-
+            const package_id = document.getElementById(`${selected_package}-system-id`).textContent;
             gigPrice = document.getElementById('gig-price').textContent = price;
             document.getElementById("selected-gig-title").textContent = title
             document.getElementById("selected-gig-tab-title").textContent = tab_title
-
+            document.getElementById('buy-package').action = `/gig_packages/${package_id}/system_gig_transactions`;
             counterElement.textContent = counterValue = 1
             updateTotalPrice();
         });

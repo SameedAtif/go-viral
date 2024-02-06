@@ -1,7 +1,10 @@
 class Gig < ApplicationRecord
+  include ValidFileTypes
+
   belongs_to :influencer
   belongs_to :reviewer, optional: true
 
+  has_many_attached :sample_work
   # One Gig can be bought by multiple clients
   has_many :gig_clients
   has_many :clients, through: :gig_clients
@@ -12,6 +15,11 @@ class Gig < ApplicationRecord
                                 allow_destroy: true
 
   #One Gig can have multiple categories
+  has_many :gig_categories, dependent: :destroy
+  has_many :categories, through: :gig_categories
+  accepts_nested_attributes_for :gig_categories,
+                                allow_destroy: true
+  #One Gig can have multiple packages
   has_many :gig_packages, dependent: :destroy
   accepts_nested_attributes_for :gig_packages,
                                 allow_destroy: true
@@ -37,6 +45,9 @@ class Gig < ApplicationRecord
   validates_length_of :title, :description, minimum: 3
   validates :targeted_demographic_end_age, comparison: { greater_than: :targeted_demographic_start_age }
   validates :status, inclusion: { in: STATUSES }
+  validates :sample_work, attached: true, content_type: IMAGE_CONTENT_TYPES,
+                          size: { less_than: 5.megabytes, message: 'should be less than 5MB per file' },
+                          limit: { min: 1, max: 3, message: 'should be between 1 and 3 files' }
 
   scope :draft, -> { where(status: Gig::STATUSES_MAP[:draft]) }
   scope :pending_review, -> { where(status: Gig::STATUSES_MAP[:pending_review]) }
@@ -48,6 +59,10 @@ class Gig < ApplicationRecord
   has_rich_text :description
 
   after_save_commit :notify_reviewer, :notify_creator, if: -> { saved_change_to_attribute?('status') }
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "description", "id", "influencer_id", "reviewed", "reviewer_id", "status", "targeted_demographic_end_age", "targeted_demographic_start_age", "targeted_geographic_audience", "title", "updated_at", "views"]
+  end
 
   private
 

@@ -28,4 +28,8 @@ class Influencer < ApplicationRecord
   validates :avatar, size: { less_than: 10.megabytes , message: 'is too large' }, content_type: 'image/png'
 
   scope :all_except, ->(user) { where.not(id: user) }
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["bio", "created_at", "id", "reviewed", "reviewer_id", "updated_at", "user_id"]
+  end
 end

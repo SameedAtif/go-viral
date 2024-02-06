@@ -9,7 +9,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    session[:user_role] = User::USER_ROLES[:client]
     super
   end
 

@@ -14,7 +14,7 @@ class GigDeliverableReview < ApplicationRecord
   validates_length_of :remarks, minimum: 3
   validates_presence_of :remarks, :status, :rating
 
-  after_save_commit :notify_creator, :schedule_influencer_payment, on: %i[create], if: -> { saved_change_to_attribute?('status') }
+  after_save_commit :notify_creator, :schedule_influencer_payment, on: %i[create update], if: -> { saved_change_to_attribute?('status') }
 
   private
 
@@ -39,17 +39,8 @@ class GigDeliverableReview < ApplicationRecord
   end
 
   def schedule_influencer_payment
+    return if gig_deliverable.status != ::GigDeliverableReview::STATUS_TYPES_MAP[:approved]
     # TODO: Schedule payment
-    return if status != STATUS_TYPES_MAP[:approved]
-
-    InfluencerGigTransaction.create!(
-      system_gig_transaction: gig_client.system_gig_transaction,
-      gig: gig_client.gig,
-      gig_client: gig_client,
-      influencer: gig_client.gig.influencer,
-      transaction_type: InfluencerGigTransaction::TRANSACTION_TYPES_MAP[:credit],
-      gross_price: gig_client.gig_package.price,
-      fee: 0.00
-    )
+    CreditGigInfluencer.perform_at(15.days.from_now, id)
   end
 end

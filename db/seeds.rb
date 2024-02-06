@@ -121,3 +121,21 @@ end
   end
 end
 
+if Rails.env.development?
+  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+  User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password', confirmed_at: DateTime.current)
+end
+
+
+Category.create!(
+  name: "Ecommerce",
+  description: "https://www.youtube.com/"
+)
+Category.create!(
+  name: "Social Networking",
+  description: "https://www.facebook.com/"
+)
+Category.create!(
+  name: "Others",
+  description: "https://www.instagram.com/"
+)
