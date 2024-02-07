@@ -21,6 +21,10 @@
 
   <body>
     <main class="">
+      <%= turbo_stream_from("notifications_channel:#{current_user.id}", channel: NotificationsChannel) if current_user %>
+      <div class='flex flex-col items-center justify-center'>
+        <div id="notifications"></div>
+      </div>
       <%= render 'shared/flash_notification' %>
       <%= render (@navbar ||'/shared/navbar/navbar_with_search') %>
       <%= yield %>

@@ -3416,18 +3416,6 @@ input:checked + .toggle-bg {
   --tw-gradient-to: #ffffff var(--tw-gradient-to-position);
 }
 
-.fill-white\/50 {
-  fill: rgb(255 255 255 / 0.5);
-}
-
-.fill-green-300 {
-  fill: #84E1BC;
-}
-
-.fill-green-400 {
-  fill: #31C48D;
-}
-
 .fill-green-500 {
   fill: #0E9F6E;
 }
@@ -3436,16 +3424,12 @@ input:checked + .toggle-bg {
   fill: #F05252;
 }
 
+.fill-white\/50 {
+  fill: rgb(255 255 255 / 0.5);
+}
+
 .fill-yellow-400 {
   fill: #E3A008;
-}
-
-.stroke-cyan-500 {
-  stroke: #06b6d4;
-}
-
-.stroke-green-300 {
-  stroke: #84E1BC;
 }
 
 .object-cover {
@@ -3849,11 +3833,6 @@ input:checked + .toggle-bg {
 .text-gray-900 {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-
-.text-green-400 {
-  --tw-text-opacity: 1;
-  color: rgb(49 196 141 / var(--tw-text-opacity));
 }
 
 .text-indigo-600 {

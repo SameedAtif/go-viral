@@ -6,6 +6,14 @@ class Notification < ApplicationRecord
 
   self.inheritance_column = :_type_disabled
 
+  after_create_commit -> {
+    broadcast_replace_to(
+      "notifications_channel:#{user.id}",
+      target: "notifications",
+      partial: 'shared/notifications/invitation_notification'
+    )
+  }
+
   NOTIFICATION_TYPES_MAP = {
     new_project_request: 'new_project_request',
     creator_approved_for_project: 'creator_approved_for_project',

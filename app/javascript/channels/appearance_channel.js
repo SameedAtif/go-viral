@@ -15,7 +15,7 @@ consumer.subscriptions.create("AppearanceChannel", {
 
   disconnected() {
     // Called when the subscription has been terminated by the server
-    console.log("Connected");
+    console.log("Disconnected");
     this.uninstall();
   },
   rejected() {

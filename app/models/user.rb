@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_one :client, dependent: :destroy
   has_one :reviewer, dependent: :destroy
   has_many :messages
+  has_many :notifications
 
   enum status: %i[offline away online]
 
