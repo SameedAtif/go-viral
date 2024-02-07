@@ -3420,6 +3420,34 @@ input:checked + .toggle-bg {
   fill: rgb(255 255 255 / 0.5);
 }
 
+.fill-green-300 {
+  fill: #84E1BC;
+}
+
+.fill-green-400 {
+  fill: #31C48D;
+}
+
+.fill-green-500 {
+  fill: #0E9F6E;
+}
+
+.fill-red-500 {
+  fill: #F05252;
+}
+
+.fill-yellow-400 {
+  fill: #E3A008;
+}
+
+.stroke-cyan-500 {
+  stroke: #06b6d4;
+}
+
+.stroke-green-300 {
+  stroke: #84E1BC;
+}
+
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
