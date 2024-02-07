@@ -10,7 +10,8 @@ class Notification < ApplicationRecord
     broadcast_replace_to(
       "notifications_channel:#{user.id}",
       target: "notifications",
-      partial: 'shared/notifications/invitation_notification'
+      partial: 'shared/notifications/invitation_notification',
+      locals: {id: id}
     )
   }
 

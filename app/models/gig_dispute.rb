@@ -43,7 +43,13 @@ class GigDispute < ApplicationRecord
         resource_type: gig_client.gig.class.name,
         user_id: user_id,
         user_type: User::USER_ROLES[:reviewer],
-        notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_dispute_opened]
+        notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_dispute_opened],
+        extra: {
+          title: 'URGENT: New dispute to review',
+          description: 'A new dispute has opened',
+          redirect_url: admin_gig_dispute_path(gig_client.id),
+          cta_button_text: 'Click here to view details'
+        }
       )
     end
   end
@@ -54,14 +60,22 @@ class GigDispute < ApplicationRecord
       resource_type: gig_client.gig.class.name,
       user_id: gig_client.gig.influencer.user.id,
       user_type: User::USER_ROLES[:influencer],
-      notification_type: Notification::NOTIFICATION_TYPES_MAP[notification_type]
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[notification_type],
+      extra: {
+        title: 'Update on Dispute',
+        description: 'You have a new update for the dispute',
+      }
     )
     Notification.create!(
       resource_id: gig_client.gig.id,
       resource_type: gig_client.gig.class.name,
       user_id: gig_client.client.user.id,
       user_type: User::USER_ROLES[:client],
-      notification_type: Notification::NOTIFICATION_TYPES_MAP[notification_type]
+      notification_type: Notification::NOTIFICATION_TYPES_MAP[notification_type],
+      extra: {
+        title: 'Update on Dispute',
+        description: 'You have a new update for the dispute',
+      }
     )
   end
 

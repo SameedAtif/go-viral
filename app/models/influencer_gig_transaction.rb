@@ -28,7 +28,13 @@ class InfluencerGigTransaction < ApplicationRecord
       resource_type: gig.class.name,
       user_id: influencer.user.id,
       user_type: User::USER_ROLES[:influencer],
-      notification_type: influencer_notification_type
+      notification_type: influencer_notification_type,
+      extra:{
+        title: 'New Transaction',
+        description: 'Login to check your balance.',
+        redirect_url: influencer_path(influencer.id),
+        cta_button_text: 'Click here to view details'
+      }
     )
   end
 
