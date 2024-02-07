@@ -21,6 +21,7 @@
 
   <body>
     <main class="">
+      <%= render 'shared/flash_notification' %>
       <%= render (@navbar ||'/shared/navbar/navbar_with_search') %>
       <%= yield %>
     </main>

@@ -102,7 +102,7 @@
                             <%= @gig.gig_packages.first.description %>
                         </p>
                     </div>
-                    <% if current_user.influencer != @gig.influencer %>
+                    <% if current_user&.influencer != @gig.influencer %>
                         <div class="flex w-full">
 
                             <%= button_to gig_package_system_gig_transactions_path(@gig.gig_packages.first),
