@@ -1,14 +1,19 @@
 <div class="mt-2 px-6 py-4 bg-white rounded-lg shadow w-full">
-      <div class=" inline-flex items-center justify-between w-full">
-        <div class="inline-flex items-center">
-          <%= render partial: notification_icon(notification.notification_type) %>
-          <h3 class="font-bold text-base text-gray-800"><%= notification.extra["title"] %></h3>
-        </div>
-        <p class="text-xs text-gray-500">
-          <%= notification.created_at.strftime("at %I:%M %p")%>
-        </p>
-      </div>
-      <p class="mt-1 text-sm">
-        <%= notification.extra["description"] %>
-      </p>
+  <div class=" inline-flex items-center justify-between w-full">
+    <div class="inline-flex items-center">
+      <%= render partial: notification_icon(notification.notification_type) %>
+      <h3 class="font-bold text-base text-gray-800"><%= notification.extra["title"] %></h3>
     </div>
+    <p class="text-xs text-gray-500">
+      <%= notification.created_at.strftime("at %I:%M %p")%>
+    </p>
+  </div>
+  <p class="mt-1 text-sm">
+    <%= notification.extra["description"] %>
+  </p>
+  <% if notification.extra["redirect_url"].present? %>
+    <div class="mt-4 flex">
+      <a href="<%= notification.extra["redirect_url"] %>" type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= notification.extra["cta_button_text"] %></a>
+    </div>
+  <% end %>
+</div>
