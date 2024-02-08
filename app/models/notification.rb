@@ -7,11 +7,11 @@ class Notification < ApplicationRecord
   self.inheritance_column = :_type_disabled
 
   after_create_commit -> {
-    broadcast_replace_to(
+    broadcast_prepend_to(
       "notifications_channel:#{user.id}",
       target: "notifications",
       partial: 'shared/notifications/invitation_notification',
-      locals: {id: id}
+      locals: { notification: self }
     )
   }
 
