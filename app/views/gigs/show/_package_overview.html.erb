@@ -1,27 +1,4 @@
 <div class="my-6">
-    <nav class="flex justify-end" aria-label="Breadcrumb">
-        <ol role="list" class="flex items-center space-x-4 md:px-8">
-            <li>
-                <button class="px-4 py-2 rounded-md border border-zinc-300">
-                    <svg class="w-4 h-4 text-zinc-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 20 18">
-                        <path
-                            d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z" />
-                    </svg>
-                </button>
-            </li>
-            <li>
-                <button class="px-4 py-2 rounded-md border border-zinc-300">
-                    <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 18 18">
-                        <path
-                            d="M14.419 10.581a3.564 3.564 0 0 0-2.574 1.1l-4.756-2.49a3.54 3.54 0 0 0 .072-.71 3.55 3.55 0 0 0-.043-.428L11.67 6.1a3.56 3.56 0 1 0-.831-2.265c.006.143.02.286.043.428L6.33 6.218a3.573 3.573 0 1 0-.175 4.743l4.756 2.491a3.58 3.58 0 1 0 3.508-2.871Z" />
-                    </svg>
-                </button>
-            </li>
-        </ol>
-    </nav>
-
     <div class="py-4 md:px-8">
         <div class="border-b border-gray-200">
             <ul class="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow flex"
@@ -108,15 +85,19 @@
     <div class="py-4 md:px-8">
         <div class="p-4 bg-zinc-50">
             <div class="flex py-4">
-                <button
-                    class="w-full text-zinc-700 py-2 px-4 rounded-md flex justify-center items-center font-semibold group border border-zinc-700 hover:bg-zinc-700 hover:text-white">
+                <%= button_to new_room_path,
+                    method: :get,
+                    local: false,
+                    remote: true,
+                    form: {class: 'w-full' },
+                    class: "w-full text-zinc-700 py-2 px-4 rounded-md flex justify-center items-center font-semibold group border border-zinc-700 hover:bg-zinc-700 hover:text-white" do %>
                     <span class="">Contact Me</span>
                     <svg class="w-4 h-4 ml-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 8">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
                     </svg>
-                </button>
+                <% end %>
             </div>
         </div>
     </div>

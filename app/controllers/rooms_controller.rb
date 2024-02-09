@@ -1,13 +1,10 @@
 class RoomsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_status
-  def index
-    @room = Room.new
-    @rooms = Room.public_rooms
 
-    @influencers = Influencer.all_except(current_user)
-    render 'index'
-  end
+  layout "pages_with_search_bar"
+
+  def index; end
 
   def show
     @single_room = Room.find(params[:id])
@@ -24,6 +21,13 @@ class RoomsController < ApplicationController
 
   def create
     @room = Room.create(name: room_params[:name])
+  end
+
+  def new
+    @room = Room.new
+    respond_to do |format|
+      format.js
+    end
   end
 
   def set_status
