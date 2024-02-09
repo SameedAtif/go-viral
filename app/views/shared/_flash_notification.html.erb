@@ -1,6 +1,6 @@
 <!-- app/views/shared/_flash_messages.html.erb -->
 <% if flash.any? %>
-  <div id="flash-message"  data-controller='flash-message' class='inset-0 items-start justify-end'>
+  <div id="flash-message" class='inset-0 items-start justify-end'>
     <div class='flex flex-col items-center justify-center'>
       <% flash.each do |type, message| %>
         <%= render 'shared/notifications/system_notification', locals: { type: type, message: message } %>

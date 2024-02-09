@@ -75,7 +75,13 @@ class Gig < ApplicationRecord
         resource_type: self.class.name,
         user_id: user_id,
         user_type: User::USER_ROLES[:reviewer],
-        notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_pending_gig_review]
+        notification_type: Notification::NOTIFICATION_TYPES_MAP[:reviewer_pending_gig_review],
+        extra: {
+          title: 'URGENT: New Gig to review',
+          description: 'A new Gig has opened',
+          redirect_url: admin_gig_path(id),
+          cta_button_text: 'Click here to view details'
+        }
       )
     end
   end
@@ -88,7 +94,13 @@ class Gig < ApplicationRecord
       resource_type: self.class.name,
       user_id: influencer.user_id,
       user_type: User::USER_ROLES[:influencer],
-      notification_type: creator_notification_type
+      notification_type: creator_notification_type,
+      extra: {
+        title: 'Update on your gig',
+        description: 'Admin has made an update on your gig.',
+        redirect_url: gig_path(id),
+        cta_button_text: 'Click here to view details'
+      }
     )
   end
 

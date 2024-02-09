@@ -40,7 +40,8 @@ class GigClient < ApplicationRecord
       resource_type: gig.class.name,
       user_id: client.user_id,
       user_type: User::USER_ROLES[:client],
-      notification_type: client_notification_type
+      notification_type: client_notification_type,
+      extra: client_notification_extra
     )
   end
 
@@ -52,7 +53,8 @@ class GigClient < ApplicationRecord
       resource_type: gig.class.name,
       user_id: influencer.user_id,
       user_type: User::USER_ROLES[:influencer],
-      notification_type: creator_notification_type
+      notification_type: creator_notification_type,
+      extra: creator_notification_extra
     )
   end
 
@@ -64,12 +66,40 @@ class GigClient < ApplicationRecord
     end
   end
 
+  def client_notification_extra
+    if status == STATUSES_MAP[:approved]
+      {
+        title: 'Order accepted',
+        description: 'The creator has accepted the order',
+        redirect_url: gig_client_path(id),
+        cta_button_text: 'Click here to view details'
+      }
+    elsif status == STATUSES_MAP[:rejected]
+      {
+        title: 'Order declined',
+        description: 'The creator has declined the order',
+        redirect_url: gig_client_path(id),
+        cta_button_text: 'Click here to view details'
+      }
+    end
+  end
+
   def creator_notification_type
     if status == STATUSES_MAP[:pending_review]
       Notification::NOTIFICATION_TYPES_MAP[:creator_gig_pending_review]
     end
   end
 
+  def creator_notification_extra
+    if status == STATUSES_MAP[:pending_review]
+      {
+        title: 'New Order received',
+        description: 'You have a new order',
+        redirect_url: gig_client_path(id),
+        cta_button_text: 'Click here to view details'
+      }
+    end
+  end
 
   def schedule_client_refund_transaction
     # TODO: Move to background job
