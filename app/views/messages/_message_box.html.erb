@@ -30,6 +30,7 @@
 
       <%= turbo_stream_from "rooms_channel:#{@room.id}", channel: RoomsChannel, id: @room.id %>
       <div id="messages-room-<%= @room.id %>" class="flex-1 px-4 py-4 overflow-y-auto">
+        <%= render partial: 'messages/message', collection: @messages, as: :message %>
       </div>
 
       <%= render partial: 'messages/form' %>

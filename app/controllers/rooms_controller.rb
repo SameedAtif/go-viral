@@ -10,6 +10,7 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @other_participant_name = @room.participants.where.not(user_id: current_user).first.user.full_name
     @message = Message.new(room: @room, user: current_user)
+    @messages = @room.messages
     respond_to do |format|
       format.js
     end
@@ -34,6 +35,7 @@ class RoomsController < ApplicationController
     @other_participant_name = User.find(params[:participant_id]).full_name
     # TODO: Delete rooms with no messages.
     @message = Message.new(room: @room, user: current_user)
+    @messages = @room.messages
     respond_to do |format|
       format.js
     end
