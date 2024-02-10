@@ -1,21 +1,5 @@
-<div class="cont-<%=message.user.id%>">
-  <div class="message-box msg-<%= message.user.id %>">
-    <% unless message.room.is_private %>
-      <h6 class="name"> <%= message.user.email %> </h6>
-    <% end %>
-    <%= message.body %>
-    <% if message.attachments.attached? %>
-      <% message.attachments.each_with_index do |attachment, index| %>
-        <% if attachment.image? %>
-          <%= image_tag(message.chat_attachment(index)) %>
-        <% elsif attachment.video? %>
-          <%= video_tag(url_for(attachment), style:'height:auto; width:100%', controls:'') %>
-        <% elsif attachment.audio? %>
-          <%= audio_tag(url_for(attachment), controls: '') %>
-        <% else %>
-          <%= link_to attachment.filename, url_for(attachment), style:"text-decoration: none; color: #fff" %>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+<% if user == message.user %>
+  <%= render partial: 'messages/sent_message', locals: { message: message } %>
+<% else %>
+  <%= render partial: 'messages/received_message', locals: { message: message } %>
+<% end %>

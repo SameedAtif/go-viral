@@ -24,7 +24,13 @@ class RoomsController < ApplicationController
   end
 
   def new
-    @room = Room.new
+    @room = Room.new(name: params[:name], is_private: true)
+    @room.participants << Participant.new(room: @room, user_id: current_user.id)
+    @room.participants << Participant.new(room: @room, user_id: params[:participant_id])
+    @other_participant_name = User.find(params[:participant_id]).full_name
+    # TODO: Delete rooms with no messages.
+    @room.save!
+    @message = Message.new(room: @room, user: current_user)
     respond_to do |format|
       format.js
     end

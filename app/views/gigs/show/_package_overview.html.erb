@@ -90,6 +90,10 @@
                     local: false,
                     remote: true,
                     form: {class: 'w-full' },
+                    params: {
+                        'name' => "#{@gig.influencer.user.full_name}-#{current_user.full_name}",
+                        'participant_id' => @gig.influencer.user.id
+                    },
                     class: "w-full text-zinc-700 py-2 px-4 rounded-md flex justify-center items-center font-semibold group border border-zinc-700 hover:bg-zinc-700 hover:text-white" do %>
                     <span class="">Contact Me</span>
                     <svg class="w-4 h-4 ml-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
