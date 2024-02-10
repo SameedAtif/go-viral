@@ -1,5 +1,5 @@
 class Room < ApplicationRecord
-  has_many :messages
+  has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
 
   scope :public_rooms, -> { where(is_private: false) }

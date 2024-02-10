@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_one :reviewer, dependent: :destroy
   has_many :messages
   has_many :notifications
+  has_many :participants
 
   enum status: %i[offline away online]
 

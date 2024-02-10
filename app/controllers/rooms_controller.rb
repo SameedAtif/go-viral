@@ -7,16 +7,12 @@ class RoomsController < ApplicationController
   def index; end
 
   def show
-    @single_room = Room.find(params[:id])
-
-    @room = Room.new
-    @rooms = Room.public_rooms
-
-    @message = Message.new
-    @messages = @single_room.messages.order(created_at: :asc)
-
-    @influencers = Influencer.all_except(current_user)
-    render 'index'
+    @room = Room.find(params[:id])
+    @other_participant_name = @room.participants.where.not(user_id: current_user).first.user.full_name
+    @message = Message.new(room: @room, user: current_user)
+    respond_to do |format|
+      format.js
+    end
   end
 
   def create
@@ -24,12 +20,19 @@ class RoomsController < ApplicationController
   end
 
   def new
-    @room = Room.new(name: params[:name], is_private: true)
-    @room.participants << Participant.new(room: @room, user_id: current_user.id)
-    @room.participants << Participant.new(room: @room, user_id: params[:participant_id])
+    @room = Room.joins(participants: :user)
+                .group('rooms.id')
+                .having('COUNT(DISTINCT participants.id) = 2')
+                .where(name: params[:name], is_private: true, participants: { user_id: [current_user.id, params[:participant_id]] })
+                .distinct.first
+    if @room.blank?
+      @room = Room.new(name: params[:name], is_private: true)
+      @room.participants << Participant.new(room: @room, user_id: current_user.id)
+      @room.participants << Participant.new(room: @room, user_id: params[:participant_id])
+      @room.save!
+    end
     @other_participant_name = User.find(params[:participant_id]).full_name
     # TODO: Delete rooms with no messages.
-    @room.save!
     @message = Message.new(room: @room, user: current_user)
     respond_to do |format|
       format.js
