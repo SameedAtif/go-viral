@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :messages
   has_many :notifications
   has_many :participants
+  has_many :rooms, through: :participants
 
   enum status: %i[offline away online]
 

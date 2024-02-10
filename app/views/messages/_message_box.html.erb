@@ -1,4 +1,4 @@
-<div data-controller="message-box" id='message-box' class="fixed max-w-md bottom-0 right-20 shadow-md">
+<div data-controller="message-box" id='message-box' data-room-id="<%= @room.id %>" data-user-id="<%=current_user.id%>" class="fixed max-w-md bottom-0 right-20 shadow-md">
   <!-- flex to align chat box side by side -->
   <div class="flex space-x-4">
     <div class="flex flex-col border bg-white">
@@ -28,8 +28,8 @@
         <!-- end chat box action -->
       </div>
 
-      <%= turbo_stream_from @room %>
-      <div id=<%= dom_id(@room, :messages) %> class="flex-1 px-4 py-4 overflow-y-auto">
+      <%= turbo_stream_from "rooms_channel:#{@room.id}", channel: RoomsChannel, id: @room.id %>
+      <div id="messages-room-<%= @room.id %>" class="flex-1 px-4 py-4 overflow-y-auto">
       </div>
 
       <%= render partial: 'messages/form' %>

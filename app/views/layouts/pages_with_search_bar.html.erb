@@ -28,7 +28,7 @@
       <%= render 'shared/flash_notification' %>
       <%= render (@navbar ||'/shared/navbar/navbar_with_search') %>
       <%= yield %>
-      <div id="message-box"></div>
+      <div id="messages"></div>
     </main>
     <%= yield :include_js_files %>
   </body>

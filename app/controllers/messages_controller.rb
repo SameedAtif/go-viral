@@ -9,12 +9,7 @@ class MessagesController < ApplicationController
     )
     current_participant = @message.room.participants.find_by(user: current_user)
     other_participants = @message.room.participants.where.not(id: current_participant.id)
-    @message.broadcast_append_to(
-      @message.room,
-      target: dom_id(@message.room, :messages),
-      partial: "messages/message",
-      locals: { message: @message, room: @message.room, user: current_user }
-    )
+    ActionCable.server.broadcast("rooms_channel:#{@message.room.id}", broadcast_payload)
     @message.broadcast_prepend_to(
       "notifications_channel:#{other_participants.first.user.id}",
       target: "notifications",
@@ -27,5 +22,21 @@ class MessagesController < ApplicationController
 
   def msg_params
     params.require(:message).permit(:body, :room_id, attachments: [])
+  end
+
+  def broadcast_payload
+    {
+      sender: ApplicationController.render(
+        target: dom_id(@message.room, :messages),
+        partial: 'messages/sent_message',
+        locals: { message: @message, sender: true }
+      ),
+      receiver: ApplicationController.render(
+        target: dom_id(@message.room, :messages),
+        partial: 'messages/received_message',
+        locals: { message: @message, sender: true }
+      ),
+      sender_id: @message.user.id
+    }
   end
 end
