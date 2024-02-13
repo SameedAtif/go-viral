@@ -19,4 +19,8 @@ class Room < ApplicationRecord
   def remove_user(user)
     participants&.find_by(user_id: user.id).destroy
   end
+
+  def other_participant(user)
+    participants.where.not(user: user).first
+  end
 end

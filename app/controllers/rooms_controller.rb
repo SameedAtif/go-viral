@@ -4,13 +4,18 @@ class RoomsController < ApplicationController
 
   layout "pages_with_search_bar"
 
-  def index; end
+  def index
+    @rooms = current_user.rooms
+    @first_room = @rooms.first
+    @message = Message.new(room: @first_room, user: current_user)
+  end
 
   def show
     @room = Room.find(params[:id])
-    @other_participant_name = @room.participants.where.not(user_id: current_user).first.user.full_name
+    @other_participant_name = @room.other_participant(current_user).user.full_name
     @message = Message.new(room: @room, user: current_user)
     @messages = @room.messages
+    @switch_tab = params[:switch_tab] == 'true'
     respond_to do |format|
       format.js
     end
