@@ -9,3 +9,6 @@ import "select2";
 import "trix"
 import "@rails/actiontext"
 import "channels"
+import Rails from '@rails/ujs';
+
+Rails.start();

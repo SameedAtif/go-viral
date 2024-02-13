@@ -4,7 +4,7 @@ class NotificationsChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    stop_all_streams "notifications_channel:#{current_user.id}"
+    stop_stream_from "notifications_channel:#{current_user.id}"
   end
 
   def receive(data)

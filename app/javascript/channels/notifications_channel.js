@@ -5,32 +5,32 @@ consumer.subscriptions.create("NotificationsChannel", {
 
   connected() {
     // Called when the subscription is ready for use on the server
-    console.log("Notifications channel connected");
+    // console.log("Notifications channel connected");
     this.install();
   },
 
   disconnected() {
     // Called when the subscription has been terminated by the server
-    console.log("Disconnected");
+    // console.log("Disconnected");
     this.uninstall();
   },
 
   rejected() {
-    console.log("Rejected");
+    // console.log("Rejected");
     this.uninstall();
   },
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    console.log('Received data');
+    // console.log('Received data', data);
     // $("#notifications").prepend(data.html);
   },
 
   uninstall() {
-    console.log("Uninstall");
+    // console.log("Uninstall");
   },
 
   install() {
-    console.log("Install");
+    // console.log("Install");
   }
 });
