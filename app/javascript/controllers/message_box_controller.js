@@ -21,12 +21,12 @@ export default class extends Controller {
               $(`#messages-room-${roomId}`).append($.parseHTML( data.receiver));
             }
             // Called when there's incoming data on the websocket for this channel
-            console.log('Received data', data);
+            // console.log('Received data', data);
             // $("#notifications").prepend(data.html);
           },
           disconnected() {
             // Called when the subscription has been terminated by the server
-            console.log("RoomChannel disconnected");
+            // console.log("RoomChannel disconnected");
             this.uninstall();
           }
         });
@@ -36,6 +36,6 @@ export default class extends Controller {
       this.element.remove();
     }
     disconnect()	{
-      console.log("Room disconnected")
+      // console.log("Room disconnected")
     }
 }
