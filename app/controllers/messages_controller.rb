@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
     current_participant = @message.room.participants.find_by(user: current_user)
     other_participants = @message.room.participants.where.not(id: current_participant.id)
     ActionCable.server.broadcast("rooms_channel:#{@message.room.id}", broadcast_payload)
-    @message.broadcast_append_to(
+    @message.broadcast_append_later_to(
       "notifications_channel:#{other_participants.first.user.id}",
       target: "notifications",
       partial: 'shared/notifications/message_notification',

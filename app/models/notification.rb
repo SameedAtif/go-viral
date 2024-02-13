@@ -7,7 +7,7 @@ class Notification < ApplicationRecord
   self.inheritance_column = :_type_disabled
 
   after_create_commit -> {
-    broadcast_prepend_to(
+    broadcast_append_later_to(
       "notifications_channel:#{user.id}",
       target: "notifications",
       partial: 'shared/notifications/invitation_notification',

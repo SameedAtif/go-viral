@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   enum status: %i[offline away online]
 
-  after_create_commit { broadcast_append_to 'users' }
+  after_create_commit { broadcast_append_later_to 'users' }
   after_update_commit { broadcast_update }
 
   USER_ROLES = {
