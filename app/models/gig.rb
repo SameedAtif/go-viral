@@ -48,6 +48,8 @@ class Gig < ApplicationRecord
   validates :sample_work, attached: true, content_type: IMAGE_CONTENT_TYPES,
                           size: { less_than: 5.megabytes, message: 'should be less than 5MB per file' },
                           limit: { min: 1, max: 3, message: 'should be between 1 and 3 files' }
+  validate :gig_package_count
+  validate :gig_update_frequency, on: :update
 
   scope :draft, -> { where(status: Gig::STATUSES_MAP[:draft]) }
   scope :pending_review, -> { where(status: Gig::STATUSES_MAP[:pending_review]) }
@@ -111,6 +113,26 @@ class Gig < ApplicationRecord
       Notification::NOTIFICATION_TYPES_MAP[:creator_gig_rejected]
     elsif status == STATUSES_MAP[:in_review]
       Notification::NOTIFICATION_TYPES_MAP[:creator_gig_in_review]
+    end
+  end
+
+  def gig_package_count
+    return if gig_packages.count <= 3
+
+    errors.add(:base, 'Cannot have more then 3 packages')
+  end
+
+  def gig_update_frequency
+    return if will_save_change_to_attribute?("status")
+    return unless status == STATUSES_MAP[:published]
+
+    if (updated_at + 5.days) > DateTime.current
+      errors.add(:base, "Update locked until #{updated_at + 5.days}")
+      return
+    end
+    total_orders = gig_clients.where(status: [STATUSES_MAP[:pending_review], STATUSES_MAP[:accepted]]).count
+    if (total_orders > 0)
+      errors.add(:base, "Please complete orders before updating the gig")
     end
   end
 end

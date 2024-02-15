@@ -26,7 +26,7 @@ class GigClientsController < ApplicationController
     @gig_client.assign_attributes(permitted_params)
     authorize @gig_client
     @gig_client.save!
-    redirect_to gig_client_path(@gig_client)
+    redirect_to gig_client_path(@gig_client), notice: "Order updated"
   end
 
   private
