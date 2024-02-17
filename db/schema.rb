@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_25_092417) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_03_115407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_092417) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -50,6 +64,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_092417) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
   create_table "categories", force: :cascade do |t|
@@ -123,6 +149,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_092417) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_example_works_on_project_id"
+  end
+
+  create_table "gig_categories", force: :cascade do |t|
+    t.bigint "gig_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_gig_categories_on_category_id"
+    t.index ["gig_id"], name: "index_gig_categories_on_gig_id"
   end
 
   create_table "gig_clients", force: :cascade do |t|
@@ -308,6 +343,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_092417) do
     t.string "bio"
     t.bigint "reviewer_id"
     t.boolean "reviewed"
+    t.string "stage_name"
     t.index ["reviewer_id"], name: "index_influencers_on_reviewer_id"
     t.index ["user_id"], name: "index_influencers_on_user_id", unique: true
   end
@@ -738,6 +774,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_092417) do
   add_foreign_key "client_project_transactions", "system_project_transactions"
   add_foreign_key "clients", "users"
   add_foreign_key "example_works", "projects"
+  add_foreign_key "gig_categories", "categories"
+  add_foreign_key "gig_categories", "gigs"
   add_foreign_key "gig_clients", "clients"
   add_foreign_key "gig_clients", "gig_packages"
   add_foreign_key "gig_clients", "gigs"

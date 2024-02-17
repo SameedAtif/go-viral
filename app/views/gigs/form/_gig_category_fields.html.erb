@@ -1,0 +1,7 @@
+<div class="nested-fields">
+  <div>
+    <%= f.label :category_id %><br>
+    <%= f.select :category_id, options_for_select(Category.pluck(:name,:id)), :class => 'genForm_dropBox' %>
+  </div>
+  <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
+</div>

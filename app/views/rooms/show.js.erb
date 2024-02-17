@@ -1,0 +1,5 @@
+<% if @switch_tab %>
+  $("#room-tab").html("<%= escape_javascript render(partial: 'rooms/room_tab', locals: { room: @room }) %>");
+<% else %>
+  $("#messages").html("<%= escape_javascript render(partial: 'messages/message_box') %>");
+<% end %>

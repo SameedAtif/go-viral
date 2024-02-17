@@ -1,14 +1,8 @@
 class Room < ApplicationRecord
-  has_many :messages
+  has_many :messages, dependent: :destroy
   has_many :participants, dependent: :destroy
 
-  validates_uniqueness_of :name
   scope :public_rooms, -> { where(is_private: false) }
-  after_create_commit { broadcast_if_public }
-
-  def broadcast_if_public
-    broadcast_append_to "rooms" unless self.is_private
-  end
 
   def participant?(room, user)
     room.participants.where(user: user).any?
@@ -24,5 +18,9 @@ class Room < ApplicationRecord
 
   def remove_user(user)
     participants&.find_by(user_id: user.id).destroy
+  end
+
+  def other_participant(user)
+    participants.where.not(user: user).first
   end
 end

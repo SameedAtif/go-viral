@@ -18,7 +18,7 @@
     <%= gig.gig_clients.rejected.count %>
   </td>
   <td class="px-6 py-4 text-right">
-    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Details</a>
+    <a href="<%= gig_path(gig) %>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Details</a>
   </td>
   <td class="px-6 py-4 text-right">
     <a href="<%= edit_gig_path(gig) %>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>

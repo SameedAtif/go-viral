@@ -1,425 +1,107 @@
 <div class="my-6">
-    <nav class="flex justify-end" aria-label="Breadcrumb">
-        <ol role="list" class="flex items-center space-x-4 md:px-8">
-            <li>
-                <button class="px-4 py-2 rounded-md border border-zinc-300">
-                    <svg class="w-4 h-4 text-zinc-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 20 18">
-                        <path
-                            d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z" />
-                    </svg>
-                </button>
-            </li>
-            <li>
-                <button class="px-4 py-2 rounded-md border border-zinc-300">
-                    <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 18 18">
-                        <path
-                            d="M14.419 10.581a3.564 3.564 0 0 0-2.574 1.1l-4.756-2.49a3.54 3.54 0 0 0 .072-.71 3.55 3.55 0 0 0-.043-.428L11.67 6.1a3.56 3.56 0 1 0-.831-2.265c.006.143.02.286.043.428L6.33 6.218a3.573 3.573 0 1 0-.175 4.743l4.756 2.491a3.58 3.58 0 1 0 3.508-2.871Z" />
-                    </svg>
-                </button>
-            </li>
-        </ol>
-    </nav>
-
     <div class="py-4 md:px-8">
         <div class="border-b border-gray-200">
             <ul class="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow flex"
                 id="myTab" data-tabs-toggle="#<%= locals[:responsive_layout_id] %>" role="tablist">
-                <li class="w-full" role="presentation">
-                    <button class="inline-block w-full p-4 border-b-2 rounded-t-lg" id="basic-tab"
-                        data-tabs-target="#basic" type="button" role="tab" aria-controls="basic"
-                        aria-selected="false">Basic</button>
-                </li>
-                <li class="w-full" role="presentation">
-                    <button
-                        class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 "
-                        id="standard-tab" data-tabs-target="#standard" type="button" role="tab"
-                        aria-controls="standard" aria-selected="false">Standard</button>
-                </li>
-                <li class="w-full" role="presentation">
-                    <button
-                        class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 "
-                        id="premium-tab" data-tabs-target="#premium" type="button" role="tab" aria-controls="premium"
-                        aria-selected="false">Premium</button>
-                </li>
+                <% package_categories = ['basic', 'standard', 'premium']%>
+                <% @gig.gig_packages.each_with_index do |_, index|%>
+                    <li class="w-full" role="presentation">
+                        <button class="inline-block w-full p-4 border-b-2 rounded-t-lg" id="<%= package_categories[index] %>-tab"
+                            data-tabs-target="#<%= package_categories[index] %>" type="button" role="tab" aria-controls="<%= package_categories[index] %>"
+                            aria-selected="false"><%= package_categories[index].capitalize %></button>
+                    </li>
+                <% end %>
             </ul>
         </div>
         <div id="<%= locals[:responsive_layout_id] %>">
-            <div class="hidden py-4 px-6 rounded-lg bg-gray-50" id="basic" role="tabpanel"
-                aria-labelledby="basic-tab">
-                <div class="flex justify-between py-4 px-2">
-                    <p class="font-medium" id="basic-tab-title">Basic Information Website</p>
-                    <p class="text-xl">$ <span id="basic-tab-price">75</span></p>
-                </div>
-                <p class="py-2">
-                    I will design a upto 5 pages custom made website. Fully responsive website.
-                </p>
-                <div class=" flex py-2">
-                    <p class="flex items-center">
-                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <span class="pl-2">
-                            2 Days Delivery
-                        </span>
+            <% @gig.gig_packages.each_with_index do |package, index| %>
+                <div class="hidden py-4 px-6 rounded-lg bg-gray-50" id="<%= package_categories[index] %>" role="tabpanel"
+                    aria-labelledby="<%= package_categories[index] %>-tab">
+                    <div class="hidden" id="<%= package_categories[index] %>-tab-system-id"><%= package.id %></div>
+                    <div class="flex justify-between py-4 px-2">
+                        <p class="font-medium" id="<%= package_categories[index] %>-tab-title"><%= package.title %></p>
+                        <p class="text-xl">$ <span id="<%= package_categories[index] %>-tab-price"><%= package.price %></span></p>
+                    </div>
+                    <p class="py-2">
+                        <%= package.description %>
                     </p>
-                    <p class="flex items-center mx-4">
-                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3" />
-                        </svg>
-                        <span class="pl-2">
-                            3 Revisions
-                        </span>
-                    </p>
-                </div>
+                    <div class=" flex py-2">
+                        <p class="flex items-center">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span class="pl-2">
+                                <%= package.delivery_estimation %> Days Delivery
+                            </span>
+                        </p>
+                        <p class="flex items-center mx-4">
+                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 20 18">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3" />
+                            </svg>
+                            <span class="pl-2">
+                                <%= package.review_limit %> Revisions
+                            </span>
+                        </p>
+                    </div>
 
-                <div class="flex py-2">
-                    <ol>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                    <div class="flex py-2">
+                        <ol>
+                            <% package.features.each do |feature| %>
+                                <li class="flex items-center">
+                                    <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 16 12">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                                    </svg>
+                                    <span class="pl-2">
+                                        <%= feature %>
+                                    </span>
+                                </li>
+                            <% end %>
+                        </ol>
+                    </div>
+                    <div class="flex py-4">
+                        <button
+                            class="w-full text-white bg-black py-2 px-4 rounded-md hover:opacity-80 flex justify-between items-center font-semibold group package-overview-selector"
+                            data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"
+                            aria-controls="drawer-right-example">
+                            <span class="mx-auto">Continue</span>
+                            <svg class="w-4 h-4 text-white transition-transform transform scale-100 group-hover:scale-125" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M1 5h12m0 0L9 1m4 4L9 9" />
                             </svg>
-                            <span class="pl-2">
-                                5 pages/screens
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                1 custom asset
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Responsive design
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Prototype
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Source file
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Content upload
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Convert to HTML/CSS
-                            </span>
-                        </li>
-                    </ol>
+                        </button>
+                    </div>
                 </div>
-                <div class="flex py-4">
-                    <button
-                        class="w-full text-white bg-black py-2 px-4 rounded-md hover:opacity-80 flex justify-between items-center font-semibold group package-overview-selector"
-                        data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"
-                        aria-controls="drawer-right-example">
-                        <span class="mx-auto">Continue</span>
-                        <svg class="w-4 h-4 text-white transition-transform transform scale-100 group-hover:scale-125" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="hidden p-4 rounded-lg bg-gray-50 " id="standard" role="tabpanel"
-                aria-labelledby="standard-tab">
-                <div class="flex justify-between py-4 px-2">
-                    <p class="font-medium" id="standard-tab-title">Standard Information Website</p>
-                    <p class="text-xl">$ <span id="standard-tab-price">250</span></p>
-                </div>
-                <p class="py-2">
-                    I will design a upto 5 pages custom made website. Fully responsive website.
-                </p>
-                <div class=" flex py-2">
-                    <p class="flex items-center">
-                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <span class="pl-2">
-                            2 Days Delivery
-                        </span>
-                    </p>
-                    <p class="flex items-center mx-4">
-                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3" />
-                        </svg>
-                        <span class="pl-2">
-                            3 Revisions
-                        </span>
-                    </p>
-                </div>
-
-                <div class="flex py-2">
-                    <ol>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                5 pages/screens
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                1 custom asset
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Responsive design
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Prototype
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Source file
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Content upload
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Convert to HTML/CSS
-                            </span>
-                        </li>
-                    </ol>
-                </div>
-                <div class="flex py-4">
-                    <button
-                        class="w-full text-white bg-black py-2 px-4 rounded-md hover:opacity-80 flex justify-between items-center font-semibold group package-overview-selector"
-                        data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"
-                        aria-controls="drawer-right-example">
-                        <span class="mx-auto">Continue</span>
-                        <svg class="w-4 h-4 text-white transition-transform transform scale-100 group-hover:scale-125"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="hidden p-4 rounded-lg bg-gray-50 " id="premium" role="tabpanel" aria-labelledby="premium-tab">
-                <div class="flex justify-between py-4 px-2">
-                    <p class="font-medium" id="premium-tab-title">Premium Information Website</p>
-                    <p class="text-xl">$ <span id="premium-tab-price">400</span></p>
-                </div>
-                <p class="py-2">
-                    I will design a upto 5 pages custom made website. Fully responsive website.
-                </p>
-                <div class=" flex py-2">
-                    <p class="flex items-center">
-                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <span class="pl-2">
-                            2 Days Delivery
-                        </span>
-                    </p>
-                    <p class="flex items-center mx-4">
-                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3" />
-                        </svg>
-                        <span class="pl-2">
-                            3 Revisions
-                        </span>
-                    </p>
-                </div>
-
-                <div class="flex py-2">
-                    <ol>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                5 pages/screens
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                1 custom asset
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Responsive design
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Prototype
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Source file
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Content upload
-                            </span>
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                            <span class="pl-2">
-                                Convert to HTML/CSS
-                            </span>
-                        </li>
-                    </ol>
-                </div>
-                <div class="flex py-4">
-                    <button
-                        class="w-full text-white bg-black py-2 px-4 rounded-md hover:opacity-80 flex justify-between items-center font-semibold group package-overview-selector"
-                        data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"
-                        aria-controls="drawer-right-example">
-                        <span class="mx-auto">Continue</span>
-                        <svg class="w-4 h-4 text-white transition-transform transform scale-100 group-hover:scale-125"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+            <% end %>
         </div>
     </div>
 
     <div class="py-4 md:px-8">
         <div class="p-4 bg-zinc-50">
             <div class="flex py-4">
-                <button
-                    class="w-full text-zinc-700 py-2 px-4 rounded-md flex justify-center items-center font-semibold group border border-zinc-700 hover:bg-zinc-700 hover:text-white">
+                <%= button_to new_room_path,
+                    method: :get,
+                    local: false,
+                    remote: true,
+                    form: {class: 'w-full' },
+                    params: {
+                        'name' => "#{@gig.influencer.user.full_name}-#{current_user.full_name}",
+                        'participant_id' => @gig.influencer.user.id
+                    },
+                    class: "w-full text-zinc-700 py-2 px-4 rounded-md flex justify-center items-center font-semibold group border border-zinc-700 hover:bg-zinc-700 hover:text-white" do %>
                     <span class="">Contact Me</span>
                     <svg class="w-4 h-4 ml-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 8">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
                     </svg>
-                </button>
+                <% end %>
             </div>
         </div>
     </div>
