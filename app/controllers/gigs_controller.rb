@@ -24,12 +24,30 @@ class GigsController < ApplicationController
 
   def index
     @gigs = Gig.includes(:gig_platforms).all
-
+  
     if params[:platform].present?
       @gigs = @gigs.joins(:gig_platforms).where(gig_platforms: { platform_id: Platform.where(name: params[:platform]) })
     end
+    
+    if params[:date_filter_option].present? && params[:date_filter_option].is_a?(Array)
+      selected_options = params[:date_filter_option]
+      if selected_options.include?("last_24_hours")
+        @gigs = @gigs.where("gigs.created_at >= ?", 24.hours.ago)
+      elsif selected_options.include?("last_week")
+        @gigs = @gigs.where("gigs.created_at >= ?", 1.week.ago)
+      elsif selected_options.include?("last_month")
+        @gigs = @gigs.where("gigs.created_at >= ?", 1.month.ago)
+      end
+    end
 
+    @platforms = Platform.all
+  
     @gigs = @gigs.page(params[:page]).per(20)
+  
+    respond_to do |format|
+      format.html
+      format.json { render partial: 'shared/partials/card_list', locals: { gigs: @gigs } }
+    end
   end
 
   def manage_gigs

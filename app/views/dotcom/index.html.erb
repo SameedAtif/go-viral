@@ -27,13 +27,29 @@
         <form class="mx-auto mt-10 flex max-w-lg gap-x-4">
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
             <div class="relative w-full">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
+      
+                <div class="">
+                  <div class="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+                    <div class="relative">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                      </div>
+                      <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" placeholder='<%= t("header.navbar.influencers_search") %>' required onkeyup="searchInfluencer()">
+                    </div>              
+                    <div id="search-results" class="flex flex-col gap-2 px-3"></div>
+                    <!-- Empty state -->
+                    <div id="no-results" class="hidden px-6 py-14 text-center text-sm sm:px-14">
+                      <svg class="mx-auto h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                      </svg>
+                      <p class="mt-4 font-semibold text-gray-900">No people found</p>
+                      <p class="mt-2 text-gray-500">We couldn’t find anything with that term. Please try again.</p>
+                    </div>
+                  </div>
                 </div>
-                <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" placeholder='<%= t("header.navbar.influencers_search") %>' required onkeyup="searchInfluencer()">
-                <div id="search-results" class="search-results-container"></div>
+              </div>
             </div>
         </form>
 
@@ -105,6 +121,7 @@
 <script>
 function searchInfluencer() {
   var query = document.getElementById('search').value;
+
   fetch(`/search?query=${encodeURIComponent(query)}`)
     .then(response => response.json())
     .then(data => {
@@ -114,15 +131,62 @@ function searchInfluencer() {
       console.error('Error fetching data: ', error);
     });
 }
-function updateSearchResults(influencers) {
+
+function updateSearchResults(results) {
   const searchResultsContainer = document.getElementById('search-results');
+  const noResultsContainer = document.getElementById('no-results');
+
   searchResultsContainer.innerHTML = '';
   
-  influencers.forEach(influencer => {
-    const influencerElement = document.createElement('div');
-    influencerElement.className = 'influencer-result-item';
-    influencerElement.textContent = influencer.first_name;
-    searchResultsContainer.appendChild(influencerElement);
+  if (results.length === 0) {
+    noResultsContainer.classList.remove('hidden');
+  } else {
+    noResultsContainer.classList.add('hidden');
+
+    // Group results by type (Influencers and Platforms)
+    const groupedResults = {
+      influencers: [],
+      platforms: []
+    };
+
+    results.forEach(result => {
+      if (result.type === 'influencer') {
+        groupedResults.influencers.push(result);
+      } else if (result.type === 'platform') {
+        groupedResults.platforms.push(result);
+      }
+    });
+
+    // Add influencers section
+    if (groupedResults.influencers.length > 0) {
+      addResultsSection('Influencers', groupedResults.influencers);
+    }
+
+    // Add platforms section
+    if (groupedResults.platforms.length > 0) {
+      addResultsSection('Platforms', groupedResults.platforms);
+    }
+  }
+}
+
+function addResultsSection(heading, results) {
+  const searchResultsContainer = document.getElementById('search-results');
+
+  // Add heading
+  const headingElement = document.createElement('h2');
+  headingElement.textContent = heading;
+  headingElement.classList.add('text-lg', 'font-bold', 'mt-4', 'mb-2');
+  searchResultsContainer.appendChild(headingElement);
+
+  // Add search results
+  results.forEach(result => {
+    const resultElement = document.createElement('div');
+    resultElement.className = 'flex items-center border rounded-md p-2 bg-white shadow-sm';
+    resultElement.innerHTML = `
+      <img src="${result.image_url}" alt="" class="h-8 w-8 rounded-full flex-none">
+      <span class="ml-3 flex-auto truncate">${result.name}</span>
+    `;
+    searchResultsContainer.appendChild(resultElement);
   });
 }
 </script>
