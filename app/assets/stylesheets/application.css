@@ -19,8 +19,12 @@
  */
 
 .vertical-tabs [aria-selected="true"] {
-    background-color: white !important;
-    color: #333;
-    font-weight: bold;
-    border-left-color: black !important;
+    background-color: #e0f0fe !important;
+    color: black;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.noUi-horizontal .noUi-handle-lower .noUi-tooltip, .noUi-horizontal .noUi-handle-upper .noUi-tooltip {
+    top: 35px;
+    bottom: initial;
 }
