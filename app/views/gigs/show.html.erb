@@ -105,6 +105,13 @@
                     <% if current_user&.influencer != @gig.influencer %>
                         <div class="flex w-full">
 
+                            <%= button_to gig_package_system_gig_transactions_path(@gig.gig_packages.first),
+                                form: { id: 'buy-package' },
+                                class: "flex w-full items-center px-4 py-4 text-sm font-medium justify-center text-white bg-black rounded-lg hover:bg-gray-700",
+                                method: :post do %>
+                                Continue
+                                ($<span id="total-gigs-price"><%= @gig.gig_packages.first.price %></span>)
+                            <% end %>
                         </div>
                     <% end %>
                 </div>
