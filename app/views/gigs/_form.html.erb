@@ -13,9 +13,9 @@
                     <div id="basic" role="tabpanel" aria-labelledby="basic-tab" class="tab-content">
                         <%= render partial: 'gigs/form/basic_information_form' , locals: {f: f} %>
                     </div>
-                    <div id="package" class="contains_nested_fields package_fields" role="tabpanel" aria-labelledby="package-tab" class="tab-content">
+                    <div id="package" class="contains_nested_fields package_fields tab-content" role="tabpanel" aria-labelledby="package-tab">
                         <div class="flex justify-between my-6">
-                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Package Tab</h3>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Package Tab</h3>
                             <span>
                                 <%= link_to_add_association "+ Add Package" , f, :gig_packages, class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl",
                                     id: 'add_new_package',
@@ -31,9 +31,9 @@
                             <% end %>
                         </div>
                     </div>
-                    <div id="faq" class="contains_nested_fields faq_fields" role="tabpanel" aria-labelledby="faq-tab" class="tab-content">
+                    <div id="faq" class="contains_nested_fields faq_fields tab-content" role="tabpanel" aria-labelledby="faq-tab">
                         <div class="flex justify-between my-6">
-                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">FAQ Tab</h3>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">FAQ Tab</h3>
                             <span>
                                 <%= link_to_add_association "+ Add FAQ" , f, :gig_faqs, class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl",
                                     partial: 'gigs/form/gig_faq_fields' , data: {
@@ -51,8 +51,8 @@
                         </div>
                     </div>
                     <div class="flex justify-end gap-4 py-4">
-                        <%= f.submit "Save as Draft" , name: "draft", class:"py-2 px-4 rounded-md bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 " , onclick: "validateForm()" %>
-                        <%= f.submit "Publish" , name: "publish", class:"py-2 px-4 rounded-md text-white bg-gray-800 cursor-pointer" , onclick: "validateForm()" %>
+                        <%= f.submit "Save as Draft" , name: "draft", class:"py-2 px-4 rounded-md bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 " , onclick: "validateForm(event)" %>
+                        <%= f.submit "Publish" , name: "publish", class:"py-2 px-4 rounded-md text-white bg-gray-800 cursor-pointer" , onclick: "validateForm(event)" %>
                     </div>
                 <% end %>
             </div>
