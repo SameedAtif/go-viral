@@ -4,8 +4,12 @@ class SystemGigTransactionsController < ApplicationController
   def create
     # api call
     # create payment transaction data
+    if current_user.client.blank?
+      redirect_to edit_user_registration_path and return
+    end
     resource = SystemGigTransaction.new(gig_package: @gig_package)
     resource.client = current_user.client
+    # TODO: Handle quantity
     resource.gross_price = resource.gig_package.price
     resource.fee = 0.00
     resource.transaction_token = "ABC"
@@ -14,6 +18,7 @@ class SystemGigTransactionsController < ApplicationController
     resource.save!
     # client would have a 1 day window (OR until influencer does not accept the gig_client)
     # failure to accept: automatically refund client, issue a warning to influencer
+    redirect_to manage_orders_gig_clients_path
   end
 
   private

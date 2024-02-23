@@ -17,16 +17,10 @@ module NavigationHelper
         ]
     end
 
-    def navbar_with_search_items
-        [
-            { content: t("header.navbar.order"), path: "#" }
-        ]
-    end
-
     def seller_navbar_items
         [
             { content: t("header.navbar.manage_gigs"), path: manage_gigs_gigs_path },
-            { content: t("header.navbar.manage_orders"), path: "#" },
+            { content: t("header.navbar.manage_orders"), path: manage_orders_gig_clients_path },
             { content: t("header.navbar.my_earnings"), path: "#" }
         ]
     end

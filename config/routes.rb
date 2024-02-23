@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   devise_scope :user do
     put :switch_session, to: 'users/sessions#switch_session'
@@ -9,6 +11,9 @@ Rails.application.routes.draw do
 
   get '/robots.txt' => 'robots#robots'
   get '/dashboard', :to => 'dotcom#dashboard'
+  get '/search', :to => 'dotcom#search'
+  resources :contacts, only: [:create]
+
   namespace :bulk do
     resource :gig, only: %i[update destroy]
   end
@@ -25,7 +30,10 @@ Rails.application.routes.draw do
   resources :gig_packages, only: [] do
     resources :system_gig_transactions, only: :create
   end
-  resources :gig_clients, only: :update do
+  resources :gig_clients, only: [:update, :show] do
+    collection do
+      get :manage_orders
+    end
     resources :gig_deliverables, only: :create
     resources :gig_disputes, only: :create
   end

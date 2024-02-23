@@ -6,6 +6,15 @@ class Notification < ApplicationRecord
 
   self.inheritance_column = :_type_disabled
 
+  after_create_commit -> {
+    broadcast_append_later_to(
+      "notifications_channel:#{user.id}",
+      target: "notifications",
+      partial: 'shared/notifications/invitation_notification',
+      locals: { notification: self }
+    )
+  }
+
   NOTIFICATION_TYPES_MAP = {
     new_project_request: 'new_project_request',
     creator_approved_for_project: 'creator_approved_for_project',
@@ -34,12 +43,13 @@ class Notification < ApplicationRecord
     creator_gig_approved: 'creator_gig_approved',
     creator_gig_rejected: 'creator_gig_rejected',
     creator_gig_in_review: 'creator_gig_in_review',
-    creator_gig_payment_verified: 'creator_gig_creator_credited',
     client_gig_approved: 'client_gig_approved',
     client_gig_rejected: 'client_gig_rejected',
     creator_gig_deliverable_approved: 'creator_gig_deliverable_approved',
     creator_gig_deliverable_rejected: 'creator_gig_deliverable_rejected',
-    client_creator_delivered_gig: 'client_creator_delivered_gig'
+    client_creator_delivered_gig: 'client_creator_delivered_gig',
+    creator_gig_amount_credited: 'creator_gig_amount_credited',
+    creator_gig_amount_debited: 'creator_gig_amount_debited'
   }
   NOTIFICATION_TYPES = NOTIFICATION_TYPES_MAP.values
 

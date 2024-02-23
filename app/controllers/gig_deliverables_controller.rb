@@ -7,7 +7,9 @@ class GigDeliverablesController < ApplicationController
     @gig_deliverable.gig_client = @gig_client
     authorize @gig_deliverable
     @gig_deliverable.save!
-    redirect_to @gig_deliverable
+    @gig_client.gig_deliverables.update(active: false)
+    @gig_deliverable.update(active: true)
+    redirect_to @gig_client
   end
 
   def update
@@ -17,7 +19,7 @@ class GigDeliverablesController < ApplicationController
   private
 
   def permitted_params
-    params.require(:gig_deliverable).permit(:title, :description)
+    params.require(:gig_deliverable).permit(:title, :description, work_files: [])
   end
 
   def load_gig_client

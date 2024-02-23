@@ -1,0 +1,13 @@
+<div class="h-screen grid place-items-center my-8">
+  <div class="lg:w-2/5 sm:w-3/5 w-11/12 bg-gray-100 dark:bg-gray-800 rounded-xl mx-auto border p-10 shadow-sm">
+    <div class="inline-flex items-center justify-between w-full">
+      <h3 class="font-bold text-xl sm:text-2xl text-gray-800 dark:text-white">Notifications</h3>
+    </div>
+    <% @notifications.each do |date, notifications| %>
+      <p class="mt-8 font-medium text-gray-500 text-sm sm:text-base dark:text-white"><%= date %></p>
+      <div class="mt-2 px-6 py-4 bg-white rounded-lg shadow w-full">
+        <%= render partial: 'shared/notifications/notification_details', collection: notifications, as: :notification %>
+      </div>
+    <%end %>
+  </div>
+</div>

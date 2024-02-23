@@ -23,7 +23,13 @@ class GigsController < ApplicationController
   # TODO: Create seed data [D]
 
   def index
-    @gigs = Gig.all
+    @gigs = Gig.includes(:gig_platforms).all
+
+    if params[:platform].present?
+      @gigs = @gigs.joins(:gig_platforms).where(gig_platforms: { platform_id: Platform.where(name: params[:platform]) })
+    end
+
+    @gigs = @gigs.page(params[:page]).per(20)
   end
 
   def manage_gigs
@@ -36,9 +42,11 @@ class GigsController < ApplicationController
     @gig.gig_platforms.build
     @gig.gig_packages.build
     @gig.gig_faqs.build
+    @gig.gig_categories.build
   end
 
   def create
+    # TODO: Bug -> User should be able to see validation failures and contineu from that point.
     @gig = Gig.new(creation_params)
     @gig.influencer = current_user.influencer
     @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
@@ -49,15 +57,24 @@ class GigsController < ApplicationController
   end
 
   def show
+    @influencer = @gig.influencer
+    @influencer_rating = @influencer.gigs.joins(:client_gig_reviews).average(:rating) || 'Just started'
+    @influencer_ongoing_orders = @influencer.gigs.joins(:gig_clients).where(gig_clients: {status: GigClient::STATUSES_MAP[:accepted] }).count
+    @influencer_completed_orders = @influencer.gigs.joins(:influencer_gig_transactions).count
+    @gig_last_delivery = @gig.influencer_gig_transactions.last&.created_at
+    @total_gig_reviews = @gig.client_gig_reviews.count
   end
 
   def edit
     @gig.gig_platforms.build
     @gig.gig_packages.build
     @gig.gig_faqs.build
+    @gig.gig_categories.build
   end
 
   def update
+    # TODO: Bug -> Cannot updated feature: Unpermitted param
+    @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
     @gig.update!(permitted_params)
     flash[:success] = "Gig was successfully updated"
     redirect_to @gig
@@ -70,6 +87,7 @@ class GigsController < ApplicationController
       :id, :title, :description, :targeted_demographic_start_age, :targeted_demographic_end_age,
       gig_packages_attributes: [:id, :title, :description, :price, :delivery_estimation, :review_limit, :_destroy, features: []],
       gig_platforms_attributes: %i[id platform_id _destroy],
+      gig_categories_attributes: %i[id category_id _destroy],
       gig_faqs_attributes: %i[id question answer _destroy],
       targeted_geographic_audience: []
     )
@@ -103,14 +121,14 @@ class GigsController < ApplicationController
     [::Gig::STATUSES_MAP[:approved], ::Gig::STATUSES_MAP[:rejected]].include?(status)
   end
 
-  def verified_role(user_type)
+  def is_verified_role(user_type)
     role = current_user.send(user_type)
 
     role.present? && session[:user_role] == User::USER_ROLES[user_type]
   end
 
   def validate_status
-    return if (verified_role(:client) && valid_client_status?) || (verified_role(:reviewer) && valid_reviewer_status?) || params.dig(:gig, :status).blank?
+    return if (is_verified_role(:client) && valid_client_status?) || (is_verified_role(:reviewer) && valid_reviewer_status?) || params.dig(:gig, :status).blank?
 
     raise Pundit::NotAuthorizedError.new("Unauthorized value for column status")
   end

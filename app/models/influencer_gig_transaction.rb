@@ -14,7 +14,7 @@ class InfluencerGigTransaction < ApplicationRecord
   validates_numericality_of :fee, :gross_price, only_float: true, greater_than_or_equal_to: 0.00
   validates_inclusion_of :transaction_type, in: TRANSACTION_TYPES
 
-  after_create_commit :notify_influencer
+  after_create_commit :notify_influencer, :close_order
 
   def readonly?
     !new_record?
@@ -28,7 +28,13 @@ class InfluencerGigTransaction < ApplicationRecord
       resource_type: gig.class.name,
       user_id: influencer.user.id,
       user_type: User::USER_ROLES[:influencer],
-      notification_type: influencer_notification_type
+      notification_type: influencer_notification_type,
+      extra:{
+        title: 'New Transaction',
+        description: 'Login to check your balance.',
+        redirect_url: influencer_path(influencer.id),
+        cta_button_text: 'Click here to view details'
+      }
     )
   end
 
@@ -38,5 +44,9 @@ class InfluencerGigTransaction < ApplicationRecord
     elsif transaction_type == TRANSACTION_TYPES_MAP[:debit]
       Notification::NOTIFICATION_TYPES_MAP[:creator_gig_amount_debited]
     end
+  end
+
+  def close_order
+    gig_client.update!(status: ::GigClient::STATUSES_MAP[:order_closed])
   end
 end
