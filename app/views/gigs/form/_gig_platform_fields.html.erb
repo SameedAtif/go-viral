@@ -1,7 +1,12 @@
 <div class="nested-fields">
-  <div>
-    <%= f.label :platform_id %><br>
-    <%= f.select :platform_id, options_for_select(Platform.pluck(:name,:id)), :class => 'genForm_dropBox' %>
+  <div class="flex flex-row gap-4 px-4">
+      <%= f.label :platform_id, class: "sr-only" %><br>
+      <%= f.select :platform_id, options_for_select(Platform.pluck(:name,:id)), {}, {:class => 'block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer'} %>
+    
+      <%= link_to_remove_association f, class:"btn btn-danger mb-2" do %>
+        <svg class="w-6 h-6 text-gray-500 hover:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+        </svg>
+      <% end %>
   </div>
-  <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
 </div>
