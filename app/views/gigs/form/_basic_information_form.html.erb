@@ -49,7 +49,7 @@
   </div>
 </div>
 
-<div data-tooltip-target="tooltip-demographic-age-range" data-tooltip-placement="right" class="mb-20">
+<div data-tooltip-target="tooltip-demographic-age-range" data-tooltip-placement="right" class="mb-20" data-controller="ui-slider" >
   <div class="mb-5">
     <label for="rangeSlider">Targeted Demograohic Age Range</label>
   </div>
@@ -111,11 +111,30 @@
   <div class="tooltip-arrow" data-popper-arrow></div>
 </div>
 
-<div class="gig_categories">
-  <%= f.fields_for :gig_categories do |category| %>
-      <%= render 'gigs/form/gig_category_fields', f: category %>
-  <% end %>
-  <%= link_to_add_association "Add Category", f, :gig_categories, partial: 'gigs/form/gig_category_fields', data: { association_insertion_node: '.gig_platforms', association_insertion_method: :append } %>
+<div data-tooltip-target="tooltip-categories" data-tooltip-placement="right" class=" mb-10">
+  <div class="flex flex-row justify-between">
+    <span>Select Categories</span>
+    <%= link_to_add_association "+ Add Category" , f, :gig_categories, partial: 'gigs/form/gig_category_fields', class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl", 
+    data: { association_insertion_node: '.gig_categories' , association_insertion_method: :append } %>
+  </div>
+  <div class="gig_categories grid grid-cols-2 gap-6">
+    <%= f.fields_for :gig_categories do |category| %>
+      <%= render 'gigs/form/gig_category_fields' , f: category %>
+    <% end %>
+  </div>
+</div>
+
+<div id="tooltip-categories" role="tooltip" class="!ml-12 absolute z-10 invisible inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-custom opacity-0 tooltip max-w-sm">
+  <h3>Describe your Gig</h3>
+  <ol>
+    <li>
+      As your Gig storefront, your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
+    </li>
+    <li>
+      This is your Gig title. Choose wisely, you can only use 80 characters.
+    </li>
+  </ol>
+  <div class="tooltip-arrow" data-popper-arrow></div>
 </div>
 
 
