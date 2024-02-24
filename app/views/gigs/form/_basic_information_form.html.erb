@@ -49,7 +49,7 @@
   </div>
 </div>
 
-<div data-tooltip-target="tooltip-demographic-age-range" data-tooltip-placement="right" class="mb-20" data-controller="ui-slider" >
+<div data-tooltip-target="tooltip-demographic-age-range" data-tooltip-placement="right" class="mb-20" >
   <div class="mb-5">
     <label for="rangeSlider">Targeted Demograohic Age Range</label>
   </div>
@@ -88,7 +88,7 @@
 <div data-tooltip-target="tooltip-platform" data-tooltip-placement="right" class=" mb-10">
   <div class="flex flex-row justify-between">
     <span>Select Platforms</span>
-    <%= link_to_add_association "+ Add Platform" , f, :gig_platforms, partial: 'gigs/form/gig_platform_fields', class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl", 
+    <%= link_to_add_association "+ Add Platform" , f, :gig_platforms, partial: 'gigs/form/gig_platform_fields', class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl",
     data: { association_insertion_node: '.gig_platforms' , association_insertion_method: :append } %>
   </div>
   <div class="gig_platforms grid grid-cols-2 gap-6">
@@ -114,7 +114,7 @@
 <div data-tooltip-target="tooltip-categories" data-tooltip-placement="right" class=" mb-10">
   <div class="flex flex-row justify-between">
     <span>Select Categories</span>
-    <%= link_to_add_association "+ Add Category" , f, :gig_categories, partial: 'gigs/form/gig_category_fields', class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl", 
+    <%= link_to_add_association "+ Add Category" , f, :gig_categories, partial: 'gigs/form/gig_category_fields', class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl",
     data: { association_insertion_node: '.gig_categories' , association_insertion_method: :append } %>
   </div>
   <div class="gig_categories grid grid-cols-2 gap-6">
@@ -139,40 +139,43 @@
 
 
 <!-- Include the nouislider JavaScript -->
-<script src="https://unpkg.com/nouislider@14.6.4/distribute/nouislider.min.js"></script>
+<script src="https://unpkg.com/nouislider@14.6.4/distribute/nouislider.min.js" onload="renderSlider()"></script>
 <script>
-  var slider = document.getElementById('rangeSlider');
-  var valuesDiv = document.getElementById('sliderValues');
+  function renderSlider() {
+    var slider = document.getElementById('rangeSlider');
+    var valuesDiv = document.getElementById('sliderValues');
 
-  var gig_targeted_demographic_start_age = document.getElementById("gig_targeted_demographic_start_age");
-  var gig_targeted_demographic_end_age = document.getElementById("gig_targeted_demographic_end_age")
+    var gig_targeted_demographic_start_age = document.getElementById("gig_targeted_demographic_start_age");
+    var gig_targeted_demographic_end_age = document.getElementById("gig_targeted_demographic_end_age")
 
 
-  noUiSlider.create(slider, {
-    start: [20, 80],
-    connect: true,
-    step: 1,
-    range: {
-      'min': 0,
-      'max': 100
-    },
-    tooltips: [true, true]
-  });
+    noUiSlider.create(slider, {
+      start: [20, 80],
+      connect: true,
+      step: 1,
+      range: {
+        'min': 0,
+        'max': 100
+      },
+      tooltips: [true, true]
+    });
 
-  // Function to update the displayed values
-  function updateValues() {
-    var values = slider.noUiSlider.get();
-    
-    gig_targeted_demographic_start_age.value = values[0]
-    gig_targeted_demographic_end_age.value = values[1]
+    // Function to update the displayed values
+    function updateValues() {
+      var values = slider.noUiSlider.get();
 
+      gig_targeted_demographic_start_age.value = values[0]
+      gig_targeted_demographic_end_age.value = values[1]
+
+    }
+
+    // Listen for changes and update the values
+    slider.noUiSlider.on('update', function () {
+      updateValues();
+    });
+
+    // Initial update
+    updateValues();
   }
 
-  // Listen for changes and update the values
-  slider.noUiSlider.on('update', function () {
-    updateValues();
-  });
-
-  // Initial update
-  updateValues();
 </script>
