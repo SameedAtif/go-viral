@@ -9,7 +9,6 @@ $(document).ready(function() {
   $(`.gig-table > .checkbox-column > .checkbox-div > input[type=checkbox]`).on('change', (e) => {
     const status = e.target.dataset['status'];
     // if all of them are unselected, unselect .all-gigs
-    console.log('status', status);
     const checkboxes = $(`.gig-table > .checkbox-column > .checkbox-div[data-status=${status}] > input[type=checkbox]`);
     const checkedChecboxes = $(`.gig-table > .checkbox-column > .checkbox-div[data-status=${status}] > input[type=checkbox]:checked`)
     const uncheckedChecboxes = $(`.gig-table > .checkbox-column > .checkbox-div[data-status=${status}] > input[type=checkbox]:not(:checked)`)
