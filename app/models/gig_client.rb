@@ -23,7 +23,8 @@ class GigClient < ApplicationRecord
   validates_inclusion_of :status, in: STATUSES
 
   after_create_commit :schedule_client_refund_transaction
-  after_save_commit :notify_client, :notify_creator, if: -> { saved_change_to_attribute?('status') }
+  after_create_commit :notify_creator
+  after_update_commit :notify_client
 
   scope :pending_review, -> { where(status: STATUSES_MAP[:pending_review]) }
   scope :accepted, -> { where(status: STATUSES_MAP[:accepted]) }
@@ -33,7 +34,7 @@ class GigClient < ApplicationRecord
   private
 
   def notify_client
-    return unless [STATUSES_MAP[:approved], STATUSES_MAP[:rejected]].include?(status)
+    return unless [STATUSES_MAP[:accepted], STATUSES_MAP[:rejected]].include?(status)
 
     Notification.create!(
       resource_id: gig.id,
@@ -51,7 +52,7 @@ class GigClient < ApplicationRecord
     Notification.create!(
       resource_id: gig.id,
       resource_type: gig.class.name,
-      user_id: influencer.user_id,
+      user_id: gig.influencer.user_id,
       user_type: User::USER_ROLES[:influencer],
       notification_type: creator_notification_type,
       extra: creator_notification_extra
@@ -85,9 +86,7 @@ class GigClient < ApplicationRecord
   end
 
   def creator_notification_type
-    if status == STATUSES_MAP[:pending_review]
-      Notification::NOTIFICATION_TYPES_MAP[:creator_gig_pending_review]
-    end
+    Notification::NOTIFICATION_TYPES_MAP[:creator_order_pending_review]
   end
 
   def creator_notification_extra

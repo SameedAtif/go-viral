@@ -33,7 +33,7 @@ class GigsController < ApplicationController
   end
 
   def manage_gigs
-    @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients) || []
+    @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients).distinct || []
   end
 
   def new
@@ -65,16 +65,15 @@ class GigsController < ApplicationController
     @total_gig_reviews = @gig.client_gig_reviews.count
   end
 
-  def edit
-    @gig.gig_platforms.build
-    @gig.gig_packages.build
-    @gig.gig_faqs.build
-    @gig.gig_categories.build
-  end
+  def edit; end
 
   def update
     # TODO: Bug -> Cannot updated feature: Unpermitted param
-    @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
+    if @gig.reviewed
+      @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:published]
+    else
+      @gig.status = params["draft"].present? ? Gig::STATUSES_MAP[:draft] : Gig::STATUSES_MAP[:pending_review]
+    end
     @gig.update!(permitted_params)
     flash[:success] = "Gig was successfully updated"
     redirect_to @gig
