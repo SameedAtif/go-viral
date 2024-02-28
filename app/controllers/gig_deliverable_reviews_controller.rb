@@ -11,11 +11,12 @@ class GigDeliverableReviewsController < ApplicationController
     authorize @gig_deliverable_review
     @gig_deliverable_review.save!
     @gig_deliverable.update(active: false)
-    redirect_to @gig_deliverable_review
+    redirect_to @gig_deliverable_review, notice: "Delivery review created"
   end
 
   def update
     @gig_deliverable_review.update!(permitted_params)
+    redirect_to @gig_deliverable_review.gig_deliverable.gig_client, notice: "Delivery review updated"
   end
 
   private

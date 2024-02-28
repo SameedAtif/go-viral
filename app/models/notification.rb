@@ -49,7 +49,8 @@ class Notification < ApplicationRecord
     creator_gig_deliverable_rejected: 'creator_gig_deliverable_rejected',
     client_creator_delivered_gig: 'client_creator_delivered_gig',
     creator_gig_amount_credited: 'creator_gig_amount_credited',
-    creator_gig_amount_debited: 'creator_gig_amount_debited'
+    creator_gig_amount_debited: 'creator_gig_amount_debited',
+    creator_order_pending_review: 'creator_order_pending_review'
   }
   NOTIFICATION_TYPES = NOTIFICATION_TYPES_MAP.values
 

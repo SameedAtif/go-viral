@@ -22,7 +22,7 @@ class InfluencersController < ApplicationController
       session[:user_role] = User::USER_ROLES[:influencer]
       redirect_to manage_gigs_gigs_path
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = @influencer.errors.full_messages.join(',')
       render 'new'
     end
   end
@@ -44,7 +44,7 @@ class InfluencersController < ApplicationController
     if @influencer.update(permitted_params)
       redirect_to @influencer
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = @influencer.errors.full_messages.join(',')
       render 'edit'
     end
   end

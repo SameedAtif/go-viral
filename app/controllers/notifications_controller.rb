@@ -5,7 +5,7 @@ class NotificationsController < ApplicationController
   layout "pages_with_search_bar"
 
   def index
-    @notifications = User.last.notifications.order("created_at desc").group_by { |n| n.created_at.strftime("%Y-%m-%d") }
+    @notifications = current_user.notifications.order("created_at desc").group_by { |n| n.created_at.strftime("%Y-%m-%d") }
   end
 
   def update
