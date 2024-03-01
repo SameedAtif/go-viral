@@ -32,4 +32,12 @@ class Influencer < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["bio", "created_at", "id", "reviewed", "reviewer_id", "updated_at", "user_id"]
   end
+
+  def gig_transactions
+    SystemGigTransaction.joins(gig_package: [gig: :influencer])
+                        .includes(:influencer_gig_transactions)
+                        .includes(:client)
+                        .includes(:gig_package)
+                        .where(influencer: {id: id})
+  end
 end

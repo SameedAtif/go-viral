@@ -21,7 +21,7 @@ module NavigationHelper
         [
             { content: t("header.navbar.manage_gigs"), path: manage_gigs_gigs_path },
             { content: t("header.navbar.manage_orders"), path: manage_orders_gig_clients_path },
-            { content: t("header.navbar.my_earnings"), path: "#" }
+            { content: t("header.navbar.my_earnings"), path: transactions_path }
         ]
     end
 end

@@ -77,4 +77,5 @@ Rails.application.routes.draw do
   end
   resources :system_packages, only: :create
   resources :system_project_transactions, only: :create
+  resources :transactions, only: :index
 end
