@@ -16,4 +16,12 @@ class Client < ApplicationRecord
   has_many :system_gig_transactions
   has_many :client_gig_transactions
   has_many :gig_deliverable_reviews
+
+  def gig_transactions
+    SystemGigTransaction.joins(gig_clients: :client)
+                        .includes(:influencer_gig_transactions)
+                        .includes(:client_gig_transactions)
+                        .includes(:gig_package)
+                        .where(client: {id: id})
+  end
 end
