@@ -46,7 +46,7 @@ class GigsController < ApplicationController
   
     respond_to do |format|
       format.html
-      format.json { render partial: 'shared/partials/card_list', locals: { gigs: @gigs } }
+      format.js
     end
   end
 

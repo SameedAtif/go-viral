@@ -171,22 +171,28 @@ function updateSearchResults(results) {
 
 function addResultsSection(heading, results) {
   const searchResultsContainer = document.getElementById('search-results');
-
-  // Add heading
   const headingElement = document.createElement('h2');
   headingElement.textContent = heading;
   headingElement.classList.add('text-lg', 'font-bold', 'mt-4', 'mb-2');
   searchResultsContainer.appendChild(headingElement);
 
-  // Add search results
   results.forEach(result => {
+    const anchorElement = document.createElement('a');
+    anchorElement.href = result.type == 'influencer' ?  `influencers/${result.id}` : `gigs?platform=${result.name}` ; 
     const resultElement = document.createElement('div');
     resultElement.className = 'flex items-center border rounded-md p-2 bg-white shadow-sm';
-    resultElement.innerHTML = `
-      <img src="${result.image_url}" alt="" class="h-8 w-8 rounded-full flex-none">
-      <span class="ml-3 flex-auto truncate">${result.name}</span>
-    `;
-    searchResultsContainer.appendChild(resultElement);
+    const imgElement = document.createElement('img');
+    imgElement.src = result.image_url;
+    imgElement.alt = '';
+    imgElement.className = 'h-8 w-8 rounded-full flex-none';
+    const nameSpanElement = document.createElement('span');
+    nameSpanElement.textContent = result.name;
+    nameSpanElement.className = 'ml-3 flex-auto truncate';
+    resultElement.appendChild(imgElement);
+    resultElement.appendChild(nameSpanElement);
+    anchorElement.appendChild(resultElement);
+    searchResultsContainer.appendChild(anchorElement);
   });
 }
+
 </script>

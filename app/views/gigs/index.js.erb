@@ -1,0 +1,11 @@
+$('.gig-list').empty();
+
+<% @gigs.each do |gig| %>
+  $('.gig-list').append("<%= j(render(partial: 'shared/partials/card', locals: { gig: gig })) %>");
+<% end %>
+
+<% if @gigs.total_pages > 1 %>
+  $('.pagination').html("<%= j(paginate(@gigs, remote: true)) %>");
+<% else %>
+  $('.pagination').empty();
+<% end %>
