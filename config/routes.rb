@@ -78,4 +78,9 @@ Rails.application.routes.draw do
   resources :system_packages, only: :create
   resources :system_project_transactions, only: :create
   resources :transactions, only: :index
+  resources :addresses, only: [] do
+    collection do
+      get 'fetch_states'
+    end
+  end
 end

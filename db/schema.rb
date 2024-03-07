@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_03_115407) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_06_114500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -267,6 +267,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_03_115407) do
     t.integer "targeted_demographic_start_age"
     t.integer "targeted_demographic_end_age"
     t.string "targeted_geographic_audience", default: [], array: true
+    t.string "targeted_geographic_audience_city", default: [], array: true
     t.index ["influencer_id"], name: "index_gigs_on_influencer_id"
     t.index ["reviewer_id"], name: "index_gigs_on_reviewer_id"
   end
@@ -301,6 +302,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_03_115407) do
     t.integer "targeted_demographic_start_age"
     t.integer "targeted_demographic_end_age"
     t.string "targeted_geographic_audience", default: [], array: true
+    t.string "targeted_geographic_audience_city", default: [], array: true
     t.index ["influencer_id"], name: "index_influencer_platforms_on_influencer_id"
     t.index ["platform_id"], name: "index_influencer_platforms_on_platform_id"
   end

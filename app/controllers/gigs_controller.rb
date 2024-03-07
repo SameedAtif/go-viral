@@ -33,7 +33,7 @@ class GigsController < ApplicationController
   end
 
   def manage_gigs
-    @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients).distinct || []
+    @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients)&.distinct || []
   end
 
   def new
@@ -88,7 +88,8 @@ class GigsController < ApplicationController
       gig_platforms_attributes: %i[id platform_id _destroy],
       gig_categories_attributes: %i[id category_id _destroy],
       gig_faqs_attributes: %i[id question answer _destroy],
-      targeted_geographic_audience: []
+      targeted_geographic_audience: [],
+      targeted_geographic_audience_city: []
     )
   end
 
