@@ -25,7 +25,11 @@
   </div>
   <div class="mb-5">
     <%= f.label :targeted_geographic_audience, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-    <%= f.select :targeted_geographic_audience, country_list, {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience' %>
+    <%= f.select :targeted_geographic_audience, ISO3166::Country.all_names_with_codes, {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience' %>
+  </div>
+  <div class="mb-5">
+    <%= f.label :targeted_geographic_audience_city, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= f.select :targeted_geographic_audience_city, [], {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience_city' %>
   </div>
   <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
 </div>
