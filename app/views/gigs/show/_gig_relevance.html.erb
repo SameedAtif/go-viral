@@ -1,0 +1,11 @@
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+
+<div class="w-full px-2 pt-2 pb-6 bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+  <div class="py-1 px-1 bg-gray-100">
+    <div class="grid grid-cols-1 gap-20 lg:grid-cols-2 lg:gap-10">
+      <% @gig_relevance.keys.each do |criteria| %>
+        <%= render partial: 'gigs/show/gig_relevance/relevance_overview', locals: { criteria: criteria } %>
+      <% end %>
+    </div>
+  </div>
+</div>

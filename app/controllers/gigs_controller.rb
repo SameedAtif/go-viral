@@ -63,6 +63,13 @@ class GigsController < ApplicationController
     @influencer_completed_orders = @influencer.gigs.joins(:influencer_gig_transactions).count
     @gig_last_delivery = @gig.influencer_gig_transactions.last&.created_at
     @total_gig_reviews = @gig.client_gig_reviews.count
+    if verified_role.respond_to?(:organization)
+      @gig_relevance = OrganizationInfluencerMatchingService.new(
+        org_id: verified_role.organization.id,
+        influencer_id: @influencer.id,
+        gig_id: @gig.id
+      ).match
+    end
   end
 
   def edit; end
