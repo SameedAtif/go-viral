@@ -26,6 +26,9 @@
         }
       });
     }
+    $('#select_targeted_geographic_audience_city_org').select2();
+    $('#platforms_org').select2();
+    $('#category_org').select2();
     $('#select_targeted_geographic_audience_org').select2();
     $('#select_targeted_geographic_audience_org').on('select2:select', () => {
       updateStates();
@@ -100,6 +103,14 @@
   <div>
       <%= f.label :targeted_geographic_audience_city %>
       <%= f.select :targeted_geographic_audience_city,  @organization.targeted_geographic_audience_city, {include_blank: true, required: true, include_hidden: false}, multiple: 'multiple', id: 'select_targeted_geographic_audience_city_org' %>
+  </div>
+  <div>
+      <%= f.label :platforms %>
+      <%= f.select :platforms,  options_for_select(Platform.pluck(:name), f.object.platforms), {include_blank: true, required: true, include_hidden: false}, multiple: 'multiple', id: 'platforms_org' %>
+  </div>
+  <div>
+      <%= f.label :categories %>
+      <%= f.select :categories,  options_for_select(Category.pluck(:name), f.object.categories), {include_blank: true, required: true, include_hidden: false}, multiple: 'multiple', id: 'category_org' %>
   </div>
   <div>
     <%= f.submit %>

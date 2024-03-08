@@ -1,14 +1,17 @@
 class OrganizationInfluencerMatchingService
   attr_reader :organization, :influencer, :gig
 
-  def intitalize(org_id: , influencer_id: , gig_id: )
+  def initialize(org_id: , influencer_id: , gig_id: )
     @organization = Organization.find(org_id)
     @influencer = Influencer.find(influencer_id)
     @gig = Gig.find(gig_id)
   end
 
   def match
-
+    {
+      influencer_score: similarity_score(influencer_object, organization_object),
+      gig_score: similarity_score(gig_object, organization_object)
+    }
   end
 
   private
@@ -23,7 +26,7 @@ class OrganizationInfluencerMatchingService
     categories_similarity = array_similarity(source[:categories], org[:categories])
 
     # Combine similarities
-    total_similarity = (age_similarity + country_similarity + city_similarity + platform_similarity + categories_similarity) / present_columns.to_f
+    total_similarity = (age_similarity + country_similarity + cities_similarity + platform_similarity + categories_similarity) / present_columns.to_f
     similarity_rating = (total_similarity * 10).round(1)
 
     {
@@ -71,7 +74,7 @@ class OrganizationInfluencerMatchingService
       end_age: influencer.avg_start_age,
       country: influencer.influencer_platforms.pluck(:targeted_geographic_audience).flatten,
       city: influencer.influencer_platforms.pluck(:targeted_geographic_audience_city).flatten,
-      platforms: influencer.influencer_platforms.pluck("platforms.name")
+      platforms: influencer.platforms.pluck("name")
     }
   end
 
