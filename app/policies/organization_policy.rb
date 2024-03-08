@@ -12,10 +12,12 @@ class OrganizationPolicy < ApplicationPolicy
 
   def permitted_attributes
     record_attributes = [
-      :id, :name, :address_1, :address_2, :city, :country, :phone_number, :payment_plan,
-      :website_url, :facebook_url, :instagram_url, :tiktok_url, :youtube_url
+      :name, :address_1, :address_2, :city, :country, :phone_number, :payment_plan,
+      :website_url, :facebook_url, :instagram_url, :tiktok_url, :youtube_url, :linkedin_url,
+      :targeted_demographic_start_age, :targeted_demographic_end_age, targeted_geographic_audience: [],
+      targeted_geographic_audience_city: []
     ]
-    if (user.admin? && current_role == User::USER_ROLES[:admin]) || record.owner.user == user
+    if record.owner.user == user
       record_attributes
     elsif (user.reviewer? && current_role == User::USER_ROLES[:reviewer])
       [

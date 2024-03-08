@@ -1,3 +1,41 @@
+<script>
+  $(document).ready(function () {
+    function updateStates() {
+      const data = $('#select_targeted_geographic_audience_org').select2('data');
+      const countryCodes = data.map((s) => s.id)
+      if ($('#select_targeted_geographic_audience_city_org').data('select2')) {
+        console.log('select2 is destroyed');
+        $('#select_targeted_geographic_audience_city_org').select2('val', '');
+        $('#select_targeted_geographic_audience_city_org').select2('destroy');
+        $("#select_targeted_geographic_audience_city_org").empty();
+      }
+      $.ajax({
+        url: '/addresses/fetch_states',
+        method: 'GET',
+        data: { country_codes: countryCodes },
+        dataType: 'json',
+        success: function(data) {
+          if ($('#select_targeted_geographic_audience_city_org').data('select2')) {
+            $('#select_targeted_geographic_audience_city_org').select2('val', '');
+            $('#select_targeted_geographic_audience_city_org').select2('destroy');
+            $("#select_targeted_geographic_audience_city_org").empty();
+          }
+          $("#select_targeted_geographic_audience_city_org").select2({
+            data: data
+          }).trigger("change");
+        }
+      });
+    }
+    $('#select_targeted_geographic_audience_org').select2();
+    $('#select_targeted_geographic_audience_org').on('select2:select', () => {
+      updateStates();
+    })
+    $('#select_targeted_geographic_audience_org').on('select2:unselect', () => {
+      updateStates();
+    });
+  });
+</script>
+
 <%= form_with model: @organization, local: true do |f| %>
   <div>
     <%= f.label :name %><br>
@@ -46,6 +84,22 @@
   <div>
     <%= f.label :phone_number %><br>
     <%= f.text_field :phone_number %>
+  </div>
+  <div>
+      <%= f.label :targeted_demographic_start_age %>
+      <%= f.number_field :targeted_demographic_start_age, in: 5..100, required: true %>
+  </div>
+  <div>
+      <%= f.label :targeted_demographic_end_age %>
+      <%= f.number_field :targeted_demographic_end_age, in: 5..100, required: true %>
+  </div>
+  <div>
+    <%= f.label :targeted_geographic_audience %>
+    <%= f.select :targeted_geographic_audience, ISO3166::Country.all_names_with_codes, {include_blank: true, required: true, include_hidden: false}, multiple: 'multiple', id: 'select_targeted_geographic_audience_org' %>
+  </div>
+  <div>
+      <%= f.label :targeted_geographic_audience_city %>
+      <%= f.select :targeted_geographic_audience_city,  @organization.targeted_geographic_audience_city, {include_blank: true, required: true, include_hidden: false}, multiple: 'multiple', id: 'select_targeted_geographic_audience_city_org' %>
   </div>
   <div>
     <%= f.submit %>

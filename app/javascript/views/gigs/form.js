@@ -1,5 +1,27 @@
 $(document).ready(function () {
+  function updateStates() {
+    const data = $('#select_targeted_geographic_audience').select2('data');
+    const countryCodes = data.map((s) => s.id)
+    $.ajax({
+      url: '/addresses/fetch_states',
+      method: 'GET',
+      data: { country_codes: countryCodes },
+      dataType: 'json',
+      success: function(data) {
+        if ($('#select_targeted_geographic_audience_city').data('select2')) {
+          $('#select_targeted_geographic_audience_city').select2('val', '');
+          $('#select_targeted_geographic_audience_city').select2('destroy');
+          $("#select_targeted_geographic_audience_city").empty();
+        }
+        $("#select_targeted_geographic_audience_city").select2({
+          data: data
+        }).trigger("change");
+      }
+    });
+  }
+
   $('#select_targeted_geographic_audience').select2();
+  $('#select_targeted_geographic_audience_city').select2();
   $('#select_targeted_geographic_audience').on('select2:select', () => {
     updateStates();
   })
@@ -28,33 +50,6 @@ $(document).ready(function () {
 
     })
 });
-
-function updateStates() {
-  const data = $('#select_targeted_geographic_audience').select2('data');
-  const countryCodes = data.map((s) => s.id)
-  if ($('#select_targeted_geographic_audience_city').data('select2')) {
-    console.log('select2 is destroyed');
-    $('#select_targeted_geographic_audience_city').select2('val', '');
-    $('#select_targeted_geographic_audience_city').select2('destroy');
-    $("#select_targeted_geographic_audience_city").empty();
-  }
-  $.ajax({
-    url: '/addresses/fetch_states',
-    method: 'GET',
-    data: { country_codes: countryCodes },
-    dataType: 'json',
-    success: function(data) {
-      if ($('#select_targeted_geographic_audience_city').data('select2')) {
-        $('#select_targeted_geographic_audience_city').select2('val', '');
-        $('#select_targeted_geographic_audience_city').select2('destroy');
-        $("#select_targeted_geographic_audience_city").empty();
-      }
-      $("#select_targeted_geographic_audience_city").select2({
-        data: data
-      }).trigger("change");
-    }
-  });
-}
 
 function findParentByIdStartingWithAvoidCertainClass(element, idStart, avoidClass) {
   while (element && element.parentElement) {
