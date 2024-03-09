@@ -22,7 +22,7 @@
 </div>
 <div class="flex mt-5 items-center flex-wrap max-w-md pl-10 bg-white shadow-xl rounded-2xl h-20"
     id="<%= criteria %>-overview"
-    x-data="{ circumference: 50 * 2 * Math.PI, percent: <%= @gig_relevance.dig(criteria, :total_rating) * 10 %> }"
+    x-data="{ circumference: 50 * 2 * Math.PI, percent: <%= relevance.dig(criteria, :total_rating) * 10 %> }"
     data-tooltip-target="tooltip"
     >
       <div class="flex items-center justify-center -m-6 overflow-hidden bg-white rounded-full">
@@ -54,12 +54,12 @@
       <p class="ml-10 font-medium text-gray-600 sm:text-xl"><%= criteria.to_s.humanize.upcase.partition(" ").first %></p>
 </div>
 <div class="bg-white shadow-xl rounded-2xl p-3 hidden" id="<%= criteria %>-detail">
-  <% @gig_relevance[criteria].reject { |k| k == :total_rating }.keys.each do |sub_criteria| %>
+  <% relevance[criteria].reject { |k| k == :total_rating }.keys.each do |sub_criteria| %>
     <div class="flex justify-center">
       <p class="mr-2 min-w-20 font-medium text-gray-600"><%= sub_criteria.to_s.humanize.upcase %></p>
       <div class="w-full my-1 bg-gray-200 rounded-full dark:bg-gray-700">
-        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: <%= @gig_relevance.dig(criteria, sub_criteria) * 100 %>%">
-          <%= (@gig_relevance.dig(criteria, sub_criteria) * 100).round(2) %>%
+        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: <%= relevance.dig(criteria, sub_criteria) * 100 %>%">
+          <%= (relevance.dig(criteria, sub_criteria) * 100).round(2) %>%
         </div>
       </div>
     </div>
