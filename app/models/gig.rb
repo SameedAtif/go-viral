@@ -49,7 +49,7 @@ class Gig < ApplicationRecord
   #                         size: { less_than: 5.megabytes, message: 'should be less than 5MB per file' },
   #                         limit: { min: 1, max: 3, message: 'should be between 1 and 3 files' }
   validate :gig_package_count
-  validate :gig_update_frequency, on: :update
+  validate :gig_update_frequency, on: :update, if: -> { Rails.env.production? }
 
   scope :draft, -> { where(status: Gig::STATUSES_MAP[:draft]) }
   scope :pending_review, -> { where(status: Gig::STATUSES_MAP[:pending_review]) }

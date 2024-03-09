@@ -40,4 +40,14 @@ class Influencer < ApplicationRecord
                         .includes(:gig_package)
                         .where(influencer: {id: id})
   end
+
+  def avg_start_age
+    arr = influencer_platforms.pluck(:targeted_demographic_start_age)
+    arr.inject{ |sum, el| sum + el }.to_f / arr.size
+  end
+
+  def avg_end_age
+    arr = influencer_platforms.pluck(:targeted_demographic_end_age)
+    arr.inject{ |sum, el| sum + el }.to_f / arr.size
+  end
 end

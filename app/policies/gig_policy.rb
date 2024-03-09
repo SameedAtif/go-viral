@@ -20,8 +20,8 @@ class GigPolicy < ApplicationPolicy
   def permitted_attributes
     record_attributes = [
       :id, :title, :description, :targeted_demographic_start_age, :targeted_demographic_end_age,
-      gig_packages_attributes: %i[id gig_id title description price delivery_estimation review_limit _destroy features: []],
-      gig_platforms_attributes: %i[id gig_id _destroy],
+      gig_packages_attributes: [:id, :gig_id, :title, :description, :price, :delivery_estimation, :review_limit, :_destroy, features: []],
+      gig_platforms_attributes: %i[id gig_id platform_id _destroy],
       gig_faqs_attributes: %i[id gig_id question answer],
       gig_categories_attributes: %i[id category_id _destroy],
       targeted_geographic_audience: [],

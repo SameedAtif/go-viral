@@ -1,0 +1,32 @@
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+
+<% if @gig_relevance.present? %>
+  <div class="w-full px-2 pt-2 pb-6 bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="py-1 px-1 bg-gray-100">
+      <div class="grid grid-cols-1 gap-20 lg:grid-cols-2 lg:gap-10">
+        <% @gig_relevance.keys.each do |criteria| %>
+          <%= render partial: 'gigs/show/gig_relevance/relevance_overview', locals: { relevance: @gig_relevance, criteria: criteria } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class= "relative z-0">
+    <div class="blur-sm w-full px-2 pt-2 pb-6 bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class="py-1 px-1 bg-gray-100">
+        <div class="grid grid-cols-1 gap-20 lg:grid-cols-2 lg:gap-10">
+          <%
+            sample_relevance = {:influencer_score=>{:total_rating=>8.4, :age=>0.65, :country=>1.0, :city=>0.5, :platform=>0.0, :category=>0},
+              :gig_score=>{:total_rating=>7.1, :age=>0.7221, :country=>0.5, :city=>0.3333333333333333, :platform=>0.5, :category=>0.5}}
+          %>
+          <% sample_relevance.keys.each do |criteria| %>
+            <%= render partial: 'gigs/show/gig_relevance/relevance_overview', locals: { relevance: sample_relevance, criteria: criteria } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="absolute inset-0 flex justify-center items-center z-10">
+      <p class="text-2xl font-bold">Fill Organization demographics under profile to view stats</p>
+    </div>
+  </div>
+<% end %>
