@@ -12,10 +12,10 @@
         <%= render "shared/partials/card_list" %>
       </div>
 
-      <div class="max-w-4xl pb-24 lg:pb-0">
-        <%= render partial: "gigs/show/reviews" %>
-          <%= render partial: "gigs/show/gig_reviews" %>
-      </div>
+      <%# <div class="max-w-4xl pb-24 lg:pb-0">
+        <%# render partial: "gigs/show/reviews" %>
+          <%# render partial: "gigs/show/gig_reviews"
+      </div> %>
 
       <div
         class="fixed bottom-0 left-0 z-50 w-full h-24 px-8 bg-white border-t border-gray-200 flex justify-center md:justify-between lg:hidden">
@@ -25,26 +25,15 @@
           </div>
           <div class="flex-1 min-w-0 ms-4 px-2">
             <p class="text-lg font-semibold text-gray-900 truncate dark:text-white">
-              Neil Sims
-            </p>
-            <p class="text-lg text-gray-500 truncate dark:text-gray-400">
-              <span>
-                Offline
-              </span>
-              <span>
-                01:50 PM local time
-              </span>
+              <%= @influencer.user.full_name %>
             </p>
           </div>
         </div>
         <div class="flex items-center gap-1 flex-col md:flex-row">
-          <div class="flex justify-center text-gray-500 order-2 md:order-1">
-            Average response time: 1 hour
-          </div>
           <div class="flex items-center my-2 order-1 md:order-2">
             <!-- Modal toggle -->
 
-            <button data-modal-target="send-message-modal" data-modal-toggle="send-message-modal"
+            <%# <button data-modal-target="send-message-modal" data-modal-toggle="send-message-modal"
               class="text-white bg-[#222325] hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md  px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full flex justify-center gap-2"
               type="button">
               <svg class="w-4 h-4 text-white rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -53,9 +42,26 @@
                   d="m9 17 8 2L9 1 1 19l8-2Zm0 0V9" />
               </svg>
               <span>
-                <%= t("body.influencers.show.contact_me") %>
+                <%= t("body.influencers.show.contact_me")
               </span>
-            </button>
+            </button> %>
+            <%= button_to new_room_path,
+                method: :get,
+                local: false,
+                remote: true,
+                form: {class: 'w-full' },
+                params: {
+                    'name' => "#{@influencer.user.full_name}-#{current_user.full_name}",
+                    'participant_id' => @influencer.user.id
+                },
+                class: "w-full text-zinc-700 py-2 px-4 rounded-md flex justify-center items-center font-semibold group border border-zinc-700 hover:bg-zinc-700 hover:text-white" do %>
+                <span class="">Contact Me</span>
+                <svg class="w-4 h-4 ml-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 8">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
+                </svg>
+            <% end %>
           </div>
         </div>
       </div>

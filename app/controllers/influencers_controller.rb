@@ -30,13 +30,10 @@ class InfluencersController < ApplicationController
 
   def show
     @influencer = Influencer.find_by(id: params[:id])
+    @influencer_rating = @influencer.gigs.joins(:client_gig_reviews).average(:rating) || 'Just started'
+    @influencer_ongoing_orders = @influencer.gigs.joins(:gig_clients).where(gig_clients: {status: GigClient::STATUSES_MAP[:accepted] }).count
+    @influencer_completed_orders = @influencer.gigs.joins(:influencer_gig_transactions).count
     @gigs = @influencer.gigs
-    @rooms = Room.public_rooms
-    @room = Room.new
-    @message = Message.new
-    @room_name =  Room.get_name(@influencer)
-    @single_room = Room.find_or_create_by!(name: @room_name)
-    @messages = @single_room.messages
   end
 
   def update
