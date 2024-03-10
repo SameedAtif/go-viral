@@ -23,24 +23,28 @@ class GigsController < ApplicationController
   # TODO: Create seed data [D]
 
   def index
-    @gigs = Gig.includes(:gig_platforms).all
-  
-    if params[:platform].present?
-      @gigs = @gigs.joins(:gig_platforms).where(gig_platforms: { platform_id: Platform.where(name: params[:platform]) })
-    end
+    @gigs = Gig.includes(:gig_platforms)
     
+    @gigs = @gigs.joins(:gig_platforms).where(gig_platforms: { platform_id: params[:platform] }) if params[:platform].present?
+    @gigs = @gigs.joins(:gig_categories).where(gig_categories: { category_id: params[:category] }) if params[:category].present?
+    @gigs = @gigs.where(targeted_geographic_audience: params[:country]) if params[:country].present?
+  
     if params[:date_filter_option].present? && params[:date_filter_option].is_a?(Array)
       selected_options = params[:date_filter_option]
-      if selected_options.include?("last_24_hours")
-        @gigs = @gigs.where("gigs.created_at >= ?", 24.hours.ago)
-      elsif selected_options.include?("last_week")
-        @gigs = @gigs.where("gigs.created_at >= ?", 1.week.ago)
-      elsif selected_options.include?("last_month")
-        @gigs = @gigs.where("gigs.created_at >= ?", 1.month.ago)
-      end
+      @gigs = case
+              when selected_options.include?("last_24_hours")
+                @gigs.where("gigs.created_at >= ?", 24.hours.ago)
+              when selected_options.include?("last_week")
+                @gigs.where("gigs.created_at >= ?", 1.week.ago)
+              when selected_options.include?("last_month")
+                @gigs.where("gigs.created_at >= ?", 1.month.ago)
+              else
+                @gigs
+              end
     end
-
+  
     @platforms = Platform.all
+    @categories = Category.all
   
     @gigs = @gigs.page(params[:page]).per(20)
   
@@ -48,7 +52,7 @@ class GigsController < ApplicationController
       format.html
       format.js
     end
-  end
+  end  
 
   def manage_gigs
     @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients) || []
