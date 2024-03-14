@@ -8,12 +8,13 @@ class GigDisputesController < ApplicationController
     resource.created_by = session[:user_role]
     authorize resource
     resource.save!
-    redirect_to @gig_client
+    redirect_to @gig_client, notice: "Dispute created"
   end
 
   def update
     authorize @dispute
     @dispute.update!(permitted_params)
+    redirect_to @dispute.gig_client, notice: "Dispute created"
   end
 
   private

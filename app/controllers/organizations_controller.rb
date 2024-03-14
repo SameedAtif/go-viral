@@ -33,7 +33,10 @@ class OrganizationsController < ApplicationController
   def creation_params
     params.require(:organization).permit(
       :name, :address_1, :address_2, :city, :country, :phone_number, :payment_plan,
-      :website_url, :facebook_url, :instagram_url, :tiktok_url, :youtube_url
+      :website_url, :facebook_url, :instagram_url, :tiktok_url, :youtube_url, :linkedin_url,
+      :targeted_demographic_start_age, :targeted_demographic_end_age, categories: [], platforms: [],
+      targeted_geographic_audience: [],
+      targeted_geographic_audience_city: []
     )
   end
 

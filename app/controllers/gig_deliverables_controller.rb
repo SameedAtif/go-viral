@@ -9,11 +9,12 @@ class GigDeliverablesController < ApplicationController
     @gig_deliverable.save!
     @gig_client.gig_deliverables.update(active: false)
     @gig_deliverable.update(active: true)
-    redirect_to @gig_client
+    redirect_to @gig_client, notice: "Delivery created"
   end
 
   def update
     @gig_deliverable.update!(permitted_params)
+    redirect_to @gig_deliverable.gig_client, notice: "Delivery updated"
   end
 
   private

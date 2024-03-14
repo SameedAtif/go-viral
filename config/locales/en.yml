@@ -30,6 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  pundit:
+    default: 'You cannot perform this action.'
+    gig_policy:
+      create?: 'You cannot create a Gig until your profile is reviewed.'
+      new?: 'You cannot create a Gig until your profile is reviewed.'
   header:
     navbar:
       influencers_search: "Search your influencer"

@@ -27,6 +27,7 @@ class SystemGigTransaction < ApplicationRecord
 
   def create_gig_client
     GigClient.create!(
+      status: ::GigClient::STATUSES_MAP[:pending_review],
       system_gig_transaction: self,
       gig: gig_package.gig,
       client: client,

@@ -21,8 +21,7 @@ class User < ApplicationRecord
   USER_ROLES = {
     client: 'client',
     influencer: 'influencer',
-    reviewer: 'reviewer',
-    admin: 'admin'
+    reviewer: 'reviewer'
   }.freeze
 
   USER_ROLES_VALUES = USER_ROLES.values

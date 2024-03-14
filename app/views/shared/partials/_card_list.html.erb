@@ -13,12 +13,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
             </svg>
         </div>
-        
+
         <div class="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
         <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
 
         <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-            <time datetime="2020-03-16" class="mr-8">Mar 16, 2020</time>
             <div class="-ml-4 flex items-center gap-x-4">
                 <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50">
                 <circle cx="1" cy="1" r="1" />
@@ -30,12 +29,12 @@
             </div>
         </div>
         <h3 class="mt-3 text-lg font-semibold leading-6 text-white text-left">
-            <%= link_to gig_path(1) do %>
+            <%= link_to gig_path(gig) do %>
                 <span class="absolute inset-0"></span>
                 <%= gig.title %>
             <% end %>
         </h3>
     </article>
   </li>
-<% end %>    
+<% end %>
 </ul>

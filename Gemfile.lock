@@ -123,6 +123,8 @@ GEM
     cocoon (1.2.15)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
+    countries (6.0.0)
+      unaccent (~> 0.3)
     crass (1.0.6)
     database_cleaner (2.0.2)
       database_cleaner-active_record (>= 2, < 3)
@@ -432,6 +434,7 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
+    unaccent (0.4.0)
     unicode-display_width (2.4.2)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -471,6 +474,7 @@ DEPENDENCIES
   byebug
   capybara
   cocoon
+  countries (~> 6.0)
   database_cleaner
   debug
   devise

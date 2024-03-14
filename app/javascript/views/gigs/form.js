@@ -19,7 +19,35 @@ $(document).ready(function () {
     tooltip.addEventListener('mouseout', showMainToolTip);
     tooltip.addEventListener('blur', showMainToolTip);
   });
+  function updateStates() {
+    const data = $('#select_targeted_geographic_audience').select2('data');
+    const countryCodes = data.map((s) => s.id)
+    $.ajax({
+      url: '/addresses/fetch_states',
+      method: 'GET',
+      data: { country_codes: countryCodes },
+      dataType: 'json',
+      success: function(data) {
+        if ($('#select_targeted_geographic_audience_city').data('select2')) {
+          $('#select_targeted_geographic_audience_city').select2('val', '');
+          $('#select_targeted_geographic_audience_city').select2('destroy');
+          $("#select_targeted_geographic_audience_city").empty();
+        }
+        $("#select_targeted_geographic_audience_city").select2({
+          data: data
+        }).trigger("change");
+      }
+    });
+  }
 
+  $('#select_targeted_geographic_audience').select2();
+  $('#select_targeted_geographic_audience_city').select2();
+  $('#select_targeted_geographic_audience').on('select2:select', () => {
+    updateStates();
+  })
+  $('#select_targeted_geographic_audience').on('select2:unselect', () => {
+    updateStates();
+  });
   $('#package')
     .on('cocoon:after-insert', function (e, insertedItem, originalEvent) {
       actionOn = insertedItem[0].querySelectorAll('[id^="accordion-collapse-heading-"]')[0];
@@ -46,11 +74,11 @@ $(document).ready(function () {
 function findParentByIdStartingWithAvoidCertainClass(element, idStart, avoidClass) {
   while (element && element.parentElement) {
     element = element.parentElement;
-    
+
     if (element.classList.contains(avoidClass)) {
       return null;
     }
-    
+
     if (element.id && element.id.startsWith(idStart)) {
       return element;
     }
@@ -87,7 +115,7 @@ function validateForm(event) {
       $(tabs).removeClass('active');
       $(tabs).prop('aria-selected', 'false');
       $(tabs).addClass('hidden');
-      
+
       tabs[i].classList.remove('hidden');
       tabs[i].classList.add('active');
       tabs[i].setAttribute('aria-selected', 'true');
