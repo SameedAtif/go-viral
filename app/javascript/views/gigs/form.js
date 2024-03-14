@@ -1,5 +1,24 @@
 $(document).ready(function () {
   $('#select_targeted_geographic_audience').select2();
+  
+  const tooltips = document.querySelectorAll('.tooltip_holder');
+
+  function hideMainToolTip() {
+    console.log("Hide")
+    $("#basic-gig-details").hide();
+  }
+  function showMainToolTip() {
+    console.log("Show")
+    $("#basic-gig-details").show();
+  }
+
+  tooltips.forEach(tooltip => {
+    tooltip.addEventListener('mouseover', hideMainToolTip);
+    tooltip.addEventListener('focus', hideMainToolTip);
+
+    tooltip.addEventListener('mouseout', showMainToolTip);
+    tooltip.addEventListener('blur', showMainToolTip);
+  });
 
   $('#package')
     .on('cocoon:after-insert', function (e, insertedItem, originalEvent) {
