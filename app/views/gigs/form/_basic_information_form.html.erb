@@ -3,38 +3,42 @@
 
 <h3 class="text-lg font-bold text-gray-900 my-6">Basic Information</h3>
 
-<div data-tooltip-target="tooltip-title" data-tooltip-placement="right" class="relative z-0 w-full mb-10 group">
+<div data-tooltip-target="tooltip-title" data-tooltip-placement="right" class="tooltip_holder relative z-0 w-full mb-10 group">
     <%= f.text_field :title, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: " ", required: true %>
     <%= f.label :title, class: "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" %>
 </div>
-<div id="tooltip-title" role="tooltip" class="!ml-12 absolute z-10 invisible inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-custom opacity-0 tooltip max-w-sm">
-  <h3>Describe your Gig</h3>
-  <ol>
-    <li>
-      As your Gig storefront, your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
+<div id="tooltip-title" role="tooltip" class="!ml-12 absolute z-10 invisible sm:inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-[#e0f0fe] rounded-lg shadow-custom opacity-0 tooltip max-w-sm !mt-10 border border-sky-500">
+  <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Your Gig Storefront</h3>
+  <ul class="list-disc list-inside text-gray-500 dark:text-gray-400 space-y-1 max-w-md">
+    <li class="">
+      Your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
     </li>
     <li>
-      This is your Gig title. Choose wisely, you can only use 80 characters.
+      Keep it under 80 characters for clarity and impact.
     </li>
-  </ol>
-  <div class="tooltip-arrow" data-popper-arrow></div>
+    <li>
+      Use relevant keywords for better Google ranking.
+    </li>
+    <li>
+      Ensure it's descriptive and attractive to your target audience.
+    </li>
+    <li>
+      Aim for uniqueness to stand out from similar gigs.
+    </li>
+  </ul>
 </div>
 
-<div data-tooltip-target="tooltip-description" data-tooltip-placement="right" class="mb-10">
+<div data-tooltip-target="tooltip-description" data-tooltip-placement="right" class="tooltip_holder mb-10">
     <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900" %>
     <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", placeholder: "Awesome Gig", required: true %>
 </div>
-<div id="tooltip-description" role="tooltip" class="!ml-12 absolute z-10 invisible inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-custom opacity-0 tooltip max-w-sm">
-  <h3>Describe your Gig</h3>
-  <ol>
-    <li>
-      As your Gig storefront, your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
+<div id="tooltip-description" role="tooltip" class="!ml-12 absolute z-10 invisible sm:inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-[#e0f0fe] rounded-lg shadow-custom opacity-0 tooltip max-w-sm border border-sky-500">
+  <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Describe your gig</h3>
+  <ul class="list-none list-inside text-gray-500 dark:text-gray-400 space-y-1 max-w-md">
+    <li class="">
+      Keep your description clear and concise, utilizing rich text features to highlight key points. Include relevant keywords for searchability and ensure all critical gig details are covered. Proofread for errors and maintain honesty to set accurate expectations. Incorporate a call to action, and only use media that respects copyright laws.
     </li>
-    <li>
-      This is your Gig title. Choose wisely, you can only use 80 characters.
-    </li>
-  </ol>
-  <div class="tooltip-arrow" data-popper-arrow></div>
+  </ul>
 </div>
 
 <div class="hidden">
@@ -49,26 +53,22 @@
   </div>
 </div>
 
-<div data-tooltip-target="tooltip-demographic-age-range" data-tooltip-placement="right" class="mb-20" >
+<div data-tooltip-target="tooltip-demographic-age-range" data-tooltip-placement="right" class="tooltip_holder mb-20" >
   <div class="mb-5">
     <label for="rangeSlider">Targeted Demograohic Age Range</label>
   </div>
   <div id="rangeSlider" class="mb-5"></div>
 </div>
-<div id="tooltip-demographic-age-range" role="tooltip" class="!ml-12 absolute z-10 invisible inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-custom opacity-0 tooltip max-w-sm">
-  <h3>Describe your Gig</h3>
-  <ol>
+<div id="tooltip-demographic-age-range" role="tooltip" class="!ml-12 absolute z-10 invisible sm:inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-[#e0f0fe] rounded-lg shadow-custom opacity-0 tooltip max-w-sm border border-sky-500">
+  <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Target Audience Age Range</h3>
+  <ul class="list-none list-inside text-gray-500 dark:text-gray-400 space-y-1 max-w-md">
     <li>
-      As your Gig storefront, your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
+      Specify the age range of your intended audience to tailor your gig's reach and effectiveness.
     </li>
-    <li>
-      This is your Gig title. Choose wisely, you can only use 80 characters.
-    </li>
-  </ol>
-  <div class="tooltip-arrow" data-popper-arrow></div>
+  </ul>
 </div>
 
-<div data-tooltip-target="tooltip-demographic-audience-country" data-tooltip-placement="right" class="mb-10">
+<div data-tooltip-target="tooltip-demographic-audience-country" data-tooltip-placement="right" class="tooltip_holder mb-10">
     <%= f.label :targeted_geographic_audience, class: "block mb-2 text-sm font-medium text-gray-900" %>
     <%= f.select :targeted_geographic_audience, ISO3166::Country.all_names_with_codes, {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience' %>
 </div>
@@ -77,69 +77,57 @@
     <%= f.label :targeted_geographic_audience_city, class: "block mb-2 text-sm font-medium text-gray-900" %>
     <%= f.select :targeted_geographic_audience_city, @gig.targeted_geographic_audience_city, {include_blank: true, required: true, include_hidden: false}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', multiple: 'multiple', id: 'select_targeted_geographic_audience_city' %>
 </div>
-<div id="tooltip-demographic-audience-country" role="tooltip" class="!ml-12 absolute z-10 invisible inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-custom opacity-0 tooltip max-w-sm">
-  <h3>Describe your Gig</h3>
-  <ol>
+<div id="tooltip-demographic-audience-country" role="tooltip" class="hidden !ml-12 absolute z-10 invisible sm:inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-[#e0f0fe] rounded-lg shadow-custom opacity-0 tooltip max-w-sm border border-sky-500">
+  <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Region Selection for Targeted Visibility</h3>
+  <ul class="list-none list-inside text-gray-500 dark:text-gray-400 space-y-1 max-w-md">
     <li>
-      As your Gig storefront, your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
+      Select the geographic region(s) where your intended audience is located to ensure your gig is marketed to the most relevant users.
     </li>
-    <li>
-      This is your Gig title. Choose wisely, you can only use 80 characters.
-    </li>
-  </ol>
-  <div class="tooltip-arrow" data-popper-arrow></div>
+  </ul>
 </div>
 
-<div data-tooltip-target="tooltip-platform" data-tooltip-placement="right" class=" mb-10">
+<div data-tooltip-target="tooltip-platform" data-tooltip-placement="right" class="tooltip_holder mb-10">
   <div class="flex flex-row justify-between">
     <span>Select Platforms</span>
     <%= link_to_add_association "+ Add Platform" , f, :gig_platforms, partial: 'gigs/form/gig_platform_fields', class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl",
     data: { association_insertion_node: '.gig_platforms' , association_insertion_method: :append } %>
   </div>
-  <div class="gig_platforms grid grid-cols-2 gap-6">
+  <div class="gig_platforms grid grid-cols-1 xs:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6">
     <%= f.fields_for :gig_platforms do |platform| %>
       <%= render 'gigs/form/gig_platform_fields' , f: platform %>
     <% end %>
   </div>
 </div>
 
-<div id="tooltip-platform" role="tooltip" class="!ml-12 absolute z-10 invisible inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-custom opacity-0 tooltip max-w-sm">
-  <h3>Describe your Gig</h3>
-  <ol>
+<div id="tooltip-platform" role="tooltip" class="!ml-12 absolute z-10 invisible sm:inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-[#e0f0fe] rounded-lg shadow-custom opacity-0 tooltip max-w-sm border border-sky-500">
+  <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Platform Applicability</h3>
+  <ul class="list-none list-inside text-gray-500 dark:text-gray-400 space-y-1 max-w-md">
     <li>
-      As your Gig storefront, your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
+      Select the platforms where your gig is applicable to ensure it reaches users on relevant digital environments.
     </li>
-    <li>
-      This is your Gig title. Choose wisely, you can only use 80 characters.
-    </li>
-  </ol>
-  <div class="tooltip-arrow" data-popper-arrow></div>
+  </ul>
 </div>
 
-<div data-tooltip-target="tooltip-categories" data-tooltip-placement="right" class=" mb-10">
+<div data-tooltip-target="tooltip-categories" data-tooltip-placement="right" class="tooltip_holder mb-10">
   <div class="flex flex-row justify-between">
     <span>Select Categories</span>
     <%= link_to_add_association "+ Add Category" , f, :gig_categories, partial: 'gigs/form/gig_category_fields', class: "bg-white transition-colors duration-300 ease-in-out hover:bg-[#e0f0fe] text-gray-800 py-2 px-4 rounded-xl",
     data: { association_insertion_node: '.gig_categories' , association_insertion_method: :append } %>
   </div>
-  <div class="gig_categories grid grid-cols-2 gap-6">
+  <div class="gig_categories grid grid-cols-1 xs:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6">
     <%= f.fields_for :gig_categories do |category| %>
       <%= render 'gigs/form/gig_category_fields' , f: category %>
     <% end %>
   </div>
 </div>
 
-<div id="tooltip-categories" role="tooltip" class="!ml-12 absolute z-10 invisible inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-custom opacity-0 tooltip max-w-sm">
-  <h3>Describe your Gig</h3>
-  <ol>
+<div id="tooltip-categories" role="tooltip" class="!ml-12 absolute z-10 invisible sm:inline-block px-6 py-4 text-sm font-medium text-gray-900 bg-[#e0f0fe] rounded-lg shadow-custom opacity-0 tooltip max-w-sm border border-sky-500">
+  <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Select Your Gig's Niche</h3>
+  <ul class="list-none list-inside text-gray-500 dark:text-gray-400 space-y-1 max-w-md">
     <li>
-      As your Gig storefront, your title is the most important place to include keywords that buyers would likely use to search for a service like yours.
+      Choose categories that best fit your gig to connect with your ideal audience and increase its discoverability.
     </li>
-    <li>
-      This is your Gig title. Choose wisely, you can only use 80 characters.
-    </li>
-  </ol>
-  <div class="tooltip-arrow" data-popper-arrow></div>
+  </ul>
 </div>
 
 <script>
@@ -183,4 +171,3 @@
 </script>
 <!-- Include the nouislider JavaScript -->
 <script src="https://unpkg.com/nouislider@14.6.4/distribute/nouislider.min.js" onload="renderSlider()"></script>
-

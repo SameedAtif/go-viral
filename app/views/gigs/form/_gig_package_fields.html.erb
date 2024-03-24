@@ -24,24 +24,20 @@
                     <%= f.label :title, class: "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" %>
                 </div>
                 <div class="mb-5">
-                    <%= f.text_field :title, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Awesome Title", required: true %>
-                    <%= f.label :title, class: "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" %>
-                </div>
-                <div class="mb-5">
                     <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900" %>
-                    <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", placeholder: "Awesome Description", required: true %>
+                    <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", placeholder: "Add Package Description", required: true %>
                 </div>
                 <div class="mb-5">
                     <%= f.label :price, class: "block mb-2 text-sm font-medium text-gray-900" %>
-                    <%= f.number_field :price, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Awesome Gig", min: 5, required: true %>
+                    <%= f.number_field :price, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Package Cost", min: 5, required: true %>
                 </div>
                 <div class="mb-5">
                     <%= f.label :delivery_estimation, class: "block mb-2 text-sm font-medium text-gray-900" %>
-                    <%= f.number_field :delivery_estimation, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Awesome Gig", min: 1, required: true %>
+                    <%= f.number_field :delivery_estimation, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Delivery Estimation", min: 1, required: true %>
                 </div>
                 <div class="mb-5">
                     <%= f.label :review_limit, class: "block mb-2 text-sm font-medium text-gray-900" %>
-                    <%= f.number_field :review_limit, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Awesome Gig", min: 0, required: true %>
+                    <%= f.number_field :review_limit, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "No. of Reviews Allowed", min: 0, required: true %>
                 </div>
                 <div class="mb-5">
                     <%= f.label :features, class: "block mb-2 text-sm font-medium text-gray-900" %>
