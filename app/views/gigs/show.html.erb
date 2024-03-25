@@ -80,14 +80,14 @@
                     <div>
                         <h1 id="selected-gig-tab-title">Basic</h1>
                         <p class="mb-6 text-sm text-gray-500">
-                            <strong id="selected-gig-title"><%= @gig.gig_packages.first.title %>
+                            <strong id="selected-gig-title"><%= @gig&.gig_packages&.first&.title %>
                         </p>
 
                         <h1 class="px-2 py-4">How often do you need this order</h1>
                         <div class="border-2 border-gray-900 rounded-xl p-2">
                             <div class="flex w-full justify-between p-2 border-b border-gray-300">
                                 <p>Single order</p>
-                                <p>$<span id="gig-price"><%= @gig.gig_packages.first.price %></span></p>
+                                <p>$<span id="gig-price"><%= @gig&.gig_packages&.first&.title %></span></p>
                             </div>
                             <div class="flex w-full justify-between p-2">
                                 <p>Gigs Quantity</p>
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <p class="py-4 text-sm text-gray-500">
-                            <%= @gig.gig_packages.first.description %>
+                            <%= @gig&.gig_packages&.first&.description %>
                         </p>
                     </div>
                     <% if current_user&.influencer != @gig.influencer %>

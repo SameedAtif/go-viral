@@ -2,9 +2,7 @@
 <% content_for :js_for_sticky_navbar do %>
   <%= javascript_include_tag "layouts/pages_with_search_bar" %>
 <% end %>
-
 <%= render 'gigs/index/gigs_filter_bar'%>
-
 <div class="bg-white">
   <div class="mx-auto max-w-screen-2xl mt-4 px-4 sm:px-6 sm:pb-24 lg:px-8">
     <div class="px-4 py-2 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
@@ -13,11 +11,10 @@
         <%= t("body.view_all") %>
       </a>
     </div>
-
-    <%= render "shared/partials/card_list" %>
-
-    <%= paginate @gigs %>
-
+    <div class="gig-list">
+      <%= render "shared/partials/card_list", gigs: @gigs %>
+      <%= paginate @gigs %>
+    </div>
     <div class="mt-6 px-4 sm:hidden">
       <a href=<%= gigs_path %> class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
         <%= t("body.view_all") %>
