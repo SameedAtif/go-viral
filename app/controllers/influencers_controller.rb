@@ -10,7 +10,6 @@ class InfluencersController < ApplicationController
   def new
     @influencer = Influencer.new
     @influencer.influencer_platforms.build
-    @influencer.influencer_portfolios.build
   end
 
   def create
@@ -22,7 +21,7 @@ class InfluencersController < ApplicationController
       session[:user_role] = User::USER_ROLES[:influencer]
       redirect_to manage_gigs_gigs_path
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = @influencer.errors.full_messages.join(',')
       render 'new'
     end
   end
@@ -31,20 +30,17 @@ class InfluencersController < ApplicationController
 
   def show
     @influencer = Influencer.find_by(id: params[:id])
+    @influencer_rating = @influencer.gigs.joins(:client_gig_reviews).average(:rating) || 'Just started'
+    @influencer_ongoing_orders = @influencer.gigs.joins(:gig_clients).where(gig_clients: {status: GigClient::STATUSES_MAP[:accepted] }).count
+    @influencer_completed_orders = @influencer.gigs.joins(:influencer_gig_transactions).count
     @gigs = @influencer.gigs
-    @rooms = Room.public_rooms
-    @room = Room.new
-    @message = Message.new
-    @room_name =  Room.get_name(@influencer)
-    @single_room = Room.find_or_create_by!(name: @room_name)
-    @messages = @single_room.messages
   end
 
   def update
     if @influencer.update(permitted_params)
       redirect_to @influencer
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = @influencer.errors.full_messages.join(',')
       render 'edit'
     end
   end
@@ -53,7 +49,7 @@ class InfluencersController < ApplicationController
 
   def permitted_params
     params.require(:influencer).permit(:avatar, :bio, :stage_name,
-      influencer_platforms_attributes: %i[id platform_id followers reach url targeted_demographic_start_age targeted_demographic_end_age _destroy targeted_geographic_audience: []],
+      influencer_platforms_attributes: [:id, :platform_id, :followers, :reach, :url, :targeted_demographic_start_age, :targeted_demographic_end_age, :_destroy, targeted_geographic_audience: [], targeted_geographic_audience_city: []],
       influencer_portfolios_attributes: %i[id title description start_time end_time content_link _destroy]
     )
   end

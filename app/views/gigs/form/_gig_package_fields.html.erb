@@ -1,27 +1,49 @@
-<div class="nested-fields">
-  <div class="mb-5">
-      <%= f.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Title", required: true %>
-  </div>
-  <div class="mb-5">
-      <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Description", required: true %>
-  </div>
-  <div class="mb-5">
-      <%= f.label :price, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.number_field :price, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", min: 5, required: true %>
-  </div>
-  <div class="mb-5">
-      <%= f.label :delivery_estimation, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.number_field :delivery_estimation, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", min: 1, required: true %>
-  </div>
-  <div class="mb-5">
-      <%= f.label :review_limit, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.number_field :review_limit, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Awesome Gig", min: 0, required: true %>
-  </div>
-  <div class="mb-5">
-      <%= f.label :features, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= f.text_field :features, placeholder: 'Feature 1, Feature 2, Feature 3', class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", multiple: true %>
-  </div>
-  <%= link_to_remove_association "Delete", f, class:"btn btn-danger mb-2" %>
+<div class="nested-fields packages mb-4" data-object-id="<%= f.object.object_id %>">
+    <div class="w-full bg-white border border-gray-200 rounded-lg shadow">
+        <h2 id="accordion-collapse-heading-<%= f.object.object_id %>">
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100 gap-3" data-accordion-target="#accordion-collapse-body-<%= f.object.object_id %>" aria-expanded="false" aria-controls="accordion-collapse-body-<%= f.object.object_id %>">
+                <span><%= f.object.title %></span>
+                <span class="flex gap-x-6 items-center">
+                    <%= link_to_remove_association f, class:"p-2 hover:bg-[#e0f0fe] rounded-xl" do %>
+                        <svg class="w-6 h-6 text-gray-500 hover:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                        </svg>
+                    <% end %>
+                    <svg data-accordion-icon class="w-3 h-3 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+                    </svg>
+                </span>
+            </button>
+        </h2>
+    
+        <div id="accordion-collapse-body-<%= f.object.object_id %>" class="hidden" aria-labelledby="accordion-collapse-heading-<%= f.object.object_id %>">
+            <div class="p-5 border border-b-0 border-gray-200">
+                <div class="relative z-0 w-full mb-10 group">
+                    <%= f.text_field :title, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: " ", required: true %>
+                    <%= f.label :title, class: "peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" %>
+                </div>
+                <div class="mb-5">
+                    <%= f.label :description, class: "block mb-2 text-sm font-medium text-gray-900" %>
+                    <%= f.rich_text_area :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", placeholder: "Add Package Description", required: true %>
+                </div>
+                <div class="mb-5">
+                    <%= f.label :price, class: "block mb-2 text-sm font-medium text-gray-900" %>
+                    <%= f.number_field :price, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Package Cost", min: 5, required: true %>
+                </div>
+                <div class="mb-5">
+                    <%= f.label :delivery_estimation, class: "block mb-2 text-sm font-medium text-gray-900" %>
+                    <%= f.number_field :delivery_estimation, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "Delivery Estimation", min: 1, required: true %>
+                </div>
+                <div class="mb-5">
+                    <%= f.label :review_limit, class: "block mb-2 text-sm font-medium text-gray-900" %>
+                    <%= f.number_field :review_limit, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", placeholder: "No. of Reviews Allowed", min: 0, required: true %>
+                </div>
+                <div class="mb-5">
+                    <%= f.label :features, class: "block mb-2 text-sm font-medium text-gray-900" %>
+                    <%= f.text_field :features, placeholder: 'Feature 1, Feature 2, Feature 3', class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer", multiple: true %>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

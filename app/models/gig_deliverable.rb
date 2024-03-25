@@ -14,6 +14,8 @@ class GigDeliverable < ApplicationRecord
                           size: { less_than: 5.megabytes, message: 'should be less than 5MB per file' },
                           limit: { min: 1, max: 3, message: 'should be between 1 and 3 files' }
 
+  validate :gig_deliverable_count
+
   after_save_commit :notify_client, on: %i[create]
 
   private
@@ -32,5 +34,11 @@ class GigDeliverable < ApplicationRecord
         cta_button_text: 'Click here to view details'
       }
     )
+  end
+
+  def gig_deliverable_count
+    return if gig_client.gig_deliverables.count <= gig_client.gig_package.delivery_estimation
+
+    errors.add(:base, "You cannot make more deliveries")
   end
 end

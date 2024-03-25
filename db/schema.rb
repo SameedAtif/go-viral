@@ -259,6 +259,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
     t.string "targeted_geographic_audience", default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "targeted_geographic_audience_city", default: [], array: true
     t.index ["influencer_id"], name: "index_gigs_on_influencer_id"
     t.index ["reviewer_id"], name: "index_gigs_on_reviewer_id"
   end
@@ -291,6 +292,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
     t.integer "targeted_demographic_start_age"
     t.integer "targeted_demographic_end_age"
     t.string "targeted_geographic_audience", default: [], array: true
+    t.string "targeted_geographic_audience_city", default: [], array: true
     t.index ["influencer_id"], name: "index_influencer_platforms_on_influencer_id"
     t.index ["platform_id"], name: "index_influencer_platforms_on_platform_id"
   end
@@ -488,6 +490,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
     t.boolean "verified"
     t.bigint "reviewer_id"
     t.string "payment_plan"
+    t.integer "targeted_demographic_start_age"
+    t.integer "targeted_demographic_end_age"
+    t.string "targeted_geographic_audience", default: [], array: true
+    t.string "targeted_geographic_audience_city", default: [], array: true
+    t.string "platforms", default: [], array: true
+    t.string "categories", default: [], array: true
     t.index ["reviewer_id"], name: "index_organizations_on_reviewer_id"
   end
 

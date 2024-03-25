@@ -106,3 +106,7 @@ gem 'aws-sdk-s3'
 # Admin portal
 gem 'activeadmin'
 
+# Range Slider
+gem 'nouislider-rails'
+
+gem "countries", "~> 6.0"
