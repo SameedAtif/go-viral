@@ -57,6 +57,7 @@ class Gig < ApplicationRecord
   scope :approved, -> { where(status: Gig::STATUSES_MAP[:approved]) }
   scope :rejected, -> { where(status: Gig::STATUSES_MAP[:rejected]) }
   scope :published, -> { where(status: Gig::STATUSES_MAP[:published]) }
+  scope :was_reviewed, -> { where(reviewed: true) }
 
   has_rich_text :description
 

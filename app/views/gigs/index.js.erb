@@ -1,7 +1,7 @@
-$('.gig-list').empty();
+$('#gig-list-ul').empty();
 
 <% @gigs.each do |gig| %>
-  $('.gig-list').append("<%= j(render(partial: 'shared/partials/card', locals: { gig: gig })) %>");
+  $('#gig-list-ul').append("<%= j(render(partial: 'shared/partials/card', locals: { gig: gig })) %>");
 <% end %>
 
 <% if @gigs.total_pages > 1 %>
