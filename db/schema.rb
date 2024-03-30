@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_07_131839) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -137,6 +137,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
 
   create_table "clients", force: :cascade do |t|
     t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_clients_on_user_id", unique: true
   end
 
@@ -161,6 +163,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
   create_table "gig_clients", force: :cascade do |t|
     t.bigint "gig_id"
     t.bigint "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "gig_package_id"
     t.string "status", default: "pending_review"
     t.bigint "system_gig_transaction_id"
@@ -222,6 +226,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
     t.string "title", default: "", null: false
     t.string "description", default: "", null: false
     t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "delivery_estimation", default: 1, null: false
     t.integer "review_limit", default: 1, null: false
     t.string "features", default: [], array: true
@@ -231,6 +237,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
   create_table "gig_platforms", force: :cascade do |t|
     t.bigint "gig_id"
     t.bigint "platform_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["gig_id"], name: "index_gig_platforms_on_gig_id"
     t.index ["platform_id"], name: "index_gig_platforms_on_platform_id"
   end
@@ -249,16 +257,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
   create_table "gigs", force: :cascade do |t|
     t.bigint "influencer_id"
     t.string "title", default: "", null: false
-    t.string "status", default: "draft"
-    t.integer "views", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "reviewer_id"
     t.boolean "reviewed"
+    t.string "status", default: "draft"
+    t.integer "views", default: 0
     t.string "description"
     t.integer "targeted_demographic_start_age"
     t.integer "targeted_demographic_end_age"
     t.string "targeted_geographic_audience", default: [], array: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string "targeted_geographic_audience_city", default: [], array: true
     t.index ["influencer_id"], name: "index_gigs_on_influencer_id"
     t.index ["reviewer_id"], name: "index_gigs_on_reviewer_id"
@@ -286,6 +294,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
   create_table "influencer_platforms", force: :cascade do |t|
     t.bigint "influencer_id"
     t.bigint "platform_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "followers"
     t.float "reach"
     t.string "url"
@@ -330,6 +340,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
 
   create_table "influencers", force: :cascade do |t|
     t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "bio"
     t.bigint "reviewer_id"
     t.boolean "reviewed"
@@ -511,6 +523,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
   create_table "platforms", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "url", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "project_applications", force: :cascade do |t|
@@ -520,6 +534,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
     t.string "description", default: "", null: false
     t.string "status", default: "", null: false
     t.float "budget"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "delivery_date"
     t.index ["influencer_id"], name: "index_project_applications_on_influencer_id"
     t.index ["project_id", "influencer_id"], name: "index_project_applications_on_project_id_and_influencer_id", unique: true
@@ -583,6 +599,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
   create_table "project_influencers", force: :cascade do |t|
     t.bigint "project_id"
     t.bigint "influencer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["influencer_id"], name: "index_project_influencers_on_influencer_id"
     t.index ["project_id"], name: "index_project_influencers_on_project_id"
   end
@@ -604,6 +622,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
   create_table "project_platforms", force: :cascade do |t|
     t.bigint "project_id"
     t.bigint "platform_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["platform_id"], name: "index_project_platforms_on_platform_id"
     t.index ["project_id"], name: "index_project_platforms_on_project_id"
   end
@@ -621,6 +641,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_17_224104) do
 
   create_table "projects", force: :cascade do |t|
     t.string "title", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "description", default: "", null: false
     t.float "budget", default: 0.0, null: false
     t.datetime "start_time"

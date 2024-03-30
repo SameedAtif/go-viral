@@ -24,11 +24,11 @@ class GigsController < ApplicationController
 
   def index
     @gigs = Gig.includes(:gig_platforms)
-    
+
     @gigs = @gigs.joins(:gig_platforms).where(gig_platforms: { platform_id: params[:platform] }) if params[:platform].present?
     @gigs = @gigs.joins(:gig_categories).where(gig_categories: { category_id: params[:category] }) if params[:category].present?
     @gigs = @gigs.where(targeted_geographic_audience: params[:country]) if params[:country].present?
-  
+
     if params[:date_filter_option].present? && params[:date_filter_option].is_a?(Array)
       selected_options = params[:date_filter_option]
       @gigs = case
@@ -42,17 +42,17 @@ class GigsController < ApplicationController
                 @gigs
               end
     end
-  
+
     @platforms = Platform.all
     @categories = Category.all
-  
+
     @gigs = @gigs.page(params[:page]).per(20)
-  
+
     respond_to do |format|
       format.html
       format.js
     end
-  end  
+  end
 
   def manage_gigs
     @gigs = current_user.influencer&.gigs&.left_outer_joins(:gig_clients)&.distinct || []
@@ -86,6 +86,10 @@ class GigsController < ApplicationController
     @gig_last_delivery = @gig.influencer_gig_transactions.last&.created_at
     @total_gig_reviews = @gig.client_gig_reviews.count
     if verified_role.respond_to?(:organization)
+      return if verified_role.organization.values_at(
+        :targeted_demographic_start_age, :targeted_demographic_end_age, :targeted_geographic_audience,
+        :targeted_geographic_audience_city, :platforms, :categories
+        ).any?(&:blank?)
       @gig_relevance = OrganizationInfluencerMatchingService.new(
         org_id: verified_role.organization.id,
         influencer_id: @influencer.id,

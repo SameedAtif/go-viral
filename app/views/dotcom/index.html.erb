@@ -27,7 +27,6 @@
         <form class="mx-auto mt-10 flex max-w-lg gap-x-4">
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
             <div class="relative w-full">
-      
                 <div class="">
                   <div class="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
                     <div class="relative">
@@ -37,8 +36,8 @@
                         </svg>
                       </div>
                       <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" placeholder='<%= t("header.navbar.influencers_search") %>' required onkeyup="searchInfluencer()">
-                    </div>              
-                    <div id="search-results" class="flex flex-col gap-2 px-3"></div>
+                    </div>
+                    <div id="search-results" class="flex flex-col gap-2 px-3 max-h-48 overflow-scroll	"></div>
                     <!-- Empty state -->
                     <div id="no-results" class="hidden px-6 py-14 text-center text-sm sm:px-14">
                       <svg class="mx-auto h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -121,6 +120,12 @@
 <script>
 function searchInfluencer() {
   var query = document.getElementById('search').value;
+  const searchResultsContainer = document.getElementById('search-results');
+
+  if (query.length === 0) {
+    searchResultsContainer.innerHTML = '';
+    return;
+  };
 
   fetch(`/search?query=${encodeURIComponent(query)}`)
     .then(response => response.json())
@@ -137,7 +142,7 @@ function updateSearchResults(results) {
   const noResultsContainer = document.getElementById('no-results');
 
   searchResultsContainer.innerHTML = '';
-  
+
   if (results.length === 0) {
     noResultsContainer.classList.remove('hidden');
   } else {
@@ -178,7 +183,7 @@ function addResultsSection(heading, results) {
 
   results.forEach(result => {
     const anchorElement = document.createElement('a');
-    anchorElement.href = result.type == 'influencer' ?  `influencers/${result.id}` : `gigs?platform=${result.name}` ; 
+    anchorElement.href = result.type == 'influencer' ?  `influencers/${result.id}` : `gigs?platform=${result.name}` ;
     const resultElement = document.createElement('div');
     resultElement.className = 'flex items-center border rounded-md p-2 bg-white shadow-sm';
     const imgElement = document.createElement('img');

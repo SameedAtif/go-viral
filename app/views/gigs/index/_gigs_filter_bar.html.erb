@@ -290,7 +290,7 @@
             class="absolute hidden  right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
             role="menu" style="max-height: 200px; overflow-y: auto;" aria-orientation="vertical" tabindex="-1">
             <form id="country_filter_form" class="space-y-4">
-              <% country_list.map(&:first).each do |country| %>
+              <% ISO3166::Country.pluck(:iso_short_name).map(&:first).each do |country| %>
                 <div class="flex items-center">
                   <input id="<%= country %>" name="country[]" value="<%= country %>" type="checkbox"
                     class="country-checkbox h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
