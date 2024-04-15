@@ -6,4 +6,4 @@ development:
 
 production:
   <<: *default
-  url:  <%= ENV['REDIS_URL_SIDEKIQ'] || 'redis://redis:6379/12' %>
+  url:  <%= ENV['REDIS_URL'] || ENV['REDIS_URL_SIDEKIQ'] || 'redis://redis:6379/12' %>

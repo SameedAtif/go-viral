@@ -26,5 +26,6 @@ test:
   database: go_viral_test
 
 production:
-  <<: *default
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>
   database: go_viral_production

@@ -6,7 +6,7 @@ require 'sidekiq'
 redis_config = Rails.application.config_for(:redis) || {}
 
 redis = {
-  url: ENV.fetch('REDIS_URL_SIDEKIQ',
+  url: ENV.fetch('REDIS_URL,
                  "redis#{redis_config['ssl'] ? 's' : ''}://#{redis_config['host']}:#{redis_config['port']}/#{redis_config['db']}")
 }
 
